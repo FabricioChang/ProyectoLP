@@ -2,7 +2,7 @@ import ply.lex as lex
 import datetime
 
 # Fabricio Chang - Inicio
-path = '/home/fabricio/Documents/ProyectoLP/'
+path = '/home/fabricio/ProyectoLP/'
 # Palabras reservadas
 reservadas = {
     'BEGIN': 'RESERVADA',
@@ -123,7 +123,7 @@ lexer = lex.lex()
 # Función para generar un log con el nombre del archivo según la convención
 def generar_log(nombre_usuario, contenido):
     fecha_hora = datetime.datetime.now().strftime("%d%m%Y-%Hh%M")
-    nombre_archivo = f"{path}logs/lexico-{nombre_usuario}-{fecha_hora}.txt"
+    nombre_archivo = f"{path}lexico-{nombre_usuario}-{fecha_hora}.txt"
     try:
         with open(nombre_archivo, 'w') as log:
             log.write(contenido)
