@@ -2,7 +2,7 @@ import ply.lex as lex
 import datetime
 
 # Fabricio Chang - Inicio
-path = '/home/fabricio/ProyectoLP/'
+path = "/home/fabricio/ProyectoLP/"
 # Palabras reservadas
 reservadas = {
     'BEGIN': 'RESERVADA',
@@ -16,10 +16,36 @@ reservadas = {
     'else': 'RESERVADA',
     'begin': 'RESERVADA',
     'end': 'RESERVADA',
-    'length': 'RESERVADA'
+    'length': 'RESERVADA',
+    #Cristhian Vinces
+    'elsif': 'RESERVADA',
+    'case': 'RESERVADA',
+    'false': 'RESERVADA',
+    'do': 'RESERVADA',
+    'then': 'RESERVADA',
+    'while': 'RESERVADA',
+    'self': 'RESERVADA',
+    'true': 'RESERVADA',
+    'def': 'RESERVADA',
+    'defined?': 'RESERVADA',
+    'return': 'RESERVADA',
+    'unless': 'RESERVADA',
+    'super': 'RESERVADA',
+    'until': 'RESERVADA',
+    'when': 'RESERVADA',
+    'class': 'RESERVADA',
+    'module': 'RESERVADA',
+    'next': 'RESERVADA',
+    'in': 'RESERVADA',
+    'not': 'RESERVADA',
+    'redo': 'RESERVADA',
+    'retry': 'RESERVADA',
+    'ensure': 'RESERVADA'
+
 }
 
 # Tokens para el lenguaje Ruby
+#Fabricio Chang
 tokens = [
     'VARIABLE_LOCAL',
     'VARIABLE_GLOBAL',
@@ -48,11 +74,23 @@ tokens = [
     'RESERVADA',
     'MENOR_QUE',
     'MAYOR_QUE',
-    'PUNTO'
+    'PUNTO',
+    #Cristhian Vinces
+    'IGUAL_IGUAL',
+    'DIFERENTE',
+    'MAYOR_IGUAL',
+    'MENOR_IGUAL',
+    'FLECHA_HASH',
+    'DOSPUNTOS',
+    'PUNTO_Y_COMA',
+    'COMA',
+    'DOSPUNTOS_IGUAL',
+    'INTERROGACION',
+    'SIMBOLO'
 ]
 
 # Expresiones regulares para tokens
-
+#Fabricio Chang
 t_CADENA = r'"([^"\\]|\\.)*"'
 t_MAS = r'\+'
 t_MENOS = r'-'
@@ -74,7 +112,21 @@ t_LLAVE_DER = r'\}'
 t_MAYOR_QUE = r'>'
 t_MENOR_QUE = r'<'
 t_PUNTO =r'\.'
+#Cristhian Vinces
+t_IGUAL_IGUAL = r'=='
+t_DIFERENTE = r'!='
+t_MAYOR_IGUAL = r'>='
+t_MENOR_IGUAL = r'<='
+t_FLECHA_HASH = r'=>'
+t_DOSPUNTOS = r':'
+t_PUNTO_Y_COMA = r';'
+t_COMA = r','
+t_DOSPUNTOS_IGUAL = r':='
+t_SIMBOLO = r':[a-zA-Z_][a-zA-Z_0-9]*'
+t_INTERROGACION = r'\?'
 
+
+#Fabricio Chang
 def t_FLOTANTE(t):
     r'(\d?|\d+)\.\d+'
     t.value = float(t.value)
@@ -142,5 +194,6 @@ def analizar_archivo(nombre_usuario, archivo_prueba):
             resultado += f"{token.type}: {token.value}\n"
     generar_log(nombre_usuario, resultado)
 
-# Fabricio Chang - Fin
 analizar_archivo("FabricioChang", path+"algoritmo_FabricioChang.rb")
+#Cristhian Vinces
+analizar_archivo("CristhianVinces", path+"algoritmo_CristhianVinces.rb")

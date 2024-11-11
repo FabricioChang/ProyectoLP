@@ -1,0 +1,88 @@
+COMENTARIO: #Cristhian Vinces
+COMENTARIO: # Este es un programa simple en Ruby que realiza operaciones con números
+COMENTARIO: # Definir variables
+VARIABLE_LOCAL: nombre
+ASIGNACION: =
+CADENA: "Juan"
+COMENTARIO: # Variable de tipo cadena
+VARIABLE_LOCAL: edad
+ASIGNACION: =
+NUMERO: 25
+COMENTARIO: # Variable de tipo entero
+VARIABLE_LOCAL: altura
+ASIGNACION: =
+FLOTANTE: 1.75
+COMENTARIO: # Variable de tipo flotante
+VARIABLE_LOCAL: es_adulto
+ASIGNACION: =
+RESERVADA: true
+COMENTARIO: # Variable booleana
+COMENTARIO: # Imprimir el saludo con el nombre
+RESERVADA: puts
+CADENA: "Hola, mi nombre es #{nombre}."
+COMENTARIO: # Verificar si la persona es adulta
+RESERVADA: if
+VARIABLE_LOCAL: es_adulto
+RESERVADA: puts
+CADENA: "Soy un adulto."
+RESERVADA: else
+RESERVADA: puts
+CADENA: "Soy menor de edad."
+RESERVADA: end
+COMENTARIO: # Realizar operaciones aritméticas
+VARIABLE_LOCAL: numero1
+ASIGNACION: =
+NUMERO: 10
+VARIABLE_LOCAL: numero2
+ASIGNACION: =
+NUMERO: 5
+VARIABLE_LOCAL: suma
+ASIGNACION: =
+VARIABLE_LOCAL: numero1
+MAS: +
+VARIABLE_LOCAL: numero2
+VARIABLE_LOCAL: resta
+ASIGNACION: =
+VARIABLE_LOCAL: numero1
+MENOS: -
+VARIABLE_LOCAL: numero2
+VARIABLE_LOCAL: multiplicacion
+ASIGNACION: =
+VARIABLE_LOCAL: numero1
+MULTIPLICAR: *
+VARIABLE_LOCAL: numero2
+VARIABLE_LOCAL: division
+ASIGNACION: =
+VARIABLE_LOCAL: numero1
+DIVIDIR: /
+VARIABLE_LOCAL: numero2
+COMENTARIO: # Mostrar los resultados de las operaciones
+RESERVADA: puts
+CADENA: "La suma de #{numero1} y #{numero2} es: #{suma}"
+RESERVADA: puts
+CADENA: "La resta de #{numero1} y #{numero2} es: #{resta}"
+RESERVADA: puts
+CADENA: "La multiplicación de #{numero1} y #{numero2} es: #{multiplicacion}"
+RESERVADA: puts
+CADENA: "La división de #{numero1} y #{numero2} es: #{division}"
+COMENTARIO: # Usar una estructura de control de tipo case
+RESERVADA: puts
+CADENA: "¿Tienes alguna mascota?"
+VARIABLE_LOCAL: mascota
+ASIGNACION: =
+CADENA: "Perro"
+RESERVADA: case
+VARIABLE_LOCAL: mascota
+RESERVADA: when
+CADENA: "Perro"
+RESERVADA: puts
+CADENA: "Tienes un perro."
+RESERVADA: when
+CADENA: "Gato"
+RESERVADA: puts
+CADENA: "Tienes un gato."
+RESERVADA: else
+RESERVADA: puts
+CADENA: "No sabemos qué mascota tienes."
+RESERVADA: end
+COMENTARIO: # Fin del programa
