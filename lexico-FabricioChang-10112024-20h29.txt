@@ -1,0 +1,19 @@
+COMENTARIO: # Fabricio Chang
+VARIABLE_LOCAL: nombre
+ASIGNACION: =
+CADENA: "Fabricio"
+VARIABLE_GLOBAL: $contador
+ASIGNACION: =
+NUMERO: 5
+RESERVADA: if
+VARIABLE_LOCAL: nombre
+PUNTO: .
+RESERVADA: length
+MAYOR_QUE: >
+NUMERO: 3
+RESERVADA: puts
+CADENA: "Nombre largo"
+RESERVADA: else
+RESERVADA: puts
+CADENA: "Nombre corto"
+RESERVADA: end
