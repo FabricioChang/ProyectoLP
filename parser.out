@@ -1,0 +1,343 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AND
+    COMA
+    COMENTARIO
+    CORCHETE_DER
+    CORCHETE_IZQ
+    DIFERENTE
+    DOSPUNTOS
+    DOSPUNTOS_IGUAL
+    FLECHA_HASH
+    IGUAL_IGUAL
+    INTERROGACION
+    LLAVE_DER
+    LLAVE_IZQ
+    MAYOR_IGUAL
+    MAYOR_QUE
+    MENOR_IGUAL
+    MENOR_QUE
+    NOT
+    OR
+    PARENTESIS_DER
+    PARENTESIS_IZQ
+    PUNTO
+    PUNTO_Y_COMA
+    RESERVADA
+    SIMBOLO
+
+Grammar
+
+Rule 0     S' -> asignacion
+Rule 1     asignacion -> variable ASIGNACION valor
+Rule 2     variable -> VARIABLE_LOCAL
+Rule 3     variable -> VARIABLE_GLOBAL
+Rule 4     variable -> VARIABLE_INSTANCIA
+Rule 5     variable -> VARIABLE_CLASE
+Rule 6     valor -> NUMERO
+Rule 7     valor -> FLOTANTE
+Rule 8     valor -> CADENA
+Rule 9     valor -> valor operador valor
+Rule 10    operador -> MAS
+Rule 11    operador -> MENOS
+Rule 12    operador -> MULTIPLICAR
+Rule 13    operador -> DIVIDIR
+Rule 14    operador -> MODULO
+Rule 15    operador -> EXPONENCIACION
+
+Terminals, with rules where they appear
+
+AND                  : 
+ASIGNACION           : 1
+CADENA               : 8
+COMA                 : 
+COMENTARIO           : 
+CORCHETE_DER         : 
+CORCHETE_IZQ         : 
+DIFERENTE            : 
+DIVIDIR              : 13
+DOSPUNTOS            : 
+DOSPUNTOS_IGUAL      : 
+EXPONENCIACION       : 15
+FLECHA_HASH          : 
+FLOTANTE             : 7
+IGUAL_IGUAL          : 
+INTERROGACION        : 
+LLAVE_DER            : 
+LLAVE_IZQ            : 
+MAS                  : 10
+MAYOR_IGUAL          : 
+MAYOR_QUE            : 
+MENOR_IGUAL          : 
+MENOR_QUE            : 
+MENOS                : 11
+MODULO               : 14
+MULTIPLICAR          : 12
+NOT                  : 
+NUMERO               : 6
+OR                   : 
+PARENTESIS_DER       : 
+PARENTESIS_IZQ       : 
+PUNTO                : 
+PUNTO_Y_COMA         : 
+RESERVADA            : 
+SIMBOLO              : 
+VARIABLE_CLASE       : 5
+VARIABLE_GLOBAL      : 3
+VARIABLE_INSTANCIA   : 4
+VARIABLE_LOCAL       : 2
+error                : 
+
+Nonterminals, with rules where they appear
+
+asignacion           : 0
+operador             : 9
+valor                : 1 9 9
+variable             : 1
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . asignacion
+    (1) asignacion -> . variable ASIGNACION valor
+    (2) variable -> . VARIABLE_LOCAL
+    (3) variable -> . VARIABLE_GLOBAL
+    (4) variable -> . VARIABLE_INSTANCIA
+    (5) variable -> . VARIABLE_CLASE
+
+    VARIABLE_LOCAL  shift and go to state 3
+    VARIABLE_GLOBAL shift and go to state 4
+    VARIABLE_INSTANCIA shift and go to state 5
+    VARIABLE_CLASE  shift and go to state 6
+
+    asignacion                     shift and go to state 1
+    variable                       shift and go to state 2
+
+state 1
+
+    (0) S' -> asignacion .
+
+
+
+state 2
+
+    (1) asignacion -> variable . ASIGNACION valor
+
+    ASIGNACION      shift and go to state 7
+
+
+state 3
+
+    (2) variable -> VARIABLE_LOCAL .
+
+    ASIGNACION      reduce using rule 2 (variable -> VARIABLE_LOCAL .)
+
+
+state 4
+
+    (3) variable -> VARIABLE_GLOBAL .
+
+    ASIGNACION      reduce using rule 3 (variable -> VARIABLE_GLOBAL .)
+
+
+state 5
+
+    (4) variable -> VARIABLE_INSTANCIA .
+
+    ASIGNACION      reduce using rule 4 (variable -> VARIABLE_INSTANCIA .)
+
+
+state 6
+
+    (5) variable -> VARIABLE_CLASE .
+
+    ASIGNACION      reduce using rule 5 (variable -> VARIABLE_CLASE .)
+
+
+state 7
+
+    (1) asignacion -> variable ASIGNACION . valor
+    (6) valor -> . NUMERO
+    (7) valor -> . FLOTANTE
+    (8) valor -> . CADENA
+    (9) valor -> . valor operador valor
+
+    NUMERO          shift and go to state 9
+    FLOTANTE        shift and go to state 10
+    CADENA          shift and go to state 11
+
+    valor                          shift and go to state 8
+
+state 8
+
+    (1) asignacion -> variable ASIGNACION valor .
+    (9) valor -> valor . operador valor
+    (10) operador -> . MAS
+    (11) operador -> . MENOS
+    (12) operador -> . MULTIPLICAR
+    (13) operador -> . DIVIDIR
+    (14) operador -> . MODULO
+    (15) operador -> . EXPONENCIACION
+
+    $end            reduce using rule 1 (asignacion -> variable ASIGNACION valor .)
+    MAS             shift and go to state 13
+    MENOS           shift and go to state 14
+    MULTIPLICAR     shift and go to state 15
+    DIVIDIR         shift and go to state 16
+    MODULO          shift and go to state 17
+    EXPONENCIACION  shift and go to state 18
+
+    operador                       shift and go to state 12
+
+state 9
+
+    (6) valor -> NUMERO .
+
+    MAS             reduce using rule 6 (valor -> NUMERO .)
+    MENOS           reduce using rule 6 (valor -> NUMERO .)
+    MULTIPLICAR     reduce using rule 6 (valor -> NUMERO .)
+    DIVIDIR         reduce using rule 6 (valor -> NUMERO .)
+    MODULO          reduce using rule 6 (valor -> NUMERO .)
+    EXPONENCIACION  reduce using rule 6 (valor -> NUMERO .)
+    $end            reduce using rule 6 (valor -> NUMERO .)
+
+
+state 10
+
+    (7) valor -> FLOTANTE .
+
+    MAS             reduce using rule 7 (valor -> FLOTANTE .)
+    MENOS           reduce using rule 7 (valor -> FLOTANTE .)
+    MULTIPLICAR     reduce using rule 7 (valor -> FLOTANTE .)
+    DIVIDIR         reduce using rule 7 (valor -> FLOTANTE .)
+    MODULO          reduce using rule 7 (valor -> FLOTANTE .)
+    EXPONENCIACION  reduce using rule 7 (valor -> FLOTANTE .)
+    $end            reduce using rule 7 (valor -> FLOTANTE .)
+
+
+state 11
+
+    (8) valor -> CADENA .
+
+    MAS             reduce using rule 8 (valor -> CADENA .)
+    MENOS           reduce using rule 8 (valor -> CADENA .)
+    MULTIPLICAR     reduce using rule 8 (valor -> CADENA .)
+    DIVIDIR         reduce using rule 8 (valor -> CADENA .)
+    MODULO          reduce using rule 8 (valor -> CADENA .)
+    EXPONENCIACION  reduce using rule 8 (valor -> CADENA .)
+    $end            reduce using rule 8 (valor -> CADENA .)
+
+
+state 12
+
+    (9) valor -> valor operador . valor
+    (6) valor -> . NUMERO
+    (7) valor -> . FLOTANTE
+    (8) valor -> . CADENA
+    (9) valor -> . valor operador valor
+
+    NUMERO          shift and go to state 9
+    FLOTANTE        shift and go to state 10
+    CADENA          shift and go to state 11
+
+    valor                          shift and go to state 19
+
+state 13
+
+    (10) operador -> MAS .
+
+    NUMERO          reduce using rule 10 (operador -> MAS .)
+    FLOTANTE        reduce using rule 10 (operador -> MAS .)
+    CADENA          reduce using rule 10 (operador -> MAS .)
+
+
+state 14
+
+    (11) operador -> MENOS .
+
+    NUMERO          reduce using rule 11 (operador -> MENOS .)
+    FLOTANTE        reduce using rule 11 (operador -> MENOS .)
+    CADENA          reduce using rule 11 (operador -> MENOS .)
+
+
+state 15
+
+    (12) operador -> MULTIPLICAR .
+
+    NUMERO          reduce using rule 12 (operador -> MULTIPLICAR .)
+    FLOTANTE        reduce using rule 12 (operador -> MULTIPLICAR .)
+    CADENA          reduce using rule 12 (operador -> MULTIPLICAR .)
+
+
+state 16
+
+    (13) operador -> DIVIDIR .
+
+    NUMERO          reduce using rule 13 (operador -> DIVIDIR .)
+    FLOTANTE        reduce using rule 13 (operador -> DIVIDIR .)
+    CADENA          reduce using rule 13 (operador -> DIVIDIR .)
+
+
+state 17
+
+    (14) operador -> MODULO .
+
+    NUMERO          reduce using rule 14 (operador -> MODULO .)
+    FLOTANTE        reduce using rule 14 (operador -> MODULO .)
+    CADENA          reduce using rule 14 (operador -> MODULO .)
+
+
+state 18
+
+    (15) operador -> EXPONENCIACION .
+
+    NUMERO          reduce using rule 15 (operador -> EXPONENCIACION .)
+    FLOTANTE        reduce using rule 15 (operador -> EXPONENCIACION .)
+    CADENA          reduce using rule 15 (operador -> EXPONENCIACION .)
+
+
+state 19
+
+    (9) valor -> valor operador valor .
+    (9) valor -> valor . operador valor
+    (10) operador -> . MAS
+    (11) operador -> . MENOS
+    (12) operador -> . MULTIPLICAR
+    (13) operador -> . DIVIDIR
+    (14) operador -> . MODULO
+    (15) operador -> . EXPONENCIACION
+
+  ! shift/reduce conflict for MAS resolved as shift
+  ! shift/reduce conflict for MENOS resolved as shift
+  ! shift/reduce conflict for MULTIPLICAR resolved as shift
+  ! shift/reduce conflict for DIVIDIR resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+  ! shift/reduce conflict for EXPONENCIACION resolved as shift
+    $end            reduce using rule 9 (valor -> valor operador valor .)
+    MAS             shift and go to state 13
+    MENOS           shift and go to state 14
+    MULTIPLICAR     shift and go to state 15
+    DIVIDIR         shift and go to state 16
+    MODULO          shift and go to state 17
+    EXPONENCIACION  shift and go to state 18
+
+  ! MAS             [ reduce using rule 9 (valor -> valor operador valor .) ]
+  ! MENOS           [ reduce using rule 9 (valor -> valor operador valor .) ]
+  ! MULTIPLICAR     [ reduce using rule 9 (valor -> valor operador valor .) ]
+  ! DIVIDIR         [ reduce using rule 9 (valor -> valor operador valor .) ]
+  ! MODULO          [ reduce using rule 9 (valor -> valor operador valor .) ]
+  ! EXPONENCIACION  [ reduce using rule 9 (valor -> valor operador valor .) ]
+
+    operador                       shift and go to state 12
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for MAS in state 19 resolved as shift
+WARNING: shift/reduce conflict for MENOS in state 19 resolved as shift
+WARNING: shift/reduce conflict for MULTIPLICAR in state 19 resolved as shift
+WARNING: shift/reduce conflict for DIVIDIR in state 19 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 19 resolved as shift
+WARNING: shift/reduce conflict for EXPONENCIACION in state 19 resolved as shift

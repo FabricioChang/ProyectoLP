@@ -5,13 +5,13 @@ import datetime
 path = "/home/fabricio/ProyectoLP/"
 # Palabras reservadas
 reservadas = {
-    'BEGIN': 'RESERVADA',
-    'END': 'RESERVADA',
+    'BEGIN': 'BEGIN',
+    'END': 'END',
     'alias': 'RESERVADA', 
     'and': 'RESERVADA',
     'begin': 'RESERVADA',
     'break': 'RESERVADA',
-    'puts': 'RESERVADA',
+    'puts': 'PUTS',
     'if': 'RESERVADA',
     'else': 'RESERVADA',
     'begin': 'RESERVADA',
@@ -193,7 +193,3 @@ def analizar_archivo(nombre_usuario, archivo_prueba):
         for token in lexer:
             resultado += f"{token.type}: {token.value}\n"
     generar_log(nombre_usuario, resultado)
-
-analizar_archivo("FabricioChang", path+"algoritmo_FabricioChang.rb")
-#Cristhian Vinces
-analizar_archivo("CristhianVinces", path+"algoritmo_CristhianVinces.rb")
