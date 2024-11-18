@@ -8,7 +8,7 @@ reservadas = {
     'begin': 'BEGIN',
     'END': 'END',
     'alias': 'ALIAS', 
-    'and': 'AND',
+    'and': 'AND_BLOCK',
     'begin': 'BEGIN_BLOCK',
     'break': 'BREAK',
     'puts': 'PUTS',
@@ -37,7 +37,7 @@ reservadas = {
     'module': 'MODULE',
     'next': 'NEXT',
     'in': 'IN',
-    'not': 'NOT',
+    'not': 'NOT_BLOCK',
     'redo': 'REDO',
     'retry': 'RETRY',
     'ensure': 'ENSURE'

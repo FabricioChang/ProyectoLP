@@ -2,134 +2,276 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    AND
-    COMA
+    ALIAS
+    AND_BLOCK
+    BEGIN_BLOCK
+    BREAK
+    CASE
+    CLASS
     COMENTARIO
-    CORCHETE_DER
-    CORCHETE_IZQ
-    DIFERENTE
+    DEF
+    DEFINED
+    DO
     DOSPUNTOS
     DOSPUNTOS_IGUAL
     END
+    ENSURE
     FLECHA_HASH
-    IGUAL_IGUAL
+    IN
     INTERROGACION
+    LENGTH
     LLAVE_DER
     LLAVE_IZQ
-    MAYOR_IGUAL
-    MAYOR_QUE
-    MENOR_IGUAL
-    MENOR_QUE
-    NOT
-    OR
+    MODULE
+    NEXT
     PUNTO
-    PUNTO_Y_COMA
+    REDO
     RESERVADA
-    SIMBOLO
+    RETRY
+    RETURN
+    SELF
+    SUPER
+    UNLESS
+    UNTIL
+    WHEN
+    WHILE
 
 Grammar
 
 Rule 0     S' -> programa
-Rule 1     programa -> asignacion
-Rule 2     programa -> impresion
-Rule 3     asignacion -> variable ASIGNACION operacionAritmetica
-Rule 4     impresion -> PUTS PARENTESIS_IZQ operacionAritmetica PARENTESIS_DER
-Rule 5     variable -> VARIABLE_LOCAL
-Rule 6     variable -> VARIABLE_GLOBAL
-Rule 7     variable -> VARIABLE_INSTANCIA
-Rule 8     variable -> VARIABLE_CLASE
-Rule 9     valor -> NUMERO
-Rule 10    valor -> FLOTANTE
-Rule 11    valor -> CADENA
-Rule 12    valor -> variable
-Rule 13    operacionAritmetica -> valor
-Rule 14    operacionAritmetica -> valor operador operacionAritmetica
-Rule 15    operador -> MAS
-Rule 16    operador -> MENOS
-Rule 17    operador -> MULTIPLICAR
-Rule 18    operador -> DIVIDIR
-Rule 19    operador -> MODULO
-Rule 20    operador -> EXPONENCIACION
+Rule 1     programa -> sentencia
+Rule 2     programa -> sentencia programa
+Rule 3     sentencia -> asignacion
+Rule 4     sentencia -> impresion
+Rule 5     sentencia -> array
+Rule 6     sentencia -> condicion
+Rule 7     asignacion -> variable ASIGNACION valores
+Rule 8     impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+Rule 9     array -> CORCHETE_IZQ argumentos CORCHETE_DER
+Rule 10    condicion -> if
+Rule 11    condicion -> if_else
+Rule 12    condicion -> if_elsif_else
+Rule 13    if -> IF expresion instrucciones END_BLOCK
+Rule 14    if -> IF expresion THEN instrucciones END_BLOCK
+Rule 15    if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK
+Rule 16    if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+Rule 17    if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK
+Rule 18    if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK
+Rule 19    if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+Rule 20    if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+Rule 21    elsif_clauses -> ELSIF expresion instrucciones
+Rule 22    elsif_clauses -> ELSIF expresion THEN instrucciones
+Rule 23    elsif_clauses -> ELSIF expresion instrucciones elsif_clauses
+Rule 24    elsif_clauses -> ELSIF expresion THEN instrucciones elsif_clauses
+Rule 25    expresion -> var_expresion
+Rule 26    expresion -> var_expresion comparadores var_expresion
+Rule 27    expresion -> expresion comparadores expresion
+Rule 28    expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER
+Rule 29    expresion -> NOT_BLOCK expresion
+Rule 30    expresion -> expresion operador_logico expresion
+Rule 31    comparadores -> MAYOR_QUE
+Rule 32    comparadores -> MENOR_QUE
+Rule 33    comparadores -> IGUAL_IGUAL
+Rule 34    comparadores -> DIFERENTE
+Rule 35    comparadores -> MAYOR_IGUAL
+Rule 36    comparadores -> MENOR_IGUAL
+Rule 37    operador_logico -> AND
+Rule 38    operador_logico -> OR
+Rule 39    operador_logico -> NOT
+Rule 40    var_expresion -> valor
+Rule 41    var_expresion -> booleano
+Rule 42    instrucciones -> instruccion
+Rule 43    instrucciones -> instruccion instrucciones
+Rule 44    instrucciones -> instruccion PUNTO_Y_COMA instrucciones
+Rule 45    instruccion -> asignacion
+Rule 46    instruccion -> impresion
+Rule 47    instruccion -> condicion
+Rule 48    instruccion -> llamada_funcion
+Rule 49    llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER
+Rule 50    llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER
+Rule 51    variable -> VARIABLE_LOCAL
+Rule 52    variable -> VARIABLE_GLOBAL
+Rule 53    variable -> VARIABLE_INSTANCIA
+Rule 54    variable -> VARIABLE_CLASE
+Rule 55    booleano -> FALSE
+Rule 56    booleano -> TRUE
+Rule 57    argumentos -> argumento
+Rule 58    argumentos -> argumento COMA argumentos
+Rule 59    argumento -> booleano
+Rule 60    argumento -> operacionAritmetica
+Rule 61    argumento -> array
+Rule 62    argumento -> empty
+Rule 63    empty -> <empty>
+Rule 64    valores -> operacionAritmetica
+Rule 65    valores -> SIMBOLO
+Rule 66    valores -> booleano
+Rule 67    valores -> array
+Rule 68    valor -> NUMERO
+Rule 69    valor -> FLOTANTE
+Rule 70    valor -> CADENA
+Rule 71    valor -> variable
+Rule 72    operacionAritmetica -> valor
+Rule 73    operacionAritmetica -> valor operador operacionAritmetica
+Rule 74    operador -> MAS
+Rule 75    operador -> MENOS
+Rule 76    operador -> MULTIPLICAR
+Rule 77    operador -> DIVIDIR
+Rule 78    operador -> MODULO
+Rule 79    operador -> EXPONENCIACION
 
 Terminals, with rules where they appear
 
-AND                  : 
-ASIGNACION           : 3
-CADENA               : 11
-COMA                 : 
+ALIAS                : 
+AND                  : 37
+AND_BLOCK            : 
+ASIGNACION           : 7
+BEGIN_BLOCK          : 
+BREAK                : 
+CADENA               : 70
+CASE                 : 
+CLASS                : 
+COMA                 : 58
 COMENTARIO           : 
-CORCHETE_DER         : 
-CORCHETE_IZQ         : 
-DIFERENTE            : 
-DIVIDIR              : 18
+CORCHETE_DER         : 9
+CORCHETE_IZQ         : 9
+DEF                  : 
+DEFINED              : 
+DIFERENTE            : 34
+DIVIDIR              : 77
+DO                   : 
 DOSPUNTOS            : 
 DOSPUNTOS_IGUAL      : 
+ELSE                 : 15 16 19 20
+ELSIF                : 21 22 23 24
 END                  : 
-EXPONENCIACION       : 20
+END_BLOCK            : 13 14 15 16 17 18 19 20
+ENSURE               : 
+EXPONENCIACION       : 79
+FALSE                : 55
 FLECHA_HASH          : 
-FLOTANTE             : 10
-IGUAL_IGUAL          : 
+FLOTANTE             : 69
+IF                   : 13 14 15 16 17 18 19 20
+IGUAL_IGUAL          : 33
+IN                   : 
 INTERROGACION        : 
+LENGTH               : 
 LLAVE_DER            : 
 LLAVE_IZQ            : 
-MAS                  : 15
-MAYOR_IGUAL          : 
-MAYOR_QUE            : 
-MENOR_IGUAL          : 
-MENOR_QUE            : 
-MENOS                : 16
-MODULO               : 19
-MULTIPLICAR          : 17
-NOT                  : 
-NUMERO               : 9
-OR                   : 
-PARENTESIS_DER       : 4
-PARENTESIS_IZQ       : 4
+MAS                  : 74
+MAYOR_IGUAL          : 35
+MAYOR_QUE            : 31
+MENOR_IGUAL          : 36
+MENOR_QUE            : 32
+MENOS                : 75
+MODULE               : 
+MODULO               : 78
+MULTIPLICAR          : 76
+NEXT                 : 
+NOT                  : 39
+NOT_BLOCK            : 29
+NUMERO               : 68
+OR                   : 38
+PARENTESIS_DER       : 8 28 49 50
+PARENTESIS_IZQ       : 8 28 49 50
 PUNTO                : 
-PUNTO_Y_COMA         : 
-PUTS                 : 4
+PUNTO_Y_COMA         : 44
+PUTS                 : 8
+REDO                 : 
 RESERVADA            : 
-SIMBOLO              : 
-VARIABLE_CLASE       : 8
-VARIABLE_GLOBAL      : 6
-VARIABLE_INSTANCIA   : 7
-VARIABLE_LOCAL       : 5
+RETRY                : 
+RETURN               : 
+SELF                 : 
+SIMBOLO              : 65
+SUPER                : 
+THEN                 : 14 16 18 20 22 24
+TRUE                 : 56
+UNLESS               : 
+UNTIL                : 
+VARIABLE_CLASE       : 54
+VARIABLE_GLOBAL      : 52
+VARIABLE_INSTANCIA   : 53
+VARIABLE_LOCAL       : 49 50 51
+WHEN                 : 
+WHILE                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-asignacion           : 1
-impresion            : 2
-operacionAritmetica  : 3 4 14
-operador             : 14
-programa             : 0
-valor                : 13 14
-variable             : 3 12
+argumento            : 57 58
+argumentos           : 8 9 49 58
+array                : 5 61 67
+asignacion           : 3 45
+booleano             : 41 59 66
+comparadores         : 26 27
+condicion            : 6 47
+elsif_clauses        : 17 18 19 20 23 24
+empty                : 62
+expresion            : 13 14 15 16 17 18 19 20 21 22 23 24 27 27 28 29 30 30
+if                   : 10
+if_else              : 11
+if_elsif_else        : 12
+impresion            : 4 46
+instruccion          : 42 43 44
+instrucciones        : 13 14 15 15 16 16 17 18 19 19 20 20 21 22 23 24 43 44
+llamada_funcion      : 48
+operacionAritmetica  : 60 64 73
+operador             : 73
+operador_logico      : 30
+programa             : 2 0
+sentencia            : 1 2
+valor                : 40 72 73
+valores              : 7
+var_expresion        : 25 26 26
+variable             : 7 71
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . programa
-    (1) programa -> . asignacion
-    (2) programa -> . impresion
-    (3) asignacion -> . variable ASIGNACION operacionAritmetica
-    (4) impresion -> . PUTS PARENTESIS_IZQ operacionAritmetica PARENTESIS_DER
-    (5) variable -> . VARIABLE_LOCAL
-    (6) variable -> . VARIABLE_GLOBAL
-    (7) variable -> . VARIABLE_INSTANCIA
-    (8) variable -> . VARIABLE_CLASE
+    (1) programa -> . sentencia
+    (2) programa -> . sentencia programa
+    (3) sentencia -> . asignacion
+    (4) sentencia -> . impresion
+    (5) sentencia -> . array
+    (6) sentencia -> . condicion
+    (7) asignacion -> . variable ASIGNACION valores
+    (8) impresion -> . PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (9) array -> . CORCHETE_IZQ argumentos CORCHETE_DER
+    (10) condicion -> . if
+    (11) condicion -> . if_else
+    (12) condicion -> . if_elsif_else
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+    (13) if -> . IF expresion instrucciones END_BLOCK
+    (14) if -> . IF expresion THEN instrucciones END_BLOCK
+    (15) if_else -> . IF expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> . IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> . IF expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> . IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
 
-    PUTS            shift and go to state 5
-    VARIABLE_LOCAL  shift and go to state 6
-    VARIABLE_GLOBAL shift and go to state 7
-    VARIABLE_INSTANCIA shift and go to state 8
-    VARIABLE_CLASE  shift and go to state 9
+    PUTS            shift and go to state 8
+    CORCHETE_IZQ    shift and go to state 9
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+    IF              shift and go to state 17
 
     programa                       shift and go to state 1
-    asignacion                     shift and go to state 2
-    impresion                      shift and go to state 3
-    variable                       shift and go to state 4
+    sentencia                      shift and go to state 2
+    asignacion                     shift and go to state 3
+    impresion                      shift and go to state 4
+    array                          shift and go to state 5
+    condicion                      shift and go to state 6
+    variable                       shift and go to state 7
+    if                             shift and go to state 10
+    if_else                        shift and go to state 11
+    if_elsif_else                  shift and go to state 12
 
 state 1
 
@@ -139,351 +281,2876 @@ state 1
 
 state 2
 
-    (1) programa -> asignacion .
+    (1) programa -> sentencia .
+    (2) programa -> sentencia . programa
+    (1) programa -> . sentencia
+    (2) programa -> . sentencia programa
+    (3) sentencia -> . asignacion
+    (4) sentencia -> . impresion
+    (5) sentencia -> . array
+    (6) sentencia -> . condicion
+    (7) asignacion -> . variable ASIGNACION valores
+    (8) impresion -> . PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (9) array -> . CORCHETE_IZQ argumentos CORCHETE_DER
+    (10) condicion -> . if
+    (11) condicion -> . if_else
+    (12) condicion -> . if_elsif_else
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+    (13) if -> . IF expresion instrucciones END_BLOCK
+    (14) if -> . IF expresion THEN instrucciones END_BLOCK
+    (15) if_else -> . IF expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> . IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> . IF expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> . IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
 
-    $end            reduce using rule 1 (programa -> asignacion .)
+    $end            reduce using rule 1 (programa -> sentencia .)
+    PUTS            shift and go to state 8
+    CORCHETE_IZQ    shift and go to state 9
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+    IF              shift and go to state 17
 
+    sentencia                      shift and go to state 2
+    programa                       shift and go to state 18
+    asignacion                     shift and go to state 3
+    impresion                      shift and go to state 4
+    array                          shift and go to state 5
+    condicion                      shift and go to state 6
+    variable                       shift and go to state 7
+    if                             shift and go to state 10
+    if_else                        shift and go to state 11
+    if_elsif_else                  shift and go to state 12
 
 state 3
 
-    (2) programa -> impresion .
+    (3) sentencia -> asignacion .
 
-    $end            reduce using rule 2 (programa -> impresion .)
+    PUTS            reduce using rule 3 (sentencia -> asignacion .)
+    CORCHETE_IZQ    reduce using rule 3 (sentencia -> asignacion .)
+    VARIABLE_LOCAL  reduce using rule 3 (sentencia -> asignacion .)
+    VARIABLE_GLOBAL reduce using rule 3 (sentencia -> asignacion .)
+    VARIABLE_INSTANCIA reduce using rule 3 (sentencia -> asignacion .)
+    VARIABLE_CLASE  reduce using rule 3 (sentencia -> asignacion .)
+    IF              reduce using rule 3 (sentencia -> asignacion .)
+    $end            reduce using rule 3 (sentencia -> asignacion .)
 
 
 state 4
 
-    (3) asignacion -> variable . ASIGNACION operacionAritmetica
+    (4) sentencia -> impresion .
 
-    ASIGNACION      shift and go to state 10
+    PUTS            reduce using rule 4 (sentencia -> impresion .)
+    CORCHETE_IZQ    reduce using rule 4 (sentencia -> impresion .)
+    VARIABLE_LOCAL  reduce using rule 4 (sentencia -> impresion .)
+    VARIABLE_GLOBAL reduce using rule 4 (sentencia -> impresion .)
+    VARIABLE_INSTANCIA reduce using rule 4 (sentencia -> impresion .)
+    VARIABLE_CLASE  reduce using rule 4 (sentencia -> impresion .)
+    IF              reduce using rule 4 (sentencia -> impresion .)
+    $end            reduce using rule 4 (sentencia -> impresion .)
 
 
 state 5
 
-    (4) impresion -> PUTS . PARENTESIS_IZQ operacionAritmetica PARENTESIS_DER
+    (5) sentencia -> array .
 
-    PARENTESIS_IZQ  shift and go to state 11
+    PUTS            reduce using rule 5 (sentencia -> array .)
+    CORCHETE_IZQ    reduce using rule 5 (sentencia -> array .)
+    VARIABLE_LOCAL  reduce using rule 5 (sentencia -> array .)
+    VARIABLE_GLOBAL reduce using rule 5 (sentencia -> array .)
+    VARIABLE_INSTANCIA reduce using rule 5 (sentencia -> array .)
+    VARIABLE_CLASE  reduce using rule 5 (sentencia -> array .)
+    IF              reduce using rule 5 (sentencia -> array .)
+    $end            reduce using rule 5 (sentencia -> array .)
 
 
 state 6
 
-    (5) variable -> VARIABLE_LOCAL .
+    (6) sentencia -> condicion .
 
-    ASIGNACION      reduce using rule 5 (variable -> VARIABLE_LOCAL .)
-    MAS             reduce using rule 5 (variable -> VARIABLE_LOCAL .)
-    MENOS           reduce using rule 5 (variable -> VARIABLE_LOCAL .)
-    MULTIPLICAR     reduce using rule 5 (variable -> VARIABLE_LOCAL .)
-    DIVIDIR         reduce using rule 5 (variable -> VARIABLE_LOCAL .)
-    MODULO          reduce using rule 5 (variable -> VARIABLE_LOCAL .)
-    EXPONENCIACION  reduce using rule 5 (variable -> VARIABLE_LOCAL .)
-    $end            reduce using rule 5 (variable -> VARIABLE_LOCAL .)
-    PARENTESIS_DER  reduce using rule 5 (variable -> VARIABLE_LOCAL .)
+    PUTS            reduce using rule 6 (sentencia -> condicion .)
+    CORCHETE_IZQ    reduce using rule 6 (sentencia -> condicion .)
+    VARIABLE_LOCAL  reduce using rule 6 (sentencia -> condicion .)
+    VARIABLE_GLOBAL reduce using rule 6 (sentencia -> condicion .)
+    VARIABLE_INSTANCIA reduce using rule 6 (sentencia -> condicion .)
+    VARIABLE_CLASE  reduce using rule 6 (sentencia -> condicion .)
+    IF              reduce using rule 6 (sentencia -> condicion .)
+    $end            reduce using rule 6 (sentencia -> condicion .)
 
 
 state 7
 
-    (6) variable -> VARIABLE_GLOBAL .
+    (7) asignacion -> variable . ASIGNACION valores
 
-    ASIGNACION      reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
-    MAS             reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
-    MENOS           reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
-    MULTIPLICAR     reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
-    DIVIDIR         reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
-    MODULO          reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
-    EXPONENCIACION  reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
-    $end            reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
-    PARENTESIS_DER  reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
+    ASIGNACION      shift and go to state 19
 
 
 state 8
 
-    (7) variable -> VARIABLE_INSTANCIA .
+    (8) impresion -> PUTS . PARENTESIS_IZQ argumentos PARENTESIS_DER
 
-    ASIGNACION      reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
-    MAS             reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
-    MENOS           reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
-    MULTIPLICAR     reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
-    DIVIDIR         reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
-    MODULO          reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
-    EXPONENCIACION  reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
-    $end            reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
-    PARENTESIS_DER  reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
+    PARENTESIS_IZQ  shift and go to state 20
 
 
 state 9
 
-    (8) variable -> VARIABLE_CLASE .
+    (9) array -> CORCHETE_IZQ . argumentos CORCHETE_DER
+    (57) argumentos -> . argumento
+    (58) argumentos -> . argumento COMA argumentos
+    (59) argumento -> . booleano
+    (60) argumento -> . operacionAritmetica
+    (61) argumento -> . array
+    (62) argumento -> . empty
+    (55) booleano -> . FALSE
+    (56) booleano -> . TRUE
+    (72) operacionAritmetica -> . valor
+    (73) operacionAritmetica -> . valor operador operacionAritmetica
+    (9) array -> . CORCHETE_IZQ argumentos CORCHETE_DER
+    (63) empty -> .
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
 
-    ASIGNACION      reduce using rule 8 (variable -> VARIABLE_CLASE .)
-    MAS             reduce using rule 8 (variable -> VARIABLE_CLASE .)
-    MENOS           reduce using rule 8 (variable -> VARIABLE_CLASE .)
-    MULTIPLICAR     reduce using rule 8 (variable -> VARIABLE_CLASE .)
-    DIVIDIR         reduce using rule 8 (variable -> VARIABLE_CLASE .)
-    MODULO          reduce using rule 8 (variable -> VARIABLE_CLASE .)
-    EXPONENCIACION  reduce using rule 8 (variable -> VARIABLE_CLASE .)
-    $end            reduce using rule 8 (variable -> VARIABLE_CLASE .)
-    PARENTESIS_DER  reduce using rule 8 (variable -> VARIABLE_CLASE .)
+    FALSE           shift and go to state 27
+    TRUE            shift and go to state 28
+    CORCHETE_IZQ    shift and go to state 9
+    COMA            reduce using rule 63 (empty -> .)
+    CORCHETE_DER    reduce using rule 63 (empty -> .)
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
 
+    argumentos                     shift and go to state 21
+    argumento                      shift and go to state 22
+    booleano                       shift and go to state 23
+    operacionAritmetica            shift and go to state 24
+    array                          shift and go to state 25
+    empty                          shift and go to state 26
+    valor                          shift and go to state 29
+    variable                       shift and go to state 33
 
 state 10
 
-    (3) asignacion -> variable ASIGNACION . operacionAritmetica
-    (13) operacionAritmetica -> . valor
-    (14) operacionAritmetica -> . valor operador operacionAritmetica
-    (9) valor -> . NUMERO
-    (10) valor -> . FLOTANTE
-    (11) valor -> . CADENA
-    (12) valor -> . variable
-    (5) variable -> . VARIABLE_LOCAL
-    (6) variable -> . VARIABLE_GLOBAL
-    (7) variable -> . VARIABLE_INSTANCIA
-    (8) variable -> . VARIABLE_CLASE
+    (10) condicion -> if .
 
-    NUMERO          shift and go to state 15
-    FLOTANTE        shift and go to state 16
-    CADENA          shift and go to state 17
-    VARIABLE_LOCAL  shift and go to state 6
-    VARIABLE_GLOBAL shift and go to state 7
-    VARIABLE_INSTANCIA shift and go to state 8
-    VARIABLE_CLASE  shift and go to state 9
+    PUTS            reduce using rule 10 (condicion -> if .)
+    CORCHETE_IZQ    reduce using rule 10 (condicion -> if .)
+    VARIABLE_LOCAL  reduce using rule 10 (condicion -> if .)
+    VARIABLE_GLOBAL reduce using rule 10 (condicion -> if .)
+    VARIABLE_INSTANCIA reduce using rule 10 (condicion -> if .)
+    VARIABLE_CLASE  reduce using rule 10 (condicion -> if .)
+    IF              reduce using rule 10 (condicion -> if .)
+    $end            reduce using rule 10 (condicion -> if .)
+    PUNTO_Y_COMA    reduce using rule 10 (condicion -> if .)
+    END_BLOCK       reduce using rule 10 (condicion -> if .)
+    ELSE            reduce using rule 10 (condicion -> if .)
+    ELSIF           reduce using rule 10 (condicion -> if .)
 
-    variable                       shift and go to state 12
-    operacionAritmetica            shift and go to state 13
-    valor                          shift and go to state 14
 
 state 11
 
-    (4) impresion -> PUTS PARENTESIS_IZQ . operacionAritmetica PARENTESIS_DER
-    (13) operacionAritmetica -> . valor
-    (14) operacionAritmetica -> . valor operador operacionAritmetica
-    (9) valor -> . NUMERO
-    (10) valor -> . FLOTANTE
-    (11) valor -> . CADENA
-    (12) valor -> . variable
-    (5) variable -> . VARIABLE_LOCAL
-    (6) variable -> . VARIABLE_GLOBAL
-    (7) variable -> . VARIABLE_INSTANCIA
-    (8) variable -> . VARIABLE_CLASE
+    (11) condicion -> if_else .
 
-    NUMERO          shift and go to state 15
-    FLOTANTE        shift and go to state 16
-    CADENA          shift and go to state 17
-    VARIABLE_LOCAL  shift and go to state 6
-    VARIABLE_GLOBAL shift and go to state 7
-    VARIABLE_INSTANCIA shift and go to state 8
-    VARIABLE_CLASE  shift and go to state 9
+    PUTS            reduce using rule 11 (condicion -> if_else .)
+    CORCHETE_IZQ    reduce using rule 11 (condicion -> if_else .)
+    VARIABLE_LOCAL  reduce using rule 11 (condicion -> if_else .)
+    VARIABLE_GLOBAL reduce using rule 11 (condicion -> if_else .)
+    VARIABLE_INSTANCIA reduce using rule 11 (condicion -> if_else .)
+    VARIABLE_CLASE  reduce using rule 11 (condicion -> if_else .)
+    IF              reduce using rule 11 (condicion -> if_else .)
+    $end            reduce using rule 11 (condicion -> if_else .)
+    PUNTO_Y_COMA    reduce using rule 11 (condicion -> if_else .)
+    END_BLOCK       reduce using rule 11 (condicion -> if_else .)
+    ELSE            reduce using rule 11 (condicion -> if_else .)
+    ELSIF           reduce using rule 11 (condicion -> if_else .)
 
-    operacionAritmetica            shift and go to state 18
-    valor                          shift and go to state 14
-    variable                       shift and go to state 12
 
 state 12
 
-    (12) valor -> variable .
+    (12) condicion -> if_elsif_else .
 
-    MAS             reduce using rule 12 (valor -> variable .)
-    MENOS           reduce using rule 12 (valor -> variable .)
-    MULTIPLICAR     reduce using rule 12 (valor -> variable .)
-    DIVIDIR         reduce using rule 12 (valor -> variable .)
-    MODULO          reduce using rule 12 (valor -> variable .)
-    EXPONENCIACION  reduce using rule 12 (valor -> variable .)
-    $end            reduce using rule 12 (valor -> variable .)
-    PARENTESIS_DER  reduce using rule 12 (valor -> variable .)
+    PUTS            reduce using rule 12 (condicion -> if_elsif_else .)
+    CORCHETE_IZQ    reduce using rule 12 (condicion -> if_elsif_else .)
+    VARIABLE_LOCAL  reduce using rule 12 (condicion -> if_elsif_else .)
+    VARIABLE_GLOBAL reduce using rule 12 (condicion -> if_elsif_else .)
+    VARIABLE_INSTANCIA reduce using rule 12 (condicion -> if_elsif_else .)
+    VARIABLE_CLASE  reduce using rule 12 (condicion -> if_elsif_else .)
+    IF              reduce using rule 12 (condicion -> if_elsif_else .)
+    $end            reduce using rule 12 (condicion -> if_elsif_else .)
+    PUNTO_Y_COMA    reduce using rule 12 (condicion -> if_elsif_else .)
+    END_BLOCK       reduce using rule 12 (condicion -> if_elsif_else .)
+    ELSE            reduce using rule 12 (condicion -> if_elsif_else .)
+    ELSIF           reduce using rule 12 (condicion -> if_elsif_else .)
 
 
 state 13
 
-    (3) asignacion -> variable ASIGNACION operacionAritmetica .
+    (51) variable -> VARIABLE_LOCAL .
 
-    $end            reduce using rule 3 (asignacion -> variable ASIGNACION operacionAritmetica .)
+    ASIGNACION      reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    MAS             reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    MENOS           reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    MULTIPLICAR     reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    DIVIDIR         reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    MODULO          reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    EXPONENCIACION  reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    COMA            reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    CORCHETE_DER    reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    MAYOR_QUE       reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    MENOR_QUE       reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    IGUAL_IGUAL     reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    DIFERENTE       reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    MAYOR_IGUAL     reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    MENOR_IGUAL     reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    THEN            reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    AND             reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    OR              reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    NOT             reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    PUTS            reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    VARIABLE_LOCAL  reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    VARIABLE_GLOBAL reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    VARIABLE_INSTANCIA reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    VARIABLE_CLASE  reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    IF              reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    CORCHETE_IZQ    reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    $end            reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    PUNTO_Y_COMA    reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    END_BLOCK       reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    ELSE            reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    ELSIF           reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+    PARENTESIS_DER  reduce using rule 51 (variable -> VARIABLE_LOCAL .)
 
 
 state 14
 
-    (13) operacionAritmetica -> valor .
-    (14) operacionAritmetica -> valor . operador operacionAritmetica
-    (15) operador -> . MAS
-    (16) operador -> . MENOS
-    (17) operador -> . MULTIPLICAR
-    (18) operador -> . DIVIDIR
-    (19) operador -> . MODULO
-    (20) operador -> . EXPONENCIACION
+    (52) variable -> VARIABLE_GLOBAL .
 
-    $end            reduce using rule 13 (operacionAritmetica -> valor .)
-    PARENTESIS_DER  reduce using rule 13 (operacionAritmetica -> valor .)
-    MAS             shift and go to state 20
-    MENOS           shift and go to state 21
-    MULTIPLICAR     shift and go to state 22
-    DIVIDIR         shift and go to state 23
-    MODULO          shift and go to state 24
-    EXPONENCIACION  shift and go to state 25
+    ASIGNACION      reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    MAS             reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    MENOS           reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    MULTIPLICAR     reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    DIVIDIR         reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    MODULO          reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    EXPONENCIACION  reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    COMA            reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    CORCHETE_DER    reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    MAYOR_QUE       reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    MENOR_QUE       reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    IGUAL_IGUAL     reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    DIFERENTE       reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    MAYOR_IGUAL     reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    MENOR_IGUAL     reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    THEN            reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    AND             reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    OR              reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    NOT             reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    PUTS            reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    VARIABLE_LOCAL  reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    VARIABLE_GLOBAL reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    VARIABLE_INSTANCIA reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    VARIABLE_CLASE  reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    IF              reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    CORCHETE_IZQ    reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    $end            reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    PUNTO_Y_COMA    reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    END_BLOCK       reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    ELSE            reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    ELSIF           reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
+    PARENTESIS_DER  reduce using rule 52 (variable -> VARIABLE_GLOBAL .)
 
-    operador                       shift and go to state 19
 
 state 15
 
-    (9) valor -> NUMERO .
+    (53) variable -> VARIABLE_INSTANCIA .
 
-    MAS             reduce using rule 9 (valor -> NUMERO .)
-    MENOS           reduce using rule 9 (valor -> NUMERO .)
-    MULTIPLICAR     reduce using rule 9 (valor -> NUMERO .)
-    DIVIDIR         reduce using rule 9 (valor -> NUMERO .)
-    MODULO          reduce using rule 9 (valor -> NUMERO .)
-    EXPONENCIACION  reduce using rule 9 (valor -> NUMERO .)
-    $end            reduce using rule 9 (valor -> NUMERO .)
-    PARENTESIS_DER  reduce using rule 9 (valor -> NUMERO .)
+    ASIGNACION      reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    MAS             reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    MENOS           reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    MULTIPLICAR     reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    DIVIDIR         reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    MODULO          reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    EXPONENCIACION  reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    COMA            reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    CORCHETE_DER    reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    MAYOR_QUE       reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    MENOR_QUE       reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    IGUAL_IGUAL     reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    DIFERENTE       reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    MAYOR_IGUAL     reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    MENOR_IGUAL     reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    THEN            reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    AND             reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    OR              reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    NOT             reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    PUTS            reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    VARIABLE_LOCAL  reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    VARIABLE_GLOBAL reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    VARIABLE_INSTANCIA reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    VARIABLE_CLASE  reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    IF              reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    CORCHETE_IZQ    reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    $end            reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    PUNTO_Y_COMA    reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    END_BLOCK       reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    ELSE            reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    ELSIF           reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
+    PARENTESIS_DER  reduce using rule 53 (variable -> VARIABLE_INSTANCIA .)
 
 
 state 16
 
-    (10) valor -> FLOTANTE .
+    (54) variable -> VARIABLE_CLASE .
 
-    MAS             reduce using rule 10 (valor -> FLOTANTE .)
-    MENOS           reduce using rule 10 (valor -> FLOTANTE .)
-    MULTIPLICAR     reduce using rule 10 (valor -> FLOTANTE .)
-    DIVIDIR         reduce using rule 10 (valor -> FLOTANTE .)
-    MODULO          reduce using rule 10 (valor -> FLOTANTE .)
-    EXPONENCIACION  reduce using rule 10 (valor -> FLOTANTE .)
-    $end            reduce using rule 10 (valor -> FLOTANTE .)
-    PARENTESIS_DER  reduce using rule 10 (valor -> FLOTANTE .)
+    ASIGNACION      reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    MAS             reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    MENOS           reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    MULTIPLICAR     reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    DIVIDIR         reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    MODULO          reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    EXPONENCIACION  reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    COMA            reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    CORCHETE_DER    reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    MAYOR_QUE       reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    MENOR_QUE       reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    IGUAL_IGUAL     reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    DIFERENTE       reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    MAYOR_IGUAL     reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    MENOR_IGUAL     reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    THEN            reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    AND             reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    OR              reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    NOT             reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    PUTS            reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    VARIABLE_LOCAL  reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    VARIABLE_GLOBAL reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    VARIABLE_INSTANCIA reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    VARIABLE_CLASE  reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    IF              reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    CORCHETE_IZQ    reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    $end            reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    PUNTO_Y_COMA    reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    END_BLOCK       reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    ELSE            reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    ELSIF           reduce using rule 54 (variable -> VARIABLE_CLASE .)
+    PARENTESIS_DER  reduce using rule 54 (variable -> VARIABLE_CLASE .)
 
 
 state 17
 
-    (11) valor -> CADENA .
+    (13) if -> IF . expresion instrucciones END_BLOCK
+    (14) if -> IF . expresion THEN instrucciones END_BLOCK
+    (15) if_else -> IF . expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> IF . expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> IF . expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> IF . expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> IF . expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> IF . expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (25) expresion -> . var_expresion
+    (26) expresion -> . var_expresion comparadores var_expresion
+    (27) expresion -> . expresion comparadores expresion
+    (28) expresion -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (29) expresion -> . NOT_BLOCK expresion
+    (30) expresion -> . expresion operador_logico expresion
+    (40) var_expresion -> . valor
+    (41) var_expresion -> . booleano
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (55) booleano -> . FALSE
+    (56) booleano -> . TRUE
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
 
-    MAS             reduce using rule 11 (valor -> CADENA .)
-    MENOS           reduce using rule 11 (valor -> CADENA .)
-    MULTIPLICAR     reduce using rule 11 (valor -> CADENA .)
-    DIVIDIR         reduce using rule 11 (valor -> CADENA .)
-    MODULO          reduce using rule 11 (valor -> CADENA .)
-    EXPONENCIACION  reduce using rule 11 (valor -> CADENA .)
-    $end            reduce using rule 11 (valor -> CADENA .)
-    PARENTESIS_DER  reduce using rule 11 (valor -> CADENA .)
+    PARENTESIS_IZQ  shift and go to state 36
+    NOT_BLOCK       shift and go to state 37
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    FALSE           shift and go to state 27
+    TRUE            shift and go to state 28
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
 
+    expresion                      shift and go to state 34
+    var_expresion                  shift and go to state 35
+    valor                          shift and go to state 38
+    booleano                       shift and go to state 39
+    variable                       shift and go to state 33
 
 state 18
 
-    (4) impresion -> PUTS PARENTESIS_IZQ operacionAritmetica . PARENTESIS_DER
+    (2) programa -> sentencia programa .
 
-    PARENTESIS_DER  shift and go to state 26
+    $end            reduce using rule 2 (programa -> sentencia programa .)
 
 
 state 19
 
-    (14) operacionAritmetica -> valor operador . operacionAritmetica
-    (13) operacionAritmetica -> . valor
-    (14) operacionAritmetica -> . valor operador operacionAritmetica
-    (9) valor -> . NUMERO
-    (10) valor -> . FLOTANTE
-    (11) valor -> . CADENA
-    (12) valor -> . variable
-    (5) variable -> . VARIABLE_LOCAL
-    (6) variable -> . VARIABLE_GLOBAL
-    (7) variable -> . VARIABLE_INSTANCIA
-    (8) variable -> . VARIABLE_CLASE
+    (7) asignacion -> variable ASIGNACION . valores
+    (64) valores -> . operacionAritmetica
+    (65) valores -> . SIMBOLO
+    (66) valores -> . booleano
+    (67) valores -> . array
+    (72) operacionAritmetica -> . valor
+    (73) operacionAritmetica -> . valor operador operacionAritmetica
+    (55) booleano -> . FALSE
+    (56) booleano -> . TRUE
+    (9) array -> . CORCHETE_IZQ argumentos CORCHETE_DER
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
 
-    NUMERO          shift and go to state 15
-    FLOTANTE        shift and go to state 16
-    CADENA          shift and go to state 17
-    VARIABLE_LOCAL  shift and go to state 6
-    VARIABLE_GLOBAL shift and go to state 7
-    VARIABLE_INSTANCIA shift and go to state 8
-    VARIABLE_CLASE  shift and go to state 9
+    SIMBOLO         shift and go to state 42
+    FALSE           shift and go to state 27
+    TRUE            shift and go to state 28
+    CORCHETE_IZQ    shift and go to state 9
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
 
-    valor                          shift and go to state 14
-    operacionAritmetica            shift and go to state 27
-    variable                       shift and go to state 12
+    variable                       shift and go to state 33
+    valores                        shift and go to state 40
+    operacionAritmetica            shift and go to state 41
+    booleano                       shift and go to state 43
+    array                          shift and go to state 44
+    valor                          shift and go to state 29
 
 state 20
 
-    (15) operador -> MAS .
+    (8) impresion -> PUTS PARENTESIS_IZQ . argumentos PARENTESIS_DER
+    (57) argumentos -> . argumento
+    (58) argumentos -> . argumento COMA argumentos
+    (59) argumento -> . booleano
+    (60) argumento -> . operacionAritmetica
+    (61) argumento -> . array
+    (62) argumento -> . empty
+    (55) booleano -> . FALSE
+    (56) booleano -> . TRUE
+    (72) operacionAritmetica -> . valor
+    (73) operacionAritmetica -> . valor operador operacionAritmetica
+    (9) array -> . CORCHETE_IZQ argumentos CORCHETE_DER
+    (63) empty -> .
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
 
-    NUMERO          reduce using rule 15 (operador -> MAS .)
-    FLOTANTE        reduce using rule 15 (operador -> MAS .)
-    CADENA          reduce using rule 15 (operador -> MAS .)
-    VARIABLE_LOCAL  reduce using rule 15 (operador -> MAS .)
-    VARIABLE_GLOBAL reduce using rule 15 (operador -> MAS .)
-    VARIABLE_INSTANCIA reduce using rule 15 (operador -> MAS .)
-    VARIABLE_CLASE  reduce using rule 15 (operador -> MAS .)
+    FALSE           shift and go to state 27
+    TRUE            shift and go to state 28
+    CORCHETE_IZQ    shift and go to state 9
+    COMA            reduce using rule 63 (empty -> .)
+    PARENTESIS_DER  reduce using rule 63 (empty -> .)
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
 
+    argumentos                     shift and go to state 45
+    argumento                      shift and go to state 22
+    booleano                       shift and go to state 23
+    operacionAritmetica            shift and go to state 24
+    array                          shift and go to state 25
+    empty                          shift and go to state 26
+    valor                          shift and go to state 29
+    variable                       shift and go to state 33
 
 state 21
 
-    (16) operador -> MENOS .
+    (9) array -> CORCHETE_IZQ argumentos . CORCHETE_DER
 
-    NUMERO          reduce using rule 16 (operador -> MENOS .)
-    FLOTANTE        reduce using rule 16 (operador -> MENOS .)
-    CADENA          reduce using rule 16 (operador -> MENOS .)
-    VARIABLE_LOCAL  reduce using rule 16 (operador -> MENOS .)
-    VARIABLE_GLOBAL reduce using rule 16 (operador -> MENOS .)
-    VARIABLE_INSTANCIA reduce using rule 16 (operador -> MENOS .)
-    VARIABLE_CLASE  reduce using rule 16 (operador -> MENOS .)
+    CORCHETE_DER    shift and go to state 46
 
 
 state 22
 
-    (17) operador -> MULTIPLICAR .
+    (57) argumentos -> argumento .
+    (58) argumentos -> argumento . COMA argumentos
 
-    NUMERO          reduce using rule 17 (operador -> MULTIPLICAR .)
-    FLOTANTE        reduce using rule 17 (operador -> MULTIPLICAR .)
-    CADENA          reduce using rule 17 (operador -> MULTIPLICAR .)
-    VARIABLE_LOCAL  reduce using rule 17 (operador -> MULTIPLICAR .)
-    VARIABLE_GLOBAL reduce using rule 17 (operador -> MULTIPLICAR .)
-    VARIABLE_INSTANCIA reduce using rule 17 (operador -> MULTIPLICAR .)
-    VARIABLE_CLASE  reduce using rule 17 (operador -> MULTIPLICAR .)
+    CORCHETE_DER    reduce using rule 57 (argumentos -> argumento .)
+    PARENTESIS_DER  reduce using rule 57 (argumentos -> argumento .)
+    COMA            shift and go to state 47
 
 
 state 23
 
-    (18) operador -> DIVIDIR .
+    (59) argumento -> booleano .
 
-    NUMERO          reduce using rule 18 (operador -> DIVIDIR .)
-    FLOTANTE        reduce using rule 18 (operador -> DIVIDIR .)
-    CADENA          reduce using rule 18 (operador -> DIVIDIR .)
-    VARIABLE_LOCAL  reduce using rule 18 (operador -> DIVIDIR .)
-    VARIABLE_GLOBAL reduce using rule 18 (operador -> DIVIDIR .)
-    VARIABLE_INSTANCIA reduce using rule 18 (operador -> DIVIDIR .)
-    VARIABLE_CLASE  reduce using rule 18 (operador -> DIVIDIR .)
+    COMA            reduce using rule 59 (argumento -> booleano .)
+    CORCHETE_DER    reduce using rule 59 (argumento -> booleano .)
+    PARENTESIS_DER  reduce using rule 59 (argumento -> booleano .)
 
 
 state 24
 
-    (19) operador -> MODULO .
+    (60) argumento -> operacionAritmetica .
 
-    NUMERO          reduce using rule 19 (operador -> MODULO .)
-    FLOTANTE        reduce using rule 19 (operador -> MODULO .)
-    CADENA          reduce using rule 19 (operador -> MODULO .)
-    VARIABLE_LOCAL  reduce using rule 19 (operador -> MODULO .)
-    VARIABLE_GLOBAL reduce using rule 19 (operador -> MODULO .)
-    VARIABLE_INSTANCIA reduce using rule 19 (operador -> MODULO .)
-    VARIABLE_CLASE  reduce using rule 19 (operador -> MODULO .)
+    COMA            reduce using rule 60 (argumento -> operacionAritmetica .)
+    CORCHETE_DER    reduce using rule 60 (argumento -> operacionAritmetica .)
+    PARENTESIS_DER  reduce using rule 60 (argumento -> operacionAritmetica .)
 
 
 state 25
 
-    (20) operador -> EXPONENCIACION .
+    (61) argumento -> array .
 
-    NUMERO          reduce using rule 20 (operador -> EXPONENCIACION .)
-    FLOTANTE        reduce using rule 20 (operador -> EXPONENCIACION .)
-    CADENA          reduce using rule 20 (operador -> EXPONENCIACION .)
-    VARIABLE_LOCAL  reduce using rule 20 (operador -> EXPONENCIACION .)
-    VARIABLE_GLOBAL reduce using rule 20 (operador -> EXPONENCIACION .)
-    VARIABLE_INSTANCIA reduce using rule 20 (operador -> EXPONENCIACION .)
-    VARIABLE_CLASE  reduce using rule 20 (operador -> EXPONENCIACION .)
+    COMA            reduce using rule 61 (argumento -> array .)
+    CORCHETE_DER    reduce using rule 61 (argumento -> array .)
+    PARENTESIS_DER  reduce using rule 61 (argumento -> array .)
 
 
 state 26
 
-    (4) impresion -> PUTS PARENTESIS_IZQ operacionAritmetica PARENTESIS_DER .
+    (62) argumento -> empty .
 
-    $end            reduce using rule 4 (impresion -> PUTS PARENTESIS_IZQ operacionAritmetica PARENTESIS_DER .)
+    COMA            reduce using rule 62 (argumento -> empty .)
+    CORCHETE_DER    reduce using rule 62 (argumento -> empty .)
+    PARENTESIS_DER  reduce using rule 62 (argumento -> empty .)
 
 
 state 27
 
-    (14) operacionAritmetica -> valor operador operacionAritmetica .
+    (55) booleano -> FALSE .
 
-    $end            reduce using rule 14 (operacionAritmetica -> valor operador operacionAritmetica .)
-    PARENTESIS_DER  reduce using rule 14 (operacionAritmetica -> valor operador operacionAritmetica .)
+    COMA            reduce using rule 55 (booleano -> FALSE .)
+    CORCHETE_DER    reduce using rule 55 (booleano -> FALSE .)
+    MAYOR_QUE       reduce using rule 55 (booleano -> FALSE .)
+    MENOR_QUE       reduce using rule 55 (booleano -> FALSE .)
+    IGUAL_IGUAL     reduce using rule 55 (booleano -> FALSE .)
+    DIFERENTE       reduce using rule 55 (booleano -> FALSE .)
+    MAYOR_IGUAL     reduce using rule 55 (booleano -> FALSE .)
+    MENOR_IGUAL     reduce using rule 55 (booleano -> FALSE .)
+    THEN            reduce using rule 55 (booleano -> FALSE .)
+    AND             reduce using rule 55 (booleano -> FALSE .)
+    OR              reduce using rule 55 (booleano -> FALSE .)
+    NOT             reduce using rule 55 (booleano -> FALSE .)
+    PUTS            reduce using rule 55 (booleano -> FALSE .)
+    VARIABLE_LOCAL  reduce using rule 55 (booleano -> FALSE .)
+    VARIABLE_GLOBAL reduce using rule 55 (booleano -> FALSE .)
+    VARIABLE_INSTANCIA reduce using rule 55 (booleano -> FALSE .)
+    VARIABLE_CLASE  reduce using rule 55 (booleano -> FALSE .)
+    IF              reduce using rule 55 (booleano -> FALSE .)
+    CORCHETE_IZQ    reduce using rule 55 (booleano -> FALSE .)
+    $end            reduce using rule 55 (booleano -> FALSE .)
+    PUNTO_Y_COMA    reduce using rule 55 (booleano -> FALSE .)
+    END_BLOCK       reduce using rule 55 (booleano -> FALSE .)
+    ELSE            reduce using rule 55 (booleano -> FALSE .)
+    ELSIF           reduce using rule 55 (booleano -> FALSE .)
+    PARENTESIS_DER  reduce using rule 55 (booleano -> FALSE .)
 
+
+state 28
+
+    (56) booleano -> TRUE .
+
+    COMA            reduce using rule 56 (booleano -> TRUE .)
+    CORCHETE_DER    reduce using rule 56 (booleano -> TRUE .)
+    MAYOR_QUE       reduce using rule 56 (booleano -> TRUE .)
+    MENOR_QUE       reduce using rule 56 (booleano -> TRUE .)
+    IGUAL_IGUAL     reduce using rule 56 (booleano -> TRUE .)
+    DIFERENTE       reduce using rule 56 (booleano -> TRUE .)
+    MAYOR_IGUAL     reduce using rule 56 (booleano -> TRUE .)
+    MENOR_IGUAL     reduce using rule 56 (booleano -> TRUE .)
+    THEN            reduce using rule 56 (booleano -> TRUE .)
+    AND             reduce using rule 56 (booleano -> TRUE .)
+    OR              reduce using rule 56 (booleano -> TRUE .)
+    NOT             reduce using rule 56 (booleano -> TRUE .)
+    PUTS            reduce using rule 56 (booleano -> TRUE .)
+    VARIABLE_LOCAL  reduce using rule 56 (booleano -> TRUE .)
+    VARIABLE_GLOBAL reduce using rule 56 (booleano -> TRUE .)
+    VARIABLE_INSTANCIA reduce using rule 56 (booleano -> TRUE .)
+    VARIABLE_CLASE  reduce using rule 56 (booleano -> TRUE .)
+    IF              reduce using rule 56 (booleano -> TRUE .)
+    CORCHETE_IZQ    reduce using rule 56 (booleano -> TRUE .)
+    $end            reduce using rule 56 (booleano -> TRUE .)
+    PUNTO_Y_COMA    reduce using rule 56 (booleano -> TRUE .)
+    END_BLOCK       reduce using rule 56 (booleano -> TRUE .)
+    ELSE            reduce using rule 56 (booleano -> TRUE .)
+    ELSIF           reduce using rule 56 (booleano -> TRUE .)
+    PARENTESIS_DER  reduce using rule 56 (booleano -> TRUE .)
+
+
+state 29
+
+    (72) operacionAritmetica -> valor .
+    (73) operacionAritmetica -> valor . operador operacionAritmetica
+    (74) operador -> . MAS
+    (75) operador -> . MENOS
+    (76) operador -> . MULTIPLICAR
+    (77) operador -> . DIVIDIR
+    (78) operador -> . MODULO
+    (79) operador -> . EXPONENCIACION
+
+    COMA            reduce using rule 72 (operacionAritmetica -> valor .)
+    CORCHETE_DER    reduce using rule 72 (operacionAritmetica -> valor .)
+    PUTS            reduce using rule 72 (operacionAritmetica -> valor .)
+    CORCHETE_IZQ    reduce using rule 72 (operacionAritmetica -> valor .)
+    VARIABLE_LOCAL  reduce using rule 72 (operacionAritmetica -> valor .)
+    VARIABLE_GLOBAL reduce using rule 72 (operacionAritmetica -> valor .)
+    VARIABLE_INSTANCIA reduce using rule 72 (operacionAritmetica -> valor .)
+    VARIABLE_CLASE  reduce using rule 72 (operacionAritmetica -> valor .)
+    IF              reduce using rule 72 (operacionAritmetica -> valor .)
+    $end            reduce using rule 72 (operacionAritmetica -> valor .)
+    PUNTO_Y_COMA    reduce using rule 72 (operacionAritmetica -> valor .)
+    END_BLOCK       reduce using rule 72 (operacionAritmetica -> valor .)
+    ELSE            reduce using rule 72 (operacionAritmetica -> valor .)
+    ELSIF           reduce using rule 72 (operacionAritmetica -> valor .)
+    PARENTESIS_DER  reduce using rule 72 (operacionAritmetica -> valor .)
+    MAS             shift and go to state 49
+    MENOS           shift and go to state 50
+    MULTIPLICAR     shift and go to state 51
+    DIVIDIR         shift and go to state 52
+    MODULO          shift and go to state 53
+    EXPONENCIACION  shift and go to state 54
+
+    operador                       shift and go to state 48
+
+state 30
+
+    (68) valor -> NUMERO .
+
+    MAS             reduce using rule 68 (valor -> NUMERO .)
+    MENOS           reduce using rule 68 (valor -> NUMERO .)
+    MULTIPLICAR     reduce using rule 68 (valor -> NUMERO .)
+    DIVIDIR         reduce using rule 68 (valor -> NUMERO .)
+    MODULO          reduce using rule 68 (valor -> NUMERO .)
+    EXPONENCIACION  reduce using rule 68 (valor -> NUMERO .)
+    COMA            reduce using rule 68 (valor -> NUMERO .)
+    CORCHETE_DER    reduce using rule 68 (valor -> NUMERO .)
+    MAYOR_QUE       reduce using rule 68 (valor -> NUMERO .)
+    MENOR_QUE       reduce using rule 68 (valor -> NUMERO .)
+    IGUAL_IGUAL     reduce using rule 68 (valor -> NUMERO .)
+    DIFERENTE       reduce using rule 68 (valor -> NUMERO .)
+    MAYOR_IGUAL     reduce using rule 68 (valor -> NUMERO .)
+    MENOR_IGUAL     reduce using rule 68 (valor -> NUMERO .)
+    THEN            reduce using rule 68 (valor -> NUMERO .)
+    AND             reduce using rule 68 (valor -> NUMERO .)
+    OR              reduce using rule 68 (valor -> NUMERO .)
+    NOT             reduce using rule 68 (valor -> NUMERO .)
+    PUTS            reduce using rule 68 (valor -> NUMERO .)
+    VARIABLE_LOCAL  reduce using rule 68 (valor -> NUMERO .)
+    VARIABLE_GLOBAL reduce using rule 68 (valor -> NUMERO .)
+    VARIABLE_INSTANCIA reduce using rule 68 (valor -> NUMERO .)
+    VARIABLE_CLASE  reduce using rule 68 (valor -> NUMERO .)
+    IF              reduce using rule 68 (valor -> NUMERO .)
+    CORCHETE_IZQ    reduce using rule 68 (valor -> NUMERO .)
+    $end            reduce using rule 68 (valor -> NUMERO .)
+    PUNTO_Y_COMA    reduce using rule 68 (valor -> NUMERO .)
+    END_BLOCK       reduce using rule 68 (valor -> NUMERO .)
+    ELSE            reduce using rule 68 (valor -> NUMERO .)
+    ELSIF           reduce using rule 68 (valor -> NUMERO .)
+    PARENTESIS_DER  reduce using rule 68 (valor -> NUMERO .)
+
+
+state 31
+
+    (69) valor -> FLOTANTE .
+
+    MAS             reduce using rule 69 (valor -> FLOTANTE .)
+    MENOS           reduce using rule 69 (valor -> FLOTANTE .)
+    MULTIPLICAR     reduce using rule 69 (valor -> FLOTANTE .)
+    DIVIDIR         reduce using rule 69 (valor -> FLOTANTE .)
+    MODULO          reduce using rule 69 (valor -> FLOTANTE .)
+    EXPONENCIACION  reduce using rule 69 (valor -> FLOTANTE .)
+    COMA            reduce using rule 69 (valor -> FLOTANTE .)
+    CORCHETE_DER    reduce using rule 69 (valor -> FLOTANTE .)
+    MAYOR_QUE       reduce using rule 69 (valor -> FLOTANTE .)
+    MENOR_QUE       reduce using rule 69 (valor -> FLOTANTE .)
+    IGUAL_IGUAL     reduce using rule 69 (valor -> FLOTANTE .)
+    DIFERENTE       reduce using rule 69 (valor -> FLOTANTE .)
+    MAYOR_IGUAL     reduce using rule 69 (valor -> FLOTANTE .)
+    MENOR_IGUAL     reduce using rule 69 (valor -> FLOTANTE .)
+    THEN            reduce using rule 69 (valor -> FLOTANTE .)
+    AND             reduce using rule 69 (valor -> FLOTANTE .)
+    OR              reduce using rule 69 (valor -> FLOTANTE .)
+    NOT             reduce using rule 69 (valor -> FLOTANTE .)
+    PUTS            reduce using rule 69 (valor -> FLOTANTE .)
+    VARIABLE_LOCAL  reduce using rule 69 (valor -> FLOTANTE .)
+    VARIABLE_GLOBAL reduce using rule 69 (valor -> FLOTANTE .)
+    VARIABLE_INSTANCIA reduce using rule 69 (valor -> FLOTANTE .)
+    VARIABLE_CLASE  reduce using rule 69 (valor -> FLOTANTE .)
+    IF              reduce using rule 69 (valor -> FLOTANTE .)
+    CORCHETE_IZQ    reduce using rule 69 (valor -> FLOTANTE .)
+    $end            reduce using rule 69 (valor -> FLOTANTE .)
+    PUNTO_Y_COMA    reduce using rule 69 (valor -> FLOTANTE .)
+    END_BLOCK       reduce using rule 69 (valor -> FLOTANTE .)
+    ELSE            reduce using rule 69 (valor -> FLOTANTE .)
+    ELSIF           reduce using rule 69 (valor -> FLOTANTE .)
+    PARENTESIS_DER  reduce using rule 69 (valor -> FLOTANTE .)
+
+
+state 32
+
+    (70) valor -> CADENA .
+
+    MAS             reduce using rule 70 (valor -> CADENA .)
+    MENOS           reduce using rule 70 (valor -> CADENA .)
+    MULTIPLICAR     reduce using rule 70 (valor -> CADENA .)
+    DIVIDIR         reduce using rule 70 (valor -> CADENA .)
+    MODULO          reduce using rule 70 (valor -> CADENA .)
+    EXPONENCIACION  reduce using rule 70 (valor -> CADENA .)
+    COMA            reduce using rule 70 (valor -> CADENA .)
+    CORCHETE_DER    reduce using rule 70 (valor -> CADENA .)
+    MAYOR_QUE       reduce using rule 70 (valor -> CADENA .)
+    MENOR_QUE       reduce using rule 70 (valor -> CADENA .)
+    IGUAL_IGUAL     reduce using rule 70 (valor -> CADENA .)
+    DIFERENTE       reduce using rule 70 (valor -> CADENA .)
+    MAYOR_IGUAL     reduce using rule 70 (valor -> CADENA .)
+    MENOR_IGUAL     reduce using rule 70 (valor -> CADENA .)
+    THEN            reduce using rule 70 (valor -> CADENA .)
+    AND             reduce using rule 70 (valor -> CADENA .)
+    OR              reduce using rule 70 (valor -> CADENA .)
+    NOT             reduce using rule 70 (valor -> CADENA .)
+    PUTS            reduce using rule 70 (valor -> CADENA .)
+    VARIABLE_LOCAL  reduce using rule 70 (valor -> CADENA .)
+    VARIABLE_GLOBAL reduce using rule 70 (valor -> CADENA .)
+    VARIABLE_INSTANCIA reduce using rule 70 (valor -> CADENA .)
+    VARIABLE_CLASE  reduce using rule 70 (valor -> CADENA .)
+    IF              reduce using rule 70 (valor -> CADENA .)
+    CORCHETE_IZQ    reduce using rule 70 (valor -> CADENA .)
+    $end            reduce using rule 70 (valor -> CADENA .)
+    PUNTO_Y_COMA    reduce using rule 70 (valor -> CADENA .)
+    END_BLOCK       reduce using rule 70 (valor -> CADENA .)
+    ELSE            reduce using rule 70 (valor -> CADENA .)
+    ELSIF           reduce using rule 70 (valor -> CADENA .)
+    PARENTESIS_DER  reduce using rule 70 (valor -> CADENA .)
+
+
+state 33
+
+    (71) valor -> variable .
+
+    MAS             reduce using rule 71 (valor -> variable .)
+    MENOS           reduce using rule 71 (valor -> variable .)
+    MULTIPLICAR     reduce using rule 71 (valor -> variable .)
+    DIVIDIR         reduce using rule 71 (valor -> variable .)
+    MODULO          reduce using rule 71 (valor -> variable .)
+    EXPONENCIACION  reduce using rule 71 (valor -> variable .)
+    COMA            reduce using rule 71 (valor -> variable .)
+    CORCHETE_DER    reduce using rule 71 (valor -> variable .)
+    MAYOR_QUE       reduce using rule 71 (valor -> variable .)
+    MENOR_QUE       reduce using rule 71 (valor -> variable .)
+    IGUAL_IGUAL     reduce using rule 71 (valor -> variable .)
+    DIFERENTE       reduce using rule 71 (valor -> variable .)
+    MAYOR_IGUAL     reduce using rule 71 (valor -> variable .)
+    MENOR_IGUAL     reduce using rule 71 (valor -> variable .)
+    THEN            reduce using rule 71 (valor -> variable .)
+    AND             reduce using rule 71 (valor -> variable .)
+    OR              reduce using rule 71 (valor -> variable .)
+    NOT             reduce using rule 71 (valor -> variable .)
+    PUTS            reduce using rule 71 (valor -> variable .)
+    VARIABLE_LOCAL  reduce using rule 71 (valor -> variable .)
+    VARIABLE_GLOBAL reduce using rule 71 (valor -> variable .)
+    VARIABLE_INSTANCIA reduce using rule 71 (valor -> variable .)
+    VARIABLE_CLASE  reduce using rule 71 (valor -> variable .)
+    IF              reduce using rule 71 (valor -> variable .)
+    CORCHETE_IZQ    reduce using rule 71 (valor -> variable .)
+    $end            reduce using rule 71 (valor -> variable .)
+    PUNTO_Y_COMA    reduce using rule 71 (valor -> variable .)
+    END_BLOCK       reduce using rule 71 (valor -> variable .)
+    ELSE            reduce using rule 71 (valor -> variable .)
+    ELSIF           reduce using rule 71 (valor -> variable .)
+    PARENTESIS_DER  reduce using rule 71 (valor -> variable .)
+
+
+state 34
+
+    (13) if -> IF expresion . instrucciones END_BLOCK
+    (14) if -> IF expresion . THEN instrucciones END_BLOCK
+    (15) if_else -> IF expresion . instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> IF expresion . THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> IF expresion . instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> IF expresion . THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> IF expresion . instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> IF expresion . THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (27) expresion -> expresion . comparadores expresion
+    (30) expresion -> expresion . operador_logico expresion
+    (42) instrucciones -> . instruccion
+    (43) instrucciones -> . instruccion instrucciones
+    (44) instrucciones -> . instruccion PUNTO_Y_COMA instrucciones
+    (31) comparadores -> . MAYOR_QUE
+    (32) comparadores -> . MENOR_QUE
+    (33) comparadores -> . IGUAL_IGUAL
+    (34) comparadores -> . DIFERENTE
+    (35) comparadores -> . MAYOR_IGUAL
+    (36) comparadores -> . MENOR_IGUAL
+    (37) operador_logico -> . AND
+    (38) operador_logico -> . OR
+    (39) operador_logico -> . NOT
+    (45) instruccion -> . asignacion
+    (46) instruccion -> . impresion
+    (47) instruccion -> . condicion
+    (48) instruccion -> . llamada_funcion
+    (7) asignacion -> . variable ASIGNACION valores
+    (8) impresion -> . PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (10) condicion -> . if
+    (11) condicion -> . if_else
+    (12) condicion -> . if_elsif_else
+    (49) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (50) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+    (13) if -> . IF expresion instrucciones END_BLOCK
+    (14) if -> . IF expresion THEN instrucciones END_BLOCK
+    (15) if_else -> . IF expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> . IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> . IF expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> . IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+
+    THEN            shift and go to state 56
+    MAYOR_QUE       shift and go to state 60
+    MENOR_QUE       shift and go to state 61
+    IGUAL_IGUAL     shift and go to state 62
+    DIFERENTE       shift and go to state 63
+    MAYOR_IGUAL     shift and go to state 64
+    MENOR_IGUAL     shift and go to state 65
+    AND             shift and go to state 66
+    OR              shift and go to state 67
+    NOT             shift and go to state 68
+    PUTS            shift and go to state 8
+    VARIABLE_LOCAL  shift and go to state 73
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+    IF              shift and go to state 17
+
+    instrucciones                  shift and go to state 55
+    comparadores                   shift and go to state 57
+    operador_logico                shift and go to state 58
+    instruccion                    shift and go to state 59
+    asignacion                     shift and go to state 69
+    impresion                      shift and go to state 70
+    condicion                      shift and go to state 71
+    llamada_funcion                shift and go to state 72
+    variable                       shift and go to state 7
+    if                             shift and go to state 10
+    if_else                        shift and go to state 11
+    if_elsif_else                  shift and go to state 12
+
+state 35
+
+    (25) expresion -> var_expresion .
+    (26) expresion -> var_expresion . comparadores var_expresion
+    (31) comparadores -> . MAYOR_QUE
+    (32) comparadores -> . MENOR_QUE
+    (33) comparadores -> . IGUAL_IGUAL
+    (34) comparadores -> . DIFERENTE
+    (35) comparadores -> . MAYOR_IGUAL
+    (36) comparadores -> . MENOR_IGUAL
+
+  ! shift/reduce conflict for MAYOR_QUE resolved as shift
+  ! shift/reduce conflict for MENOR_QUE resolved as shift
+  ! shift/reduce conflict for IGUAL_IGUAL resolved as shift
+  ! shift/reduce conflict for DIFERENTE resolved as shift
+  ! shift/reduce conflict for MAYOR_IGUAL resolved as shift
+  ! shift/reduce conflict for MENOR_IGUAL resolved as shift
+    THEN            reduce using rule 25 (expresion -> var_expresion .)
+    AND             reduce using rule 25 (expresion -> var_expresion .)
+    OR              reduce using rule 25 (expresion -> var_expresion .)
+    NOT             reduce using rule 25 (expresion -> var_expresion .)
+    PUTS            reduce using rule 25 (expresion -> var_expresion .)
+    VARIABLE_LOCAL  reduce using rule 25 (expresion -> var_expresion .)
+    VARIABLE_GLOBAL reduce using rule 25 (expresion -> var_expresion .)
+    VARIABLE_INSTANCIA reduce using rule 25 (expresion -> var_expresion .)
+    VARIABLE_CLASE  reduce using rule 25 (expresion -> var_expresion .)
+    IF              reduce using rule 25 (expresion -> var_expresion .)
+    PARENTESIS_DER  reduce using rule 25 (expresion -> var_expresion .)
+    MAYOR_QUE       shift and go to state 60
+    MENOR_QUE       shift and go to state 61
+    IGUAL_IGUAL     shift and go to state 62
+    DIFERENTE       shift and go to state 63
+    MAYOR_IGUAL     shift and go to state 64
+    MENOR_IGUAL     shift and go to state 65
+
+  ! MAYOR_QUE       [ reduce using rule 25 (expresion -> var_expresion .) ]
+  ! MENOR_QUE       [ reduce using rule 25 (expresion -> var_expresion .) ]
+  ! IGUAL_IGUAL     [ reduce using rule 25 (expresion -> var_expresion .) ]
+  ! DIFERENTE       [ reduce using rule 25 (expresion -> var_expresion .) ]
+  ! MAYOR_IGUAL     [ reduce using rule 25 (expresion -> var_expresion .) ]
+  ! MENOR_IGUAL     [ reduce using rule 25 (expresion -> var_expresion .) ]
+
+    comparadores                   shift and go to state 74
+
+state 36
+
+    (28) expresion -> PARENTESIS_IZQ . expresion PARENTESIS_DER
+    (25) expresion -> . var_expresion
+    (26) expresion -> . var_expresion comparadores var_expresion
+    (27) expresion -> . expresion comparadores expresion
+    (28) expresion -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (29) expresion -> . NOT_BLOCK expresion
+    (30) expresion -> . expresion operador_logico expresion
+    (40) var_expresion -> . valor
+    (41) var_expresion -> . booleano
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (55) booleano -> . FALSE
+    (56) booleano -> . TRUE
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+
+    PARENTESIS_IZQ  shift and go to state 36
+    NOT_BLOCK       shift and go to state 37
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    FALSE           shift and go to state 27
+    TRUE            shift and go to state 28
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+
+    expresion                      shift and go to state 75
+    var_expresion                  shift and go to state 35
+    valor                          shift and go to state 38
+    booleano                       shift and go to state 39
+    variable                       shift and go to state 33
+
+state 37
+
+    (29) expresion -> NOT_BLOCK . expresion
+    (25) expresion -> . var_expresion
+    (26) expresion -> . var_expresion comparadores var_expresion
+    (27) expresion -> . expresion comparadores expresion
+    (28) expresion -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (29) expresion -> . NOT_BLOCK expresion
+    (30) expresion -> . expresion operador_logico expresion
+    (40) var_expresion -> . valor
+    (41) var_expresion -> . booleano
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (55) booleano -> . FALSE
+    (56) booleano -> . TRUE
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+
+    PARENTESIS_IZQ  shift and go to state 36
+    NOT_BLOCK       shift and go to state 37
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    FALSE           shift and go to state 27
+    TRUE            shift and go to state 28
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+
+    expresion                      shift and go to state 76
+    var_expresion                  shift and go to state 35
+    valor                          shift and go to state 38
+    booleano                       shift and go to state 39
+    variable                       shift and go to state 33
+
+state 38
+
+    (40) var_expresion -> valor .
+
+    MAYOR_QUE       reduce using rule 40 (var_expresion -> valor .)
+    MENOR_QUE       reduce using rule 40 (var_expresion -> valor .)
+    IGUAL_IGUAL     reduce using rule 40 (var_expresion -> valor .)
+    DIFERENTE       reduce using rule 40 (var_expresion -> valor .)
+    MAYOR_IGUAL     reduce using rule 40 (var_expresion -> valor .)
+    MENOR_IGUAL     reduce using rule 40 (var_expresion -> valor .)
+    THEN            reduce using rule 40 (var_expresion -> valor .)
+    AND             reduce using rule 40 (var_expresion -> valor .)
+    OR              reduce using rule 40 (var_expresion -> valor .)
+    NOT             reduce using rule 40 (var_expresion -> valor .)
+    PUTS            reduce using rule 40 (var_expresion -> valor .)
+    VARIABLE_LOCAL  reduce using rule 40 (var_expresion -> valor .)
+    VARIABLE_GLOBAL reduce using rule 40 (var_expresion -> valor .)
+    VARIABLE_INSTANCIA reduce using rule 40 (var_expresion -> valor .)
+    VARIABLE_CLASE  reduce using rule 40 (var_expresion -> valor .)
+    IF              reduce using rule 40 (var_expresion -> valor .)
+    PARENTESIS_DER  reduce using rule 40 (var_expresion -> valor .)
+
+
+state 39
+
+    (41) var_expresion -> booleano .
+
+    MAYOR_QUE       reduce using rule 41 (var_expresion -> booleano .)
+    MENOR_QUE       reduce using rule 41 (var_expresion -> booleano .)
+    IGUAL_IGUAL     reduce using rule 41 (var_expresion -> booleano .)
+    DIFERENTE       reduce using rule 41 (var_expresion -> booleano .)
+    MAYOR_IGUAL     reduce using rule 41 (var_expresion -> booleano .)
+    MENOR_IGUAL     reduce using rule 41 (var_expresion -> booleano .)
+    THEN            reduce using rule 41 (var_expresion -> booleano .)
+    AND             reduce using rule 41 (var_expresion -> booleano .)
+    OR              reduce using rule 41 (var_expresion -> booleano .)
+    NOT             reduce using rule 41 (var_expresion -> booleano .)
+    PUTS            reduce using rule 41 (var_expresion -> booleano .)
+    VARIABLE_LOCAL  reduce using rule 41 (var_expresion -> booleano .)
+    VARIABLE_GLOBAL reduce using rule 41 (var_expresion -> booleano .)
+    VARIABLE_INSTANCIA reduce using rule 41 (var_expresion -> booleano .)
+    VARIABLE_CLASE  reduce using rule 41 (var_expresion -> booleano .)
+    IF              reduce using rule 41 (var_expresion -> booleano .)
+    PARENTESIS_DER  reduce using rule 41 (var_expresion -> booleano .)
+
+
+state 40
+
+    (7) asignacion -> variable ASIGNACION valores .
+
+    PUTS            reduce using rule 7 (asignacion -> variable ASIGNACION valores .)
+    CORCHETE_IZQ    reduce using rule 7 (asignacion -> variable ASIGNACION valores .)
+    VARIABLE_LOCAL  reduce using rule 7 (asignacion -> variable ASIGNACION valores .)
+    VARIABLE_GLOBAL reduce using rule 7 (asignacion -> variable ASIGNACION valores .)
+    VARIABLE_INSTANCIA reduce using rule 7 (asignacion -> variable ASIGNACION valores .)
+    VARIABLE_CLASE  reduce using rule 7 (asignacion -> variable ASIGNACION valores .)
+    IF              reduce using rule 7 (asignacion -> variable ASIGNACION valores .)
+    $end            reduce using rule 7 (asignacion -> variable ASIGNACION valores .)
+    PUNTO_Y_COMA    reduce using rule 7 (asignacion -> variable ASIGNACION valores .)
+    END_BLOCK       reduce using rule 7 (asignacion -> variable ASIGNACION valores .)
+    ELSE            reduce using rule 7 (asignacion -> variable ASIGNACION valores .)
+    ELSIF           reduce using rule 7 (asignacion -> variable ASIGNACION valores .)
+
+
+state 41
+
+    (64) valores -> operacionAritmetica .
+
+    PUTS            reduce using rule 64 (valores -> operacionAritmetica .)
+    CORCHETE_IZQ    reduce using rule 64 (valores -> operacionAritmetica .)
+    VARIABLE_LOCAL  reduce using rule 64 (valores -> operacionAritmetica .)
+    VARIABLE_GLOBAL reduce using rule 64 (valores -> operacionAritmetica .)
+    VARIABLE_INSTANCIA reduce using rule 64 (valores -> operacionAritmetica .)
+    VARIABLE_CLASE  reduce using rule 64 (valores -> operacionAritmetica .)
+    IF              reduce using rule 64 (valores -> operacionAritmetica .)
+    $end            reduce using rule 64 (valores -> operacionAritmetica .)
+    PUNTO_Y_COMA    reduce using rule 64 (valores -> operacionAritmetica .)
+    END_BLOCK       reduce using rule 64 (valores -> operacionAritmetica .)
+    ELSE            reduce using rule 64 (valores -> operacionAritmetica .)
+    ELSIF           reduce using rule 64 (valores -> operacionAritmetica .)
+
+
+state 42
+
+    (65) valores -> SIMBOLO .
+
+    PUTS            reduce using rule 65 (valores -> SIMBOLO .)
+    CORCHETE_IZQ    reduce using rule 65 (valores -> SIMBOLO .)
+    VARIABLE_LOCAL  reduce using rule 65 (valores -> SIMBOLO .)
+    VARIABLE_GLOBAL reduce using rule 65 (valores -> SIMBOLO .)
+    VARIABLE_INSTANCIA reduce using rule 65 (valores -> SIMBOLO .)
+    VARIABLE_CLASE  reduce using rule 65 (valores -> SIMBOLO .)
+    IF              reduce using rule 65 (valores -> SIMBOLO .)
+    $end            reduce using rule 65 (valores -> SIMBOLO .)
+    PUNTO_Y_COMA    reduce using rule 65 (valores -> SIMBOLO .)
+    END_BLOCK       reduce using rule 65 (valores -> SIMBOLO .)
+    ELSE            reduce using rule 65 (valores -> SIMBOLO .)
+    ELSIF           reduce using rule 65 (valores -> SIMBOLO .)
+
+
+state 43
+
+    (66) valores -> booleano .
+
+    PUTS            reduce using rule 66 (valores -> booleano .)
+    CORCHETE_IZQ    reduce using rule 66 (valores -> booleano .)
+    VARIABLE_LOCAL  reduce using rule 66 (valores -> booleano .)
+    VARIABLE_GLOBAL reduce using rule 66 (valores -> booleano .)
+    VARIABLE_INSTANCIA reduce using rule 66 (valores -> booleano .)
+    VARIABLE_CLASE  reduce using rule 66 (valores -> booleano .)
+    IF              reduce using rule 66 (valores -> booleano .)
+    $end            reduce using rule 66 (valores -> booleano .)
+    PUNTO_Y_COMA    reduce using rule 66 (valores -> booleano .)
+    END_BLOCK       reduce using rule 66 (valores -> booleano .)
+    ELSE            reduce using rule 66 (valores -> booleano .)
+    ELSIF           reduce using rule 66 (valores -> booleano .)
+
+
+state 44
+
+    (67) valores -> array .
+
+    PUTS            reduce using rule 67 (valores -> array .)
+    CORCHETE_IZQ    reduce using rule 67 (valores -> array .)
+    VARIABLE_LOCAL  reduce using rule 67 (valores -> array .)
+    VARIABLE_GLOBAL reduce using rule 67 (valores -> array .)
+    VARIABLE_INSTANCIA reduce using rule 67 (valores -> array .)
+    VARIABLE_CLASE  reduce using rule 67 (valores -> array .)
+    IF              reduce using rule 67 (valores -> array .)
+    $end            reduce using rule 67 (valores -> array .)
+    PUNTO_Y_COMA    reduce using rule 67 (valores -> array .)
+    END_BLOCK       reduce using rule 67 (valores -> array .)
+    ELSE            reduce using rule 67 (valores -> array .)
+    ELSIF           reduce using rule 67 (valores -> array .)
+
+
+state 45
+
+    (8) impresion -> PUTS PARENTESIS_IZQ argumentos . PARENTESIS_DER
+
+    PARENTESIS_DER  shift and go to state 77
+
+
+state 46
+
+    (9) array -> CORCHETE_IZQ argumentos CORCHETE_DER .
+
+    PUTS            reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    CORCHETE_IZQ    reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    VARIABLE_LOCAL  reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    VARIABLE_GLOBAL reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    VARIABLE_INSTANCIA reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    VARIABLE_CLASE  reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    IF              reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    $end            reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    COMA            reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    CORCHETE_DER    reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    PUNTO_Y_COMA    reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    END_BLOCK       reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    ELSE            reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    ELSIF           reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+    PARENTESIS_DER  reduce using rule 9 (array -> CORCHETE_IZQ argumentos CORCHETE_DER .)
+
+
+state 47
+
+    (58) argumentos -> argumento COMA . argumentos
+    (57) argumentos -> . argumento
+    (58) argumentos -> . argumento COMA argumentos
+    (59) argumento -> . booleano
+    (60) argumento -> . operacionAritmetica
+    (61) argumento -> . array
+    (62) argumento -> . empty
+    (55) booleano -> . FALSE
+    (56) booleano -> . TRUE
+    (72) operacionAritmetica -> . valor
+    (73) operacionAritmetica -> . valor operador operacionAritmetica
+    (9) array -> . CORCHETE_IZQ argumentos CORCHETE_DER
+    (63) empty -> .
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+
+    FALSE           shift and go to state 27
+    TRUE            shift and go to state 28
+    CORCHETE_IZQ    shift and go to state 9
+    COMA            reduce using rule 63 (empty -> .)
+    CORCHETE_DER    reduce using rule 63 (empty -> .)
+    PARENTESIS_DER  reduce using rule 63 (empty -> .)
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+
+    argumento                      shift and go to state 22
+    argumentos                     shift and go to state 78
+    booleano                       shift and go to state 23
+    operacionAritmetica            shift and go to state 24
+    array                          shift and go to state 25
+    empty                          shift and go to state 26
+    valor                          shift and go to state 29
+    variable                       shift and go to state 33
+
+state 48
+
+    (73) operacionAritmetica -> valor operador . operacionAritmetica
+    (72) operacionAritmetica -> . valor
+    (73) operacionAritmetica -> . valor operador operacionAritmetica
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+
+    valor                          shift and go to state 29
+    operacionAritmetica            shift and go to state 79
+    variable                       shift and go to state 33
+
+state 49
+
+    (74) operador -> MAS .
+
+    NUMERO          reduce using rule 74 (operador -> MAS .)
+    FLOTANTE        reduce using rule 74 (operador -> MAS .)
+    CADENA          reduce using rule 74 (operador -> MAS .)
+    VARIABLE_LOCAL  reduce using rule 74 (operador -> MAS .)
+    VARIABLE_GLOBAL reduce using rule 74 (operador -> MAS .)
+    VARIABLE_INSTANCIA reduce using rule 74 (operador -> MAS .)
+    VARIABLE_CLASE  reduce using rule 74 (operador -> MAS .)
+
+
+state 50
+
+    (75) operador -> MENOS .
+
+    NUMERO          reduce using rule 75 (operador -> MENOS .)
+    FLOTANTE        reduce using rule 75 (operador -> MENOS .)
+    CADENA          reduce using rule 75 (operador -> MENOS .)
+    VARIABLE_LOCAL  reduce using rule 75 (operador -> MENOS .)
+    VARIABLE_GLOBAL reduce using rule 75 (operador -> MENOS .)
+    VARIABLE_INSTANCIA reduce using rule 75 (operador -> MENOS .)
+    VARIABLE_CLASE  reduce using rule 75 (operador -> MENOS .)
+
+
+state 51
+
+    (76) operador -> MULTIPLICAR .
+
+    NUMERO          reduce using rule 76 (operador -> MULTIPLICAR .)
+    FLOTANTE        reduce using rule 76 (operador -> MULTIPLICAR .)
+    CADENA          reduce using rule 76 (operador -> MULTIPLICAR .)
+    VARIABLE_LOCAL  reduce using rule 76 (operador -> MULTIPLICAR .)
+    VARIABLE_GLOBAL reduce using rule 76 (operador -> MULTIPLICAR .)
+    VARIABLE_INSTANCIA reduce using rule 76 (operador -> MULTIPLICAR .)
+    VARIABLE_CLASE  reduce using rule 76 (operador -> MULTIPLICAR .)
+
+
+state 52
+
+    (77) operador -> DIVIDIR .
+
+    NUMERO          reduce using rule 77 (operador -> DIVIDIR .)
+    FLOTANTE        reduce using rule 77 (operador -> DIVIDIR .)
+    CADENA          reduce using rule 77 (operador -> DIVIDIR .)
+    VARIABLE_LOCAL  reduce using rule 77 (operador -> DIVIDIR .)
+    VARIABLE_GLOBAL reduce using rule 77 (operador -> DIVIDIR .)
+    VARIABLE_INSTANCIA reduce using rule 77 (operador -> DIVIDIR .)
+    VARIABLE_CLASE  reduce using rule 77 (operador -> DIVIDIR .)
+
+
+state 53
+
+    (78) operador -> MODULO .
+
+    NUMERO          reduce using rule 78 (operador -> MODULO .)
+    FLOTANTE        reduce using rule 78 (operador -> MODULO .)
+    CADENA          reduce using rule 78 (operador -> MODULO .)
+    VARIABLE_LOCAL  reduce using rule 78 (operador -> MODULO .)
+    VARIABLE_GLOBAL reduce using rule 78 (operador -> MODULO .)
+    VARIABLE_INSTANCIA reduce using rule 78 (operador -> MODULO .)
+    VARIABLE_CLASE  reduce using rule 78 (operador -> MODULO .)
+
+
+state 54
+
+    (79) operador -> EXPONENCIACION .
+
+    NUMERO          reduce using rule 79 (operador -> EXPONENCIACION .)
+    FLOTANTE        reduce using rule 79 (operador -> EXPONENCIACION .)
+    CADENA          reduce using rule 79 (operador -> EXPONENCIACION .)
+    VARIABLE_LOCAL  reduce using rule 79 (operador -> EXPONENCIACION .)
+    VARIABLE_GLOBAL reduce using rule 79 (operador -> EXPONENCIACION .)
+    VARIABLE_INSTANCIA reduce using rule 79 (operador -> EXPONENCIACION .)
+    VARIABLE_CLASE  reduce using rule 79 (operador -> EXPONENCIACION .)
+
+
+state 55
+
+    (13) if -> IF expresion instrucciones . END_BLOCK
+    (15) if_else -> IF expresion instrucciones . ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> IF expresion instrucciones . elsif_clauses END_BLOCK
+    (19) if_elsif_else -> IF expresion instrucciones . elsif_clauses ELSE instrucciones END_BLOCK
+    (21) elsif_clauses -> . ELSIF expresion instrucciones
+    (22) elsif_clauses -> . ELSIF expresion THEN instrucciones
+    (23) elsif_clauses -> . ELSIF expresion instrucciones elsif_clauses
+    (24) elsif_clauses -> . ELSIF expresion THEN instrucciones elsif_clauses
+
+    END_BLOCK       shift and go to state 80
+    ELSE            shift and go to state 81
+    ELSIF           shift and go to state 83
+
+    elsif_clauses                  shift and go to state 82
+
+state 56
+
+    (14) if -> IF expresion THEN . instrucciones END_BLOCK
+    (16) if_else -> IF expresion THEN . instrucciones ELSE instrucciones END_BLOCK
+    (18) if_elsif_else -> IF expresion THEN . instrucciones elsif_clauses END_BLOCK
+    (20) if_elsif_else -> IF expresion THEN . instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (42) instrucciones -> . instruccion
+    (43) instrucciones -> . instruccion instrucciones
+    (44) instrucciones -> . instruccion PUNTO_Y_COMA instrucciones
+    (45) instruccion -> . asignacion
+    (46) instruccion -> . impresion
+    (47) instruccion -> . condicion
+    (48) instruccion -> . llamada_funcion
+    (7) asignacion -> . variable ASIGNACION valores
+    (8) impresion -> . PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (10) condicion -> . if
+    (11) condicion -> . if_else
+    (12) condicion -> . if_elsif_else
+    (49) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (50) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+    (13) if -> . IF expresion instrucciones END_BLOCK
+    (14) if -> . IF expresion THEN instrucciones END_BLOCK
+    (15) if_else -> . IF expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> . IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> . IF expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> . IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+
+    PUTS            shift and go to state 8
+    VARIABLE_LOCAL  shift and go to state 73
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+    IF              shift and go to state 17
+
+    instrucciones                  shift and go to state 84
+    instruccion                    shift and go to state 59
+    asignacion                     shift and go to state 69
+    impresion                      shift and go to state 70
+    condicion                      shift and go to state 71
+    llamada_funcion                shift and go to state 72
+    variable                       shift and go to state 7
+    if                             shift and go to state 10
+    if_else                        shift and go to state 11
+    if_elsif_else                  shift and go to state 12
+
+state 57
+
+    (27) expresion -> expresion comparadores . expresion
+    (25) expresion -> . var_expresion
+    (26) expresion -> . var_expresion comparadores var_expresion
+    (27) expresion -> . expresion comparadores expresion
+    (28) expresion -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (29) expresion -> . NOT_BLOCK expresion
+    (30) expresion -> . expresion operador_logico expresion
+    (40) var_expresion -> . valor
+    (41) var_expresion -> . booleano
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (55) booleano -> . FALSE
+    (56) booleano -> . TRUE
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+
+    PARENTESIS_IZQ  shift and go to state 36
+    NOT_BLOCK       shift and go to state 37
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    FALSE           shift and go to state 27
+    TRUE            shift and go to state 28
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+
+    expresion                      shift and go to state 85
+    var_expresion                  shift and go to state 35
+    valor                          shift and go to state 38
+    booleano                       shift and go to state 39
+    variable                       shift and go to state 33
+
+state 58
+
+    (30) expresion -> expresion operador_logico . expresion
+    (25) expresion -> . var_expresion
+    (26) expresion -> . var_expresion comparadores var_expresion
+    (27) expresion -> . expresion comparadores expresion
+    (28) expresion -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (29) expresion -> . NOT_BLOCK expresion
+    (30) expresion -> . expresion operador_logico expresion
+    (40) var_expresion -> . valor
+    (41) var_expresion -> . booleano
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (55) booleano -> . FALSE
+    (56) booleano -> . TRUE
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+
+    PARENTESIS_IZQ  shift and go to state 36
+    NOT_BLOCK       shift and go to state 37
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    FALSE           shift and go to state 27
+    TRUE            shift and go to state 28
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+
+    expresion                      shift and go to state 86
+    var_expresion                  shift and go to state 35
+    valor                          shift and go to state 38
+    booleano                       shift and go to state 39
+    variable                       shift and go to state 33
+
+state 59
+
+    (42) instrucciones -> instruccion .
+    (43) instrucciones -> instruccion . instrucciones
+    (44) instrucciones -> instruccion . PUNTO_Y_COMA instrucciones
+    (42) instrucciones -> . instruccion
+    (43) instrucciones -> . instruccion instrucciones
+    (44) instrucciones -> . instruccion PUNTO_Y_COMA instrucciones
+    (45) instruccion -> . asignacion
+    (46) instruccion -> . impresion
+    (47) instruccion -> . condicion
+    (48) instruccion -> . llamada_funcion
+    (7) asignacion -> . variable ASIGNACION valores
+    (8) impresion -> . PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (10) condicion -> . if
+    (11) condicion -> . if_else
+    (12) condicion -> . if_elsif_else
+    (49) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (50) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+    (13) if -> . IF expresion instrucciones END_BLOCK
+    (14) if -> . IF expresion THEN instrucciones END_BLOCK
+    (15) if_else -> . IF expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> . IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> . IF expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> . IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+
+    END_BLOCK       reduce using rule 42 (instrucciones -> instruccion .)
+    ELSE            reduce using rule 42 (instrucciones -> instruccion .)
+    ELSIF           reduce using rule 42 (instrucciones -> instruccion .)
+    PUNTO_Y_COMA    shift and go to state 88
+    PUTS            shift and go to state 8
+    VARIABLE_LOCAL  shift and go to state 73
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+    IF              shift and go to state 17
+
+    instruccion                    shift and go to state 59
+    instrucciones                  shift and go to state 87
+    asignacion                     shift and go to state 69
+    impresion                      shift and go to state 70
+    condicion                      shift and go to state 71
+    llamada_funcion                shift and go to state 72
+    variable                       shift and go to state 7
+    if                             shift and go to state 10
+    if_else                        shift and go to state 11
+    if_elsif_else                  shift and go to state 12
+
+state 60
+
+    (31) comparadores -> MAYOR_QUE .
+
+    PARENTESIS_IZQ  reduce using rule 31 (comparadores -> MAYOR_QUE .)
+    NOT_BLOCK       reduce using rule 31 (comparadores -> MAYOR_QUE .)
+    NUMERO          reduce using rule 31 (comparadores -> MAYOR_QUE .)
+    FLOTANTE        reduce using rule 31 (comparadores -> MAYOR_QUE .)
+    CADENA          reduce using rule 31 (comparadores -> MAYOR_QUE .)
+    FALSE           reduce using rule 31 (comparadores -> MAYOR_QUE .)
+    TRUE            reduce using rule 31 (comparadores -> MAYOR_QUE .)
+    VARIABLE_LOCAL  reduce using rule 31 (comparadores -> MAYOR_QUE .)
+    VARIABLE_GLOBAL reduce using rule 31 (comparadores -> MAYOR_QUE .)
+    VARIABLE_INSTANCIA reduce using rule 31 (comparadores -> MAYOR_QUE .)
+    VARIABLE_CLASE  reduce using rule 31 (comparadores -> MAYOR_QUE .)
+
+
+state 61
+
+    (32) comparadores -> MENOR_QUE .
+
+    PARENTESIS_IZQ  reduce using rule 32 (comparadores -> MENOR_QUE .)
+    NOT_BLOCK       reduce using rule 32 (comparadores -> MENOR_QUE .)
+    NUMERO          reduce using rule 32 (comparadores -> MENOR_QUE .)
+    FLOTANTE        reduce using rule 32 (comparadores -> MENOR_QUE .)
+    CADENA          reduce using rule 32 (comparadores -> MENOR_QUE .)
+    FALSE           reduce using rule 32 (comparadores -> MENOR_QUE .)
+    TRUE            reduce using rule 32 (comparadores -> MENOR_QUE .)
+    VARIABLE_LOCAL  reduce using rule 32 (comparadores -> MENOR_QUE .)
+    VARIABLE_GLOBAL reduce using rule 32 (comparadores -> MENOR_QUE .)
+    VARIABLE_INSTANCIA reduce using rule 32 (comparadores -> MENOR_QUE .)
+    VARIABLE_CLASE  reduce using rule 32 (comparadores -> MENOR_QUE .)
+
+
+state 62
+
+    (33) comparadores -> IGUAL_IGUAL .
+
+    PARENTESIS_IZQ  reduce using rule 33 (comparadores -> IGUAL_IGUAL .)
+    NOT_BLOCK       reduce using rule 33 (comparadores -> IGUAL_IGUAL .)
+    NUMERO          reduce using rule 33 (comparadores -> IGUAL_IGUAL .)
+    FLOTANTE        reduce using rule 33 (comparadores -> IGUAL_IGUAL .)
+    CADENA          reduce using rule 33 (comparadores -> IGUAL_IGUAL .)
+    FALSE           reduce using rule 33 (comparadores -> IGUAL_IGUAL .)
+    TRUE            reduce using rule 33 (comparadores -> IGUAL_IGUAL .)
+    VARIABLE_LOCAL  reduce using rule 33 (comparadores -> IGUAL_IGUAL .)
+    VARIABLE_GLOBAL reduce using rule 33 (comparadores -> IGUAL_IGUAL .)
+    VARIABLE_INSTANCIA reduce using rule 33 (comparadores -> IGUAL_IGUAL .)
+    VARIABLE_CLASE  reduce using rule 33 (comparadores -> IGUAL_IGUAL .)
+
+
+state 63
+
+    (34) comparadores -> DIFERENTE .
+
+    PARENTESIS_IZQ  reduce using rule 34 (comparadores -> DIFERENTE .)
+    NOT_BLOCK       reduce using rule 34 (comparadores -> DIFERENTE .)
+    NUMERO          reduce using rule 34 (comparadores -> DIFERENTE .)
+    FLOTANTE        reduce using rule 34 (comparadores -> DIFERENTE .)
+    CADENA          reduce using rule 34 (comparadores -> DIFERENTE .)
+    FALSE           reduce using rule 34 (comparadores -> DIFERENTE .)
+    TRUE            reduce using rule 34 (comparadores -> DIFERENTE .)
+    VARIABLE_LOCAL  reduce using rule 34 (comparadores -> DIFERENTE .)
+    VARIABLE_GLOBAL reduce using rule 34 (comparadores -> DIFERENTE .)
+    VARIABLE_INSTANCIA reduce using rule 34 (comparadores -> DIFERENTE .)
+    VARIABLE_CLASE  reduce using rule 34 (comparadores -> DIFERENTE .)
+
+
+state 64
+
+    (35) comparadores -> MAYOR_IGUAL .
+
+    PARENTESIS_IZQ  reduce using rule 35 (comparadores -> MAYOR_IGUAL .)
+    NOT_BLOCK       reduce using rule 35 (comparadores -> MAYOR_IGUAL .)
+    NUMERO          reduce using rule 35 (comparadores -> MAYOR_IGUAL .)
+    FLOTANTE        reduce using rule 35 (comparadores -> MAYOR_IGUAL .)
+    CADENA          reduce using rule 35 (comparadores -> MAYOR_IGUAL .)
+    FALSE           reduce using rule 35 (comparadores -> MAYOR_IGUAL .)
+    TRUE            reduce using rule 35 (comparadores -> MAYOR_IGUAL .)
+    VARIABLE_LOCAL  reduce using rule 35 (comparadores -> MAYOR_IGUAL .)
+    VARIABLE_GLOBAL reduce using rule 35 (comparadores -> MAYOR_IGUAL .)
+    VARIABLE_INSTANCIA reduce using rule 35 (comparadores -> MAYOR_IGUAL .)
+    VARIABLE_CLASE  reduce using rule 35 (comparadores -> MAYOR_IGUAL .)
+
+
+state 65
+
+    (36) comparadores -> MENOR_IGUAL .
+
+    PARENTESIS_IZQ  reduce using rule 36 (comparadores -> MENOR_IGUAL .)
+    NOT_BLOCK       reduce using rule 36 (comparadores -> MENOR_IGUAL .)
+    NUMERO          reduce using rule 36 (comparadores -> MENOR_IGUAL .)
+    FLOTANTE        reduce using rule 36 (comparadores -> MENOR_IGUAL .)
+    CADENA          reduce using rule 36 (comparadores -> MENOR_IGUAL .)
+    FALSE           reduce using rule 36 (comparadores -> MENOR_IGUAL .)
+    TRUE            reduce using rule 36 (comparadores -> MENOR_IGUAL .)
+    VARIABLE_LOCAL  reduce using rule 36 (comparadores -> MENOR_IGUAL .)
+    VARIABLE_GLOBAL reduce using rule 36 (comparadores -> MENOR_IGUAL .)
+    VARIABLE_INSTANCIA reduce using rule 36 (comparadores -> MENOR_IGUAL .)
+    VARIABLE_CLASE  reduce using rule 36 (comparadores -> MENOR_IGUAL .)
+
+
+state 66
+
+    (37) operador_logico -> AND .
+
+    PARENTESIS_IZQ  reduce using rule 37 (operador_logico -> AND .)
+    NOT_BLOCK       reduce using rule 37 (operador_logico -> AND .)
+    NUMERO          reduce using rule 37 (operador_logico -> AND .)
+    FLOTANTE        reduce using rule 37 (operador_logico -> AND .)
+    CADENA          reduce using rule 37 (operador_logico -> AND .)
+    FALSE           reduce using rule 37 (operador_logico -> AND .)
+    TRUE            reduce using rule 37 (operador_logico -> AND .)
+    VARIABLE_LOCAL  reduce using rule 37 (operador_logico -> AND .)
+    VARIABLE_GLOBAL reduce using rule 37 (operador_logico -> AND .)
+    VARIABLE_INSTANCIA reduce using rule 37 (operador_logico -> AND .)
+    VARIABLE_CLASE  reduce using rule 37 (operador_logico -> AND .)
+
+
+state 67
+
+    (38) operador_logico -> OR .
+
+    PARENTESIS_IZQ  reduce using rule 38 (operador_logico -> OR .)
+    NOT_BLOCK       reduce using rule 38 (operador_logico -> OR .)
+    NUMERO          reduce using rule 38 (operador_logico -> OR .)
+    FLOTANTE        reduce using rule 38 (operador_logico -> OR .)
+    CADENA          reduce using rule 38 (operador_logico -> OR .)
+    FALSE           reduce using rule 38 (operador_logico -> OR .)
+    TRUE            reduce using rule 38 (operador_logico -> OR .)
+    VARIABLE_LOCAL  reduce using rule 38 (operador_logico -> OR .)
+    VARIABLE_GLOBAL reduce using rule 38 (operador_logico -> OR .)
+    VARIABLE_INSTANCIA reduce using rule 38 (operador_logico -> OR .)
+    VARIABLE_CLASE  reduce using rule 38 (operador_logico -> OR .)
+
+
+state 68
+
+    (39) operador_logico -> NOT .
+
+    PARENTESIS_IZQ  reduce using rule 39 (operador_logico -> NOT .)
+    NOT_BLOCK       reduce using rule 39 (operador_logico -> NOT .)
+    NUMERO          reduce using rule 39 (operador_logico -> NOT .)
+    FLOTANTE        reduce using rule 39 (operador_logico -> NOT .)
+    CADENA          reduce using rule 39 (operador_logico -> NOT .)
+    FALSE           reduce using rule 39 (operador_logico -> NOT .)
+    TRUE            reduce using rule 39 (operador_logico -> NOT .)
+    VARIABLE_LOCAL  reduce using rule 39 (operador_logico -> NOT .)
+    VARIABLE_GLOBAL reduce using rule 39 (operador_logico -> NOT .)
+    VARIABLE_INSTANCIA reduce using rule 39 (operador_logico -> NOT .)
+    VARIABLE_CLASE  reduce using rule 39 (operador_logico -> NOT .)
+
+
+state 69
+
+    (45) instruccion -> asignacion .
+
+    PUNTO_Y_COMA    reduce using rule 45 (instruccion -> asignacion .)
+    PUTS            reduce using rule 45 (instruccion -> asignacion .)
+    VARIABLE_LOCAL  reduce using rule 45 (instruccion -> asignacion .)
+    VARIABLE_GLOBAL reduce using rule 45 (instruccion -> asignacion .)
+    VARIABLE_INSTANCIA reduce using rule 45 (instruccion -> asignacion .)
+    VARIABLE_CLASE  reduce using rule 45 (instruccion -> asignacion .)
+    IF              reduce using rule 45 (instruccion -> asignacion .)
+    END_BLOCK       reduce using rule 45 (instruccion -> asignacion .)
+    ELSE            reduce using rule 45 (instruccion -> asignacion .)
+    ELSIF           reduce using rule 45 (instruccion -> asignacion .)
+
+
+state 70
+
+    (46) instruccion -> impresion .
+
+    PUNTO_Y_COMA    reduce using rule 46 (instruccion -> impresion .)
+    PUTS            reduce using rule 46 (instruccion -> impresion .)
+    VARIABLE_LOCAL  reduce using rule 46 (instruccion -> impresion .)
+    VARIABLE_GLOBAL reduce using rule 46 (instruccion -> impresion .)
+    VARIABLE_INSTANCIA reduce using rule 46 (instruccion -> impresion .)
+    VARIABLE_CLASE  reduce using rule 46 (instruccion -> impresion .)
+    IF              reduce using rule 46 (instruccion -> impresion .)
+    END_BLOCK       reduce using rule 46 (instruccion -> impresion .)
+    ELSE            reduce using rule 46 (instruccion -> impresion .)
+    ELSIF           reduce using rule 46 (instruccion -> impresion .)
+
+
+state 71
+
+    (47) instruccion -> condicion .
+
+    PUNTO_Y_COMA    reduce using rule 47 (instruccion -> condicion .)
+    PUTS            reduce using rule 47 (instruccion -> condicion .)
+    VARIABLE_LOCAL  reduce using rule 47 (instruccion -> condicion .)
+    VARIABLE_GLOBAL reduce using rule 47 (instruccion -> condicion .)
+    VARIABLE_INSTANCIA reduce using rule 47 (instruccion -> condicion .)
+    VARIABLE_CLASE  reduce using rule 47 (instruccion -> condicion .)
+    IF              reduce using rule 47 (instruccion -> condicion .)
+    END_BLOCK       reduce using rule 47 (instruccion -> condicion .)
+    ELSE            reduce using rule 47 (instruccion -> condicion .)
+    ELSIF           reduce using rule 47 (instruccion -> condicion .)
+
+
+state 72
+
+    (48) instruccion -> llamada_funcion .
+
+    PUNTO_Y_COMA    reduce using rule 48 (instruccion -> llamada_funcion .)
+    PUTS            reduce using rule 48 (instruccion -> llamada_funcion .)
+    VARIABLE_LOCAL  reduce using rule 48 (instruccion -> llamada_funcion .)
+    VARIABLE_GLOBAL reduce using rule 48 (instruccion -> llamada_funcion .)
+    VARIABLE_INSTANCIA reduce using rule 48 (instruccion -> llamada_funcion .)
+    VARIABLE_CLASE  reduce using rule 48 (instruccion -> llamada_funcion .)
+    IF              reduce using rule 48 (instruccion -> llamada_funcion .)
+    END_BLOCK       reduce using rule 48 (instruccion -> llamada_funcion .)
+    ELSE            reduce using rule 48 (instruccion -> llamada_funcion .)
+    ELSIF           reduce using rule 48 (instruccion -> llamada_funcion .)
+
+
+state 73
+
+    (49) llamada_funcion -> VARIABLE_LOCAL . PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (50) llamada_funcion -> VARIABLE_LOCAL . PARENTESIS_IZQ PARENTESIS_DER
+    (51) variable -> VARIABLE_LOCAL .
+
+    PARENTESIS_IZQ  shift and go to state 89
+    ASIGNACION      reduce using rule 51 (variable -> VARIABLE_LOCAL .)
+
+
+state 74
+
+    (26) expresion -> var_expresion comparadores . var_expresion
+    (40) var_expresion -> . valor
+    (41) var_expresion -> . booleano
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (55) booleano -> . FALSE
+    (56) booleano -> . TRUE
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    FALSE           shift and go to state 27
+    TRUE            shift and go to state 28
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+
+    var_expresion                  shift and go to state 90
+    valor                          shift and go to state 38
+    booleano                       shift and go to state 39
+    variable                       shift and go to state 33
+
+state 75
+
+    (28) expresion -> PARENTESIS_IZQ expresion . PARENTESIS_DER
+    (27) expresion -> expresion . comparadores expresion
+    (30) expresion -> expresion . operador_logico expresion
+    (31) comparadores -> . MAYOR_QUE
+    (32) comparadores -> . MENOR_QUE
+    (33) comparadores -> . IGUAL_IGUAL
+    (34) comparadores -> . DIFERENTE
+    (35) comparadores -> . MAYOR_IGUAL
+    (36) comparadores -> . MENOR_IGUAL
+    (37) operador_logico -> . AND
+    (38) operador_logico -> . OR
+    (39) operador_logico -> . NOT
+
+    PARENTESIS_DER  shift and go to state 91
+    MAYOR_QUE       shift and go to state 60
+    MENOR_QUE       shift and go to state 61
+    IGUAL_IGUAL     shift and go to state 62
+    DIFERENTE       shift and go to state 63
+    MAYOR_IGUAL     shift and go to state 64
+    MENOR_IGUAL     shift and go to state 65
+    AND             shift and go to state 66
+    OR              shift and go to state 67
+    NOT             shift and go to state 68
+
+    comparadores                   shift and go to state 57
+    operador_logico                shift and go to state 58
+
+state 76
+
+    (29) expresion -> NOT_BLOCK expresion .
+    (27) expresion -> expresion . comparadores expresion
+    (30) expresion -> expresion . operador_logico expresion
+    (31) comparadores -> . MAYOR_QUE
+    (32) comparadores -> . MENOR_QUE
+    (33) comparadores -> . IGUAL_IGUAL
+    (34) comparadores -> . DIFERENTE
+    (35) comparadores -> . MAYOR_IGUAL
+    (36) comparadores -> . MENOR_IGUAL
+    (37) operador_logico -> . AND
+    (38) operador_logico -> . OR
+    (39) operador_logico -> . NOT
+
+  ! shift/reduce conflict for MAYOR_QUE resolved as shift
+  ! shift/reduce conflict for MENOR_QUE resolved as shift
+  ! shift/reduce conflict for IGUAL_IGUAL resolved as shift
+  ! shift/reduce conflict for DIFERENTE resolved as shift
+  ! shift/reduce conflict for MAYOR_IGUAL resolved as shift
+  ! shift/reduce conflict for MENOR_IGUAL resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+    THEN            reduce using rule 29 (expresion -> NOT_BLOCK expresion .)
+    PUTS            reduce using rule 29 (expresion -> NOT_BLOCK expresion .)
+    VARIABLE_LOCAL  reduce using rule 29 (expresion -> NOT_BLOCK expresion .)
+    VARIABLE_GLOBAL reduce using rule 29 (expresion -> NOT_BLOCK expresion .)
+    VARIABLE_INSTANCIA reduce using rule 29 (expresion -> NOT_BLOCK expresion .)
+    VARIABLE_CLASE  reduce using rule 29 (expresion -> NOT_BLOCK expresion .)
+    IF              reduce using rule 29 (expresion -> NOT_BLOCK expresion .)
+    PARENTESIS_DER  reduce using rule 29 (expresion -> NOT_BLOCK expresion .)
+    MAYOR_QUE       shift and go to state 60
+    MENOR_QUE       shift and go to state 61
+    IGUAL_IGUAL     shift and go to state 62
+    DIFERENTE       shift and go to state 63
+    MAYOR_IGUAL     shift and go to state 64
+    MENOR_IGUAL     shift and go to state 65
+    AND             shift and go to state 66
+    OR              shift and go to state 67
+    NOT             shift and go to state 68
+
+  ! MAYOR_QUE       [ reduce using rule 29 (expresion -> NOT_BLOCK expresion .) ]
+  ! MENOR_QUE       [ reduce using rule 29 (expresion -> NOT_BLOCK expresion .) ]
+  ! IGUAL_IGUAL     [ reduce using rule 29 (expresion -> NOT_BLOCK expresion .) ]
+  ! DIFERENTE       [ reduce using rule 29 (expresion -> NOT_BLOCK expresion .) ]
+  ! MAYOR_IGUAL     [ reduce using rule 29 (expresion -> NOT_BLOCK expresion .) ]
+  ! MENOR_IGUAL     [ reduce using rule 29 (expresion -> NOT_BLOCK expresion .) ]
+  ! AND             [ reduce using rule 29 (expresion -> NOT_BLOCK expresion .) ]
+  ! OR              [ reduce using rule 29 (expresion -> NOT_BLOCK expresion .) ]
+  ! NOT             [ reduce using rule 29 (expresion -> NOT_BLOCK expresion .) ]
+
+    comparadores                   shift and go to state 57
+    operador_logico                shift and go to state 58
+
+state 77
+
+    (8) impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .
+
+    PUTS            reduce using rule 8 (impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    CORCHETE_IZQ    reduce using rule 8 (impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    VARIABLE_LOCAL  reduce using rule 8 (impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    VARIABLE_GLOBAL reduce using rule 8 (impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    VARIABLE_INSTANCIA reduce using rule 8 (impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    VARIABLE_CLASE  reduce using rule 8 (impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    IF              reduce using rule 8 (impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    $end            reduce using rule 8 (impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    PUNTO_Y_COMA    reduce using rule 8 (impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    END_BLOCK       reduce using rule 8 (impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    ELSE            reduce using rule 8 (impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    ELSIF           reduce using rule 8 (impresion -> PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+
+
+state 78
+
+    (58) argumentos -> argumento COMA argumentos .
+
+    CORCHETE_DER    reduce using rule 58 (argumentos -> argumento COMA argumentos .)
+    PARENTESIS_DER  reduce using rule 58 (argumentos -> argumento COMA argumentos .)
+
+
+state 79
+
+    (73) operacionAritmetica -> valor operador operacionAritmetica .
+
+    COMA            reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    CORCHETE_DER    reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    PUTS            reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    CORCHETE_IZQ    reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    VARIABLE_LOCAL  reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    VARIABLE_GLOBAL reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    VARIABLE_INSTANCIA reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    VARIABLE_CLASE  reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    IF              reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    $end            reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    PUNTO_Y_COMA    reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    END_BLOCK       reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    ELSE            reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    ELSIF           reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+    PARENTESIS_DER  reduce using rule 73 (operacionAritmetica -> valor operador operacionAritmetica .)
+
+
+state 80
+
+    (13) if -> IF expresion instrucciones END_BLOCK .
+
+    PUTS            reduce using rule 13 (if -> IF expresion instrucciones END_BLOCK .)
+    CORCHETE_IZQ    reduce using rule 13 (if -> IF expresion instrucciones END_BLOCK .)
+    VARIABLE_LOCAL  reduce using rule 13 (if -> IF expresion instrucciones END_BLOCK .)
+    VARIABLE_GLOBAL reduce using rule 13 (if -> IF expresion instrucciones END_BLOCK .)
+    VARIABLE_INSTANCIA reduce using rule 13 (if -> IF expresion instrucciones END_BLOCK .)
+    VARIABLE_CLASE  reduce using rule 13 (if -> IF expresion instrucciones END_BLOCK .)
+    IF              reduce using rule 13 (if -> IF expresion instrucciones END_BLOCK .)
+    $end            reduce using rule 13 (if -> IF expresion instrucciones END_BLOCK .)
+    PUNTO_Y_COMA    reduce using rule 13 (if -> IF expresion instrucciones END_BLOCK .)
+    END_BLOCK       reduce using rule 13 (if -> IF expresion instrucciones END_BLOCK .)
+    ELSE            reduce using rule 13 (if -> IF expresion instrucciones END_BLOCK .)
+    ELSIF           reduce using rule 13 (if -> IF expresion instrucciones END_BLOCK .)
+
+
+state 81
+
+    (15) if_else -> IF expresion instrucciones ELSE . instrucciones END_BLOCK
+    (42) instrucciones -> . instruccion
+    (43) instrucciones -> . instruccion instrucciones
+    (44) instrucciones -> . instruccion PUNTO_Y_COMA instrucciones
+    (45) instruccion -> . asignacion
+    (46) instruccion -> . impresion
+    (47) instruccion -> . condicion
+    (48) instruccion -> . llamada_funcion
+    (7) asignacion -> . variable ASIGNACION valores
+    (8) impresion -> . PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (10) condicion -> . if
+    (11) condicion -> . if_else
+    (12) condicion -> . if_elsif_else
+    (49) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (50) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+    (13) if -> . IF expresion instrucciones END_BLOCK
+    (14) if -> . IF expresion THEN instrucciones END_BLOCK
+    (15) if_else -> . IF expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> . IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> . IF expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> . IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+
+    PUTS            shift and go to state 8
+    VARIABLE_LOCAL  shift and go to state 73
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+    IF              shift and go to state 17
+
+    instrucciones                  shift and go to state 92
+    instruccion                    shift and go to state 59
+    asignacion                     shift and go to state 69
+    impresion                      shift and go to state 70
+    condicion                      shift and go to state 71
+    llamada_funcion                shift and go to state 72
+    variable                       shift and go to state 7
+    if                             shift and go to state 10
+    if_else                        shift and go to state 11
+    if_elsif_else                  shift and go to state 12
+
+state 82
+
+    (17) if_elsif_else -> IF expresion instrucciones elsif_clauses . END_BLOCK
+    (19) if_elsif_else -> IF expresion instrucciones elsif_clauses . ELSE instrucciones END_BLOCK
+
+    END_BLOCK       shift and go to state 93
+    ELSE            shift and go to state 94
+
+
+state 83
+
+    (21) elsif_clauses -> ELSIF . expresion instrucciones
+    (22) elsif_clauses -> ELSIF . expresion THEN instrucciones
+    (23) elsif_clauses -> ELSIF . expresion instrucciones elsif_clauses
+    (24) elsif_clauses -> ELSIF . expresion THEN instrucciones elsif_clauses
+    (25) expresion -> . var_expresion
+    (26) expresion -> . var_expresion comparadores var_expresion
+    (27) expresion -> . expresion comparadores expresion
+    (28) expresion -> . PARENTESIS_IZQ expresion PARENTESIS_DER
+    (29) expresion -> . NOT_BLOCK expresion
+    (30) expresion -> . expresion operador_logico expresion
+    (40) var_expresion -> . valor
+    (41) var_expresion -> . booleano
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (55) booleano -> . FALSE
+    (56) booleano -> . TRUE
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+
+    PARENTESIS_IZQ  shift and go to state 36
+    NOT_BLOCK       shift and go to state 37
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    FALSE           shift and go to state 27
+    TRUE            shift and go to state 28
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+
+    expresion                      shift and go to state 95
+    var_expresion                  shift and go to state 35
+    valor                          shift and go to state 38
+    booleano                       shift and go to state 39
+    variable                       shift and go to state 33
+
+state 84
+
+    (14) if -> IF expresion THEN instrucciones . END_BLOCK
+    (16) if_else -> IF expresion THEN instrucciones . ELSE instrucciones END_BLOCK
+    (18) if_elsif_else -> IF expresion THEN instrucciones . elsif_clauses END_BLOCK
+    (20) if_elsif_else -> IF expresion THEN instrucciones . elsif_clauses ELSE instrucciones END_BLOCK
+    (21) elsif_clauses -> . ELSIF expresion instrucciones
+    (22) elsif_clauses -> . ELSIF expresion THEN instrucciones
+    (23) elsif_clauses -> . ELSIF expresion instrucciones elsif_clauses
+    (24) elsif_clauses -> . ELSIF expresion THEN instrucciones elsif_clauses
+
+    END_BLOCK       shift and go to state 96
+    ELSE            shift and go to state 97
+    ELSIF           shift and go to state 83
+
+    elsif_clauses                  shift and go to state 98
+
+state 85
+
+    (27) expresion -> expresion comparadores expresion .
+    (27) expresion -> expresion . comparadores expresion
+    (30) expresion -> expresion . operador_logico expresion
+    (31) comparadores -> . MAYOR_QUE
+    (32) comparadores -> . MENOR_QUE
+    (33) comparadores -> . IGUAL_IGUAL
+    (34) comparadores -> . DIFERENTE
+    (35) comparadores -> . MAYOR_IGUAL
+    (36) comparadores -> . MENOR_IGUAL
+    (37) operador_logico -> . AND
+    (38) operador_logico -> . OR
+    (39) operador_logico -> . NOT
+
+  ! shift/reduce conflict for MAYOR_QUE resolved as shift
+  ! shift/reduce conflict for MENOR_QUE resolved as shift
+  ! shift/reduce conflict for IGUAL_IGUAL resolved as shift
+  ! shift/reduce conflict for DIFERENTE resolved as shift
+  ! shift/reduce conflict for MAYOR_IGUAL resolved as shift
+  ! shift/reduce conflict for MENOR_IGUAL resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+    THEN            reduce using rule 27 (expresion -> expresion comparadores expresion .)
+    PUTS            reduce using rule 27 (expresion -> expresion comparadores expresion .)
+    VARIABLE_LOCAL  reduce using rule 27 (expresion -> expresion comparadores expresion .)
+    VARIABLE_GLOBAL reduce using rule 27 (expresion -> expresion comparadores expresion .)
+    VARIABLE_INSTANCIA reduce using rule 27 (expresion -> expresion comparadores expresion .)
+    VARIABLE_CLASE  reduce using rule 27 (expresion -> expresion comparadores expresion .)
+    IF              reduce using rule 27 (expresion -> expresion comparadores expresion .)
+    PARENTESIS_DER  reduce using rule 27 (expresion -> expresion comparadores expresion .)
+    MAYOR_QUE       shift and go to state 60
+    MENOR_QUE       shift and go to state 61
+    IGUAL_IGUAL     shift and go to state 62
+    DIFERENTE       shift and go to state 63
+    MAYOR_IGUAL     shift and go to state 64
+    MENOR_IGUAL     shift and go to state 65
+    AND             shift and go to state 66
+    OR              shift and go to state 67
+    NOT             shift and go to state 68
+
+  ! MAYOR_QUE       [ reduce using rule 27 (expresion -> expresion comparadores expresion .) ]
+  ! MENOR_QUE       [ reduce using rule 27 (expresion -> expresion comparadores expresion .) ]
+  ! IGUAL_IGUAL     [ reduce using rule 27 (expresion -> expresion comparadores expresion .) ]
+  ! DIFERENTE       [ reduce using rule 27 (expresion -> expresion comparadores expresion .) ]
+  ! MAYOR_IGUAL     [ reduce using rule 27 (expresion -> expresion comparadores expresion .) ]
+  ! MENOR_IGUAL     [ reduce using rule 27 (expresion -> expresion comparadores expresion .) ]
+  ! AND             [ reduce using rule 27 (expresion -> expresion comparadores expresion .) ]
+  ! OR              [ reduce using rule 27 (expresion -> expresion comparadores expresion .) ]
+  ! NOT             [ reduce using rule 27 (expresion -> expresion comparadores expresion .) ]
+
+    comparadores                   shift and go to state 57
+    operador_logico                shift and go to state 58
+
+state 86
+
+    (30) expresion -> expresion operador_logico expresion .
+    (27) expresion -> expresion . comparadores expresion
+    (30) expresion -> expresion . operador_logico expresion
+    (31) comparadores -> . MAYOR_QUE
+    (32) comparadores -> . MENOR_QUE
+    (33) comparadores -> . IGUAL_IGUAL
+    (34) comparadores -> . DIFERENTE
+    (35) comparadores -> . MAYOR_IGUAL
+    (36) comparadores -> . MENOR_IGUAL
+    (37) operador_logico -> . AND
+    (38) operador_logico -> . OR
+    (39) operador_logico -> . NOT
+
+  ! shift/reduce conflict for MAYOR_QUE resolved as shift
+  ! shift/reduce conflict for MENOR_QUE resolved as shift
+  ! shift/reduce conflict for IGUAL_IGUAL resolved as shift
+  ! shift/reduce conflict for DIFERENTE resolved as shift
+  ! shift/reduce conflict for MAYOR_IGUAL resolved as shift
+  ! shift/reduce conflict for MENOR_IGUAL resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+    THEN            reduce using rule 30 (expresion -> expresion operador_logico expresion .)
+    PUTS            reduce using rule 30 (expresion -> expresion operador_logico expresion .)
+    VARIABLE_LOCAL  reduce using rule 30 (expresion -> expresion operador_logico expresion .)
+    VARIABLE_GLOBAL reduce using rule 30 (expresion -> expresion operador_logico expresion .)
+    VARIABLE_INSTANCIA reduce using rule 30 (expresion -> expresion operador_logico expresion .)
+    VARIABLE_CLASE  reduce using rule 30 (expresion -> expresion operador_logico expresion .)
+    IF              reduce using rule 30 (expresion -> expresion operador_logico expresion .)
+    PARENTESIS_DER  reduce using rule 30 (expresion -> expresion operador_logico expresion .)
+    MAYOR_QUE       shift and go to state 60
+    MENOR_QUE       shift and go to state 61
+    IGUAL_IGUAL     shift and go to state 62
+    DIFERENTE       shift and go to state 63
+    MAYOR_IGUAL     shift and go to state 64
+    MENOR_IGUAL     shift and go to state 65
+    AND             shift and go to state 66
+    OR              shift and go to state 67
+    NOT             shift and go to state 68
+
+  ! MAYOR_QUE       [ reduce using rule 30 (expresion -> expresion operador_logico expresion .) ]
+  ! MENOR_QUE       [ reduce using rule 30 (expresion -> expresion operador_logico expresion .) ]
+  ! IGUAL_IGUAL     [ reduce using rule 30 (expresion -> expresion operador_logico expresion .) ]
+  ! DIFERENTE       [ reduce using rule 30 (expresion -> expresion operador_logico expresion .) ]
+  ! MAYOR_IGUAL     [ reduce using rule 30 (expresion -> expresion operador_logico expresion .) ]
+  ! MENOR_IGUAL     [ reduce using rule 30 (expresion -> expresion operador_logico expresion .) ]
+  ! AND             [ reduce using rule 30 (expresion -> expresion operador_logico expresion .) ]
+  ! OR              [ reduce using rule 30 (expresion -> expresion operador_logico expresion .) ]
+  ! NOT             [ reduce using rule 30 (expresion -> expresion operador_logico expresion .) ]
+
+    operador_logico                shift and go to state 58
+    comparadores                   shift and go to state 57
+
+state 87
+
+    (43) instrucciones -> instruccion instrucciones .
+
+    END_BLOCK       reduce using rule 43 (instrucciones -> instruccion instrucciones .)
+    ELSE            reduce using rule 43 (instrucciones -> instruccion instrucciones .)
+    ELSIF           reduce using rule 43 (instrucciones -> instruccion instrucciones .)
+
+
+state 88
+
+    (44) instrucciones -> instruccion PUNTO_Y_COMA . instrucciones
+    (42) instrucciones -> . instruccion
+    (43) instrucciones -> . instruccion instrucciones
+    (44) instrucciones -> . instruccion PUNTO_Y_COMA instrucciones
+    (45) instruccion -> . asignacion
+    (46) instruccion -> . impresion
+    (47) instruccion -> . condicion
+    (48) instruccion -> . llamada_funcion
+    (7) asignacion -> . variable ASIGNACION valores
+    (8) impresion -> . PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (10) condicion -> . if
+    (11) condicion -> . if_else
+    (12) condicion -> . if_elsif_else
+    (49) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (50) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+    (13) if -> . IF expresion instrucciones END_BLOCK
+    (14) if -> . IF expresion THEN instrucciones END_BLOCK
+    (15) if_else -> . IF expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> . IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> . IF expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> . IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+
+    PUTS            shift and go to state 8
+    VARIABLE_LOCAL  shift and go to state 73
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+    IF              shift and go to state 17
+
+    instruccion                    shift and go to state 59
+    instrucciones                  shift and go to state 99
+    asignacion                     shift and go to state 69
+    impresion                      shift and go to state 70
+    condicion                      shift and go to state 71
+    llamada_funcion                shift and go to state 72
+    variable                       shift and go to state 7
+    if                             shift and go to state 10
+    if_else                        shift and go to state 11
+    if_elsif_else                  shift and go to state 12
+
+state 89
+
+    (49) llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ . argumentos PARENTESIS_DER
+    (50) llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ . PARENTESIS_DER
+    (57) argumentos -> . argumento
+    (58) argumentos -> . argumento COMA argumentos
+    (59) argumento -> . booleano
+    (60) argumento -> . operacionAritmetica
+    (61) argumento -> . array
+    (62) argumento -> . empty
+    (55) booleano -> . FALSE
+    (56) booleano -> . TRUE
+    (72) operacionAritmetica -> . valor
+    (73) operacionAritmetica -> . valor operador operacionAritmetica
+    (9) array -> . CORCHETE_IZQ argumentos CORCHETE_DER
+    (63) empty -> .
+    (68) valor -> . NUMERO
+    (69) valor -> . FLOTANTE
+    (70) valor -> . CADENA
+    (71) valor -> . variable
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+
+  ! shift/reduce conflict for PARENTESIS_DER resolved as shift
+    PARENTESIS_DER  shift and go to state 101
+    FALSE           shift and go to state 27
+    TRUE            shift and go to state 28
+    CORCHETE_IZQ    shift and go to state 9
+    COMA            reduce using rule 63 (empty -> .)
+    NUMERO          shift and go to state 30
+    FLOTANTE        shift and go to state 31
+    CADENA          shift and go to state 32
+    VARIABLE_LOCAL  shift and go to state 13
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+
+  ! PARENTESIS_DER  [ reduce using rule 63 (empty -> .) ]
+
+    argumentos                     shift and go to state 100
+    argumento                      shift and go to state 22
+    booleano                       shift and go to state 23
+    operacionAritmetica            shift and go to state 24
+    array                          shift and go to state 25
+    empty                          shift and go to state 26
+    valor                          shift and go to state 29
+    variable                       shift and go to state 33
+
+state 90
+
+    (26) expresion -> var_expresion comparadores var_expresion .
+
+    THEN            reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    MAYOR_QUE       reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    MENOR_QUE       reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    IGUAL_IGUAL     reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    DIFERENTE       reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    MAYOR_IGUAL     reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    MENOR_IGUAL     reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    AND             reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    OR              reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    NOT             reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    PUTS            reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    VARIABLE_LOCAL  reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    VARIABLE_GLOBAL reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    VARIABLE_INSTANCIA reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    VARIABLE_CLASE  reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    IF              reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+    PARENTESIS_DER  reduce using rule 26 (expresion -> var_expresion comparadores var_expresion .)
+
+
+state 91
+
+    (28) expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .
+
+    THEN            reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    MAYOR_QUE       reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    MENOR_QUE       reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    IGUAL_IGUAL     reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    DIFERENTE       reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    MAYOR_IGUAL     reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    MENOR_IGUAL     reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    AND             reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    OR              reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    NOT             reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    PUTS            reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    VARIABLE_LOCAL  reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    VARIABLE_GLOBAL reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    VARIABLE_INSTANCIA reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    VARIABLE_CLASE  reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    IF              reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+    PARENTESIS_DER  reduce using rule 28 (expresion -> PARENTESIS_IZQ expresion PARENTESIS_DER .)
+
+
+state 92
+
+    (15) if_else -> IF expresion instrucciones ELSE instrucciones . END_BLOCK
+
+    END_BLOCK       shift and go to state 102
+
+
+state 93
+
+    (17) if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .
+
+    PUTS            reduce using rule 17 (if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .)
+    CORCHETE_IZQ    reduce using rule 17 (if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .)
+    VARIABLE_LOCAL  reduce using rule 17 (if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .)
+    VARIABLE_GLOBAL reduce using rule 17 (if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .)
+    VARIABLE_INSTANCIA reduce using rule 17 (if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .)
+    VARIABLE_CLASE  reduce using rule 17 (if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .)
+    IF              reduce using rule 17 (if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .)
+    $end            reduce using rule 17 (if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .)
+    PUNTO_Y_COMA    reduce using rule 17 (if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .)
+    END_BLOCK       reduce using rule 17 (if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .)
+    ELSE            reduce using rule 17 (if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .)
+    ELSIF           reduce using rule 17 (if_elsif_else -> IF expresion instrucciones elsif_clauses END_BLOCK .)
+
+
+state 94
+
+    (19) if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE . instrucciones END_BLOCK
+    (42) instrucciones -> . instruccion
+    (43) instrucciones -> . instruccion instrucciones
+    (44) instrucciones -> . instruccion PUNTO_Y_COMA instrucciones
+    (45) instruccion -> . asignacion
+    (46) instruccion -> . impresion
+    (47) instruccion -> . condicion
+    (48) instruccion -> . llamada_funcion
+    (7) asignacion -> . variable ASIGNACION valores
+    (8) impresion -> . PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (10) condicion -> . if
+    (11) condicion -> . if_else
+    (12) condicion -> . if_elsif_else
+    (49) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (50) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+    (13) if -> . IF expresion instrucciones END_BLOCK
+    (14) if -> . IF expresion THEN instrucciones END_BLOCK
+    (15) if_else -> . IF expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> . IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> . IF expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> . IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+
+    PUTS            shift and go to state 8
+    VARIABLE_LOCAL  shift and go to state 73
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+    IF              shift and go to state 17
+
+    instrucciones                  shift and go to state 103
+    instruccion                    shift and go to state 59
+    asignacion                     shift and go to state 69
+    impresion                      shift and go to state 70
+    condicion                      shift and go to state 71
+    llamada_funcion                shift and go to state 72
+    variable                       shift and go to state 7
+    if                             shift and go to state 10
+    if_else                        shift and go to state 11
+    if_elsif_else                  shift and go to state 12
+
+state 95
+
+    (21) elsif_clauses -> ELSIF expresion . instrucciones
+    (22) elsif_clauses -> ELSIF expresion . THEN instrucciones
+    (23) elsif_clauses -> ELSIF expresion . instrucciones elsif_clauses
+    (24) elsif_clauses -> ELSIF expresion . THEN instrucciones elsif_clauses
+    (27) expresion -> expresion . comparadores expresion
+    (30) expresion -> expresion . operador_logico expresion
+    (42) instrucciones -> . instruccion
+    (43) instrucciones -> . instruccion instrucciones
+    (44) instrucciones -> . instruccion PUNTO_Y_COMA instrucciones
+    (31) comparadores -> . MAYOR_QUE
+    (32) comparadores -> . MENOR_QUE
+    (33) comparadores -> . IGUAL_IGUAL
+    (34) comparadores -> . DIFERENTE
+    (35) comparadores -> . MAYOR_IGUAL
+    (36) comparadores -> . MENOR_IGUAL
+    (37) operador_logico -> . AND
+    (38) operador_logico -> . OR
+    (39) operador_logico -> . NOT
+    (45) instruccion -> . asignacion
+    (46) instruccion -> . impresion
+    (47) instruccion -> . condicion
+    (48) instruccion -> . llamada_funcion
+    (7) asignacion -> . variable ASIGNACION valores
+    (8) impresion -> . PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (10) condicion -> . if
+    (11) condicion -> . if_else
+    (12) condicion -> . if_elsif_else
+    (49) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (50) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+    (13) if -> . IF expresion instrucciones END_BLOCK
+    (14) if -> . IF expresion THEN instrucciones END_BLOCK
+    (15) if_else -> . IF expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> . IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> . IF expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> . IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+
+    THEN            shift and go to state 105
+    MAYOR_QUE       shift and go to state 60
+    MENOR_QUE       shift and go to state 61
+    IGUAL_IGUAL     shift and go to state 62
+    DIFERENTE       shift and go to state 63
+    MAYOR_IGUAL     shift and go to state 64
+    MENOR_IGUAL     shift and go to state 65
+    AND             shift and go to state 66
+    OR              shift and go to state 67
+    NOT             shift and go to state 68
+    PUTS            shift and go to state 8
+    VARIABLE_LOCAL  shift and go to state 73
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+    IF              shift and go to state 17
+
+    instrucciones                  shift and go to state 104
+    comparadores                   shift and go to state 57
+    operador_logico                shift and go to state 58
+    instruccion                    shift and go to state 59
+    asignacion                     shift and go to state 69
+    impresion                      shift and go to state 70
+    condicion                      shift and go to state 71
+    llamada_funcion                shift and go to state 72
+    variable                       shift and go to state 7
+    if                             shift and go to state 10
+    if_else                        shift and go to state 11
+    if_elsif_else                  shift and go to state 12
+
+state 96
+
+    (14) if -> IF expresion THEN instrucciones END_BLOCK .
+
+    PUTS            reduce using rule 14 (if -> IF expresion THEN instrucciones END_BLOCK .)
+    CORCHETE_IZQ    reduce using rule 14 (if -> IF expresion THEN instrucciones END_BLOCK .)
+    VARIABLE_LOCAL  reduce using rule 14 (if -> IF expresion THEN instrucciones END_BLOCK .)
+    VARIABLE_GLOBAL reduce using rule 14 (if -> IF expresion THEN instrucciones END_BLOCK .)
+    VARIABLE_INSTANCIA reduce using rule 14 (if -> IF expresion THEN instrucciones END_BLOCK .)
+    VARIABLE_CLASE  reduce using rule 14 (if -> IF expresion THEN instrucciones END_BLOCK .)
+    IF              reduce using rule 14 (if -> IF expresion THEN instrucciones END_BLOCK .)
+    $end            reduce using rule 14 (if -> IF expresion THEN instrucciones END_BLOCK .)
+    PUNTO_Y_COMA    reduce using rule 14 (if -> IF expresion THEN instrucciones END_BLOCK .)
+    END_BLOCK       reduce using rule 14 (if -> IF expresion THEN instrucciones END_BLOCK .)
+    ELSE            reduce using rule 14 (if -> IF expresion THEN instrucciones END_BLOCK .)
+    ELSIF           reduce using rule 14 (if -> IF expresion THEN instrucciones END_BLOCK .)
+
+
+state 97
+
+    (16) if_else -> IF expresion THEN instrucciones ELSE . instrucciones END_BLOCK
+    (42) instrucciones -> . instruccion
+    (43) instrucciones -> . instruccion instrucciones
+    (44) instrucciones -> . instruccion PUNTO_Y_COMA instrucciones
+    (45) instruccion -> . asignacion
+    (46) instruccion -> . impresion
+    (47) instruccion -> . condicion
+    (48) instruccion -> . llamada_funcion
+    (7) asignacion -> . variable ASIGNACION valores
+    (8) impresion -> . PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (10) condicion -> . if
+    (11) condicion -> . if_else
+    (12) condicion -> . if_elsif_else
+    (49) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (50) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+    (13) if -> . IF expresion instrucciones END_BLOCK
+    (14) if -> . IF expresion THEN instrucciones END_BLOCK
+    (15) if_else -> . IF expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> . IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> . IF expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> . IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+
+    PUTS            shift and go to state 8
+    VARIABLE_LOCAL  shift and go to state 73
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+    IF              shift and go to state 17
+
+    instrucciones                  shift and go to state 106
+    instruccion                    shift and go to state 59
+    asignacion                     shift and go to state 69
+    impresion                      shift and go to state 70
+    condicion                      shift and go to state 71
+    llamada_funcion                shift and go to state 72
+    variable                       shift and go to state 7
+    if                             shift and go to state 10
+    if_else                        shift and go to state 11
+    if_elsif_else                  shift and go to state 12
+
+state 98
+
+    (18) if_elsif_else -> IF expresion THEN instrucciones elsif_clauses . END_BLOCK
+    (20) if_elsif_else -> IF expresion THEN instrucciones elsif_clauses . ELSE instrucciones END_BLOCK
+
+    END_BLOCK       shift and go to state 107
+    ELSE            shift and go to state 108
+
+
+state 99
+
+    (44) instrucciones -> instruccion PUNTO_Y_COMA instrucciones .
+
+    END_BLOCK       reduce using rule 44 (instrucciones -> instruccion PUNTO_Y_COMA instrucciones .)
+    ELSE            reduce using rule 44 (instrucciones -> instruccion PUNTO_Y_COMA instrucciones .)
+    ELSIF           reduce using rule 44 (instrucciones -> instruccion PUNTO_Y_COMA instrucciones .)
+
+
+state 100
+
+    (49) llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos . PARENTESIS_DER
+
+    PARENTESIS_DER  shift and go to state 109
+
+
+state 101
+
+    (50) llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER .
+
+    PUNTO_Y_COMA    reduce using rule 50 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER .)
+    PUTS            reduce using rule 50 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER .)
+    VARIABLE_LOCAL  reduce using rule 50 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER .)
+    VARIABLE_GLOBAL reduce using rule 50 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER .)
+    VARIABLE_INSTANCIA reduce using rule 50 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER .)
+    VARIABLE_CLASE  reduce using rule 50 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER .)
+    IF              reduce using rule 50 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER .)
+    END_BLOCK       reduce using rule 50 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER .)
+    ELSE            reduce using rule 50 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER .)
+    ELSIF           reduce using rule 50 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER .)
+
+
+state 102
+
+    (15) if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .
+
+    PUTS            reduce using rule 15 (if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .)
+    CORCHETE_IZQ    reduce using rule 15 (if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .)
+    VARIABLE_LOCAL  reduce using rule 15 (if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .)
+    VARIABLE_GLOBAL reduce using rule 15 (if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .)
+    VARIABLE_INSTANCIA reduce using rule 15 (if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .)
+    VARIABLE_CLASE  reduce using rule 15 (if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .)
+    IF              reduce using rule 15 (if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .)
+    $end            reduce using rule 15 (if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .)
+    PUNTO_Y_COMA    reduce using rule 15 (if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .)
+    END_BLOCK       reduce using rule 15 (if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .)
+    ELSE            reduce using rule 15 (if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .)
+    ELSIF           reduce using rule 15 (if_else -> IF expresion instrucciones ELSE instrucciones END_BLOCK .)
+
+
+state 103
+
+    (19) if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones . END_BLOCK
+
+    END_BLOCK       shift and go to state 110
+
+
+state 104
+
+    (21) elsif_clauses -> ELSIF expresion instrucciones .
+    (23) elsif_clauses -> ELSIF expresion instrucciones . elsif_clauses
+    (21) elsif_clauses -> . ELSIF expresion instrucciones
+    (22) elsif_clauses -> . ELSIF expresion THEN instrucciones
+    (23) elsif_clauses -> . ELSIF expresion instrucciones elsif_clauses
+    (24) elsif_clauses -> . ELSIF expresion THEN instrucciones elsif_clauses
+
+    END_BLOCK       reduce using rule 21 (elsif_clauses -> ELSIF expresion instrucciones .)
+    ELSE            reduce using rule 21 (elsif_clauses -> ELSIF expresion instrucciones .)
+    ELSIF           shift and go to state 83
+
+    elsif_clauses                  shift and go to state 111
+
+state 105
+
+    (22) elsif_clauses -> ELSIF expresion THEN . instrucciones
+    (24) elsif_clauses -> ELSIF expresion THEN . instrucciones elsif_clauses
+    (42) instrucciones -> . instruccion
+    (43) instrucciones -> . instruccion instrucciones
+    (44) instrucciones -> . instruccion PUNTO_Y_COMA instrucciones
+    (45) instruccion -> . asignacion
+    (46) instruccion -> . impresion
+    (47) instruccion -> . condicion
+    (48) instruccion -> . llamada_funcion
+    (7) asignacion -> . variable ASIGNACION valores
+    (8) impresion -> . PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (10) condicion -> . if
+    (11) condicion -> . if_else
+    (12) condicion -> . if_elsif_else
+    (49) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (50) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+    (13) if -> . IF expresion instrucciones END_BLOCK
+    (14) if -> . IF expresion THEN instrucciones END_BLOCK
+    (15) if_else -> . IF expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> . IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> . IF expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> . IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+
+    PUTS            shift and go to state 8
+    VARIABLE_LOCAL  shift and go to state 73
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+    IF              shift and go to state 17
+
+    instrucciones                  shift and go to state 112
+    instruccion                    shift and go to state 59
+    asignacion                     shift and go to state 69
+    impresion                      shift and go to state 70
+    condicion                      shift and go to state 71
+    llamada_funcion                shift and go to state 72
+    variable                       shift and go to state 7
+    if                             shift and go to state 10
+    if_else                        shift and go to state 11
+    if_elsif_else                  shift and go to state 12
+
+state 106
+
+    (16) if_else -> IF expresion THEN instrucciones ELSE instrucciones . END_BLOCK
+
+    END_BLOCK       shift and go to state 113
+
+
+state 107
+
+    (18) if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .
+
+    PUTS            reduce using rule 18 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .)
+    CORCHETE_IZQ    reduce using rule 18 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .)
+    VARIABLE_LOCAL  reduce using rule 18 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .)
+    VARIABLE_GLOBAL reduce using rule 18 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .)
+    VARIABLE_INSTANCIA reduce using rule 18 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .)
+    VARIABLE_CLASE  reduce using rule 18 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .)
+    IF              reduce using rule 18 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .)
+    $end            reduce using rule 18 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .)
+    PUNTO_Y_COMA    reduce using rule 18 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .)
+    END_BLOCK       reduce using rule 18 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .)
+    ELSE            reduce using rule 18 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .)
+    ELSIF           reduce using rule 18 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses END_BLOCK .)
+
+
+state 108
+
+    (20) if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE . instrucciones END_BLOCK
+    (42) instrucciones -> . instruccion
+    (43) instrucciones -> . instruccion instrucciones
+    (44) instrucciones -> . instruccion PUNTO_Y_COMA instrucciones
+    (45) instruccion -> . asignacion
+    (46) instruccion -> . impresion
+    (47) instruccion -> . condicion
+    (48) instruccion -> . llamada_funcion
+    (7) asignacion -> . variable ASIGNACION valores
+    (8) impresion -> . PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (10) condicion -> . if
+    (11) condicion -> . if_else
+    (12) condicion -> . if_elsif_else
+    (49) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER
+    (50) llamada_funcion -> . VARIABLE_LOCAL PARENTESIS_IZQ PARENTESIS_DER
+    (51) variable -> . VARIABLE_LOCAL
+    (52) variable -> . VARIABLE_GLOBAL
+    (53) variable -> . VARIABLE_INSTANCIA
+    (54) variable -> . VARIABLE_CLASE
+    (13) if -> . IF expresion instrucciones END_BLOCK
+    (14) if -> . IF expresion THEN instrucciones END_BLOCK
+    (15) if_else -> . IF expresion instrucciones ELSE instrucciones END_BLOCK
+    (16) if_else -> . IF expresion THEN instrucciones ELSE instrucciones END_BLOCK
+    (17) if_elsif_else -> . IF expresion instrucciones elsif_clauses END_BLOCK
+    (18) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses END_BLOCK
+    (19) if_elsif_else -> . IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+    (20) if_elsif_else -> . IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK
+
+    PUTS            shift and go to state 8
+    VARIABLE_LOCAL  shift and go to state 73
+    VARIABLE_GLOBAL shift and go to state 14
+    VARIABLE_INSTANCIA shift and go to state 15
+    VARIABLE_CLASE  shift and go to state 16
+    IF              shift and go to state 17
+
+    instrucciones                  shift and go to state 114
+    instruccion                    shift and go to state 59
+    asignacion                     shift and go to state 69
+    impresion                      shift and go to state 70
+    condicion                      shift and go to state 71
+    llamada_funcion                shift and go to state 72
+    variable                       shift and go to state 7
+    if                             shift and go to state 10
+    if_else                        shift and go to state 11
+    if_elsif_else                  shift and go to state 12
+
+state 109
+
+    (49) llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER .
+
+    PUNTO_Y_COMA    reduce using rule 49 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    PUTS            reduce using rule 49 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    VARIABLE_LOCAL  reduce using rule 49 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    VARIABLE_GLOBAL reduce using rule 49 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    VARIABLE_INSTANCIA reduce using rule 49 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    VARIABLE_CLASE  reduce using rule 49 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    IF              reduce using rule 49 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    END_BLOCK       reduce using rule 49 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    ELSE            reduce using rule 49 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+    ELSIF           reduce using rule 49 (llamada_funcion -> VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER .)
+
+
+state 110
+
+    (19) if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .
+
+    PUTS            reduce using rule 19 (if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    CORCHETE_IZQ    reduce using rule 19 (if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    VARIABLE_LOCAL  reduce using rule 19 (if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    VARIABLE_GLOBAL reduce using rule 19 (if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    VARIABLE_INSTANCIA reduce using rule 19 (if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    VARIABLE_CLASE  reduce using rule 19 (if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    IF              reduce using rule 19 (if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    $end            reduce using rule 19 (if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    PUNTO_Y_COMA    reduce using rule 19 (if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    END_BLOCK       reduce using rule 19 (if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    ELSE            reduce using rule 19 (if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    ELSIF           reduce using rule 19 (if_elsif_else -> IF expresion instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+
+
+state 111
+
+    (23) elsif_clauses -> ELSIF expresion instrucciones elsif_clauses .
+
+    END_BLOCK       reduce using rule 23 (elsif_clauses -> ELSIF expresion instrucciones elsif_clauses .)
+    ELSE            reduce using rule 23 (elsif_clauses -> ELSIF expresion instrucciones elsif_clauses .)
+
+
+state 112
+
+    (22) elsif_clauses -> ELSIF expresion THEN instrucciones .
+    (24) elsif_clauses -> ELSIF expresion THEN instrucciones . elsif_clauses
+    (21) elsif_clauses -> . ELSIF expresion instrucciones
+    (22) elsif_clauses -> . ELSIF expresion THEN instrucciones
+    (23) elsif_clauses -> . ELSIF expresion instrucciones elsif_clauses
+    (24) elsif_clauses -> . ELSIF expresion THEN instrucciones elsif_clauses
+
+    END_BLOCK       reduce using rule 22 (elsif_clauses -> ELSIF expresion THEN instrucciones .)
+    ELSE            reduce using rule 22 (elsif_clauses -> ELSIF expresion THEN instrucciones .)
+    ELSIF           shift and go to state 83
+
+    elsif_clauses                  shift and go to state 115
+
+state 113
+
+    (16) if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .
+
+    PUTS            reduce using rule 16 (if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .)
+    CORCHETE_IZQ    reduce using rule 16 (if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .)
+    VARIABLE_LOCAL  reduce using rule 16 (if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .)
+    VARIABLE_GLOBAL reduce using rule 16 (if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .)
+    VARIABLE_INSTANCIA reduce using rule 16 (if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .)
+    VARIABLE_CLASE  reduce using rule 16 (if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .)
+    IF              reduce using rule 16 (if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .)
+    $end            reduce using rule 16 (if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .)
+    PUNTO_Y_COMA    reduce using rule 16 (if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .)
+    END_BLOCK       reduce using rule 16 (if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .)
+    ELSE            reduce using rule 16 (if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .)
+    ELSIF           reduce using rule 16 (if_else -> IF expresion THEN instrucciones ELSE instrucciones END_BLOCK .)
+
+
+state 114
+
+    (20) if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones . END_BLOCK
+
+    END_BLOCK       shift and go to state 116
+
+
+state 115
+
+    (24) elsif_clauses -> ELSIF expresion THEN instrucciones elsif_clauses .
+
+    END_BLOCK       reduce using rule 24 (elsif_clauses -> ELSIF expresion THEN instrucciones elsif_clauses .)
+    ELSE            reduce using rule 24 (elsif_clauses -> ELSIF expresion THEN instrucciones elsif_clauses .)
+
+
+state 116
+
+    (20) if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .
+
+    PUTS            reduce using rule 20 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    CORCHETE_IZQ    reduce using rule 20 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    VARIABLE_LOCAL  reduce using rule 20 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    VARIABLE_GLOBAL reduce using rule 20 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    VARIABLE_INSTANCIA reduce using rule 20 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    VARIABLE_CLASE  reduce using rule 20 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    IF              reduce using rule 20 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    $end            reduce using rule 20 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    PUNTO_Y_COMA    reduce using rule 20 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    END_BLOCK       reduce using rule 20 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    ELSE            reduce using rule 20 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+    ELSIF           reduce using rule 20 (if_elsif_else -> IF expresion THEN instrucciones elsif_clauses ELSE instrucciones END_BLOCK .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for MAYOR_QUE in state 35 resolved as shift
+WARNING: shift/reduce conflict for MENOR_QUE in state 35 resolved as shift
+WARNING: shift/reduce conflict for IGUAL_IGUAL in state 35 resolved as shift
+WARNING: shift/reduce conflict for DIFERENTE in state 35 resolved as shift
+WARNING: shift/reduce conflict for MAYOR_IGUAL in state 35 resolved as shift
+WARNING: shift/reduce conflict for MENOR_IGUAL in state 35 resolved as shift
+WARNING: shift/reduce conflict for MAYOR_QUE in state 76 resolved as shift
+WARNING: shift/reduce conflict for MENOR_QUE in state 76 resolved as shift
+WARNING: shift/reduce conflict for IGUAL_IGUAL in state 76 resolved as shift
+WARNING: shift/reduce conflict for DIFERENTE in state 76 resolved as shift
+WARNING: shift/reduce conflict for MAYOR_IGUAL in state 76 resolved as shift
+WARNING: shift/reduce conflict for MENOR_IGUAL in state 76 resolved as shift
+WARNING: shift/reduce conflict for AND in state 76 resolved as shift
+WARNING: shift/reduce conflict for OR in state 76 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 76 resolved as shift
+WARNING: shift/reduce conflict for MAYOR_QUE in state 85 resolved as shift
+WARNING: shift/reduce conflict for MENOR_QUE in state 85 resolved as shift
+WARNING: shift/reduce conflict for IGUAL_IGUAL in state 85 resolved as shift
+WARNING: shift/reduce conflict for DIFERENTE in state 85 resolved as shift
+WARNING: shift/reduce conflict for MAYOR_IGUAL in state 85 resolved as shift
+WARNING: shift/reduce conflict for MENOR_IGUAL in state 85 resolved as shift
+WARNING: shift/reduce conflict for AND in state 85 resolved as shift
+WARNING: shift/reduce conflict for OR in state 85 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 85 resolved as shift
+WARNING: shift/reduce conflict for MAYOR_QUE in state 86 resolved as shift
+WARNING: shift/reduce conflict for MENOR_QUE in state 86 resolved as shift
+WARNING: shift/reduce conflict for IGUAL_IGUAL in state 86 resolved as shift
+WARNING: shift/reduce conflict for DIFERENTE in state 86 resolved as shift
+WARNING: shift/reduce conflict for MAYOR_IGUAL in state 86 resolved as shift
+WARNING: shift/reduce conflict for MENOR_IGUAL in state 86 resolved as shift
+WARNING: shift/reduce conflict for AND in state 86 resolved as shift
+WARNING: shift/reduce conflict for OR in state 86 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 86 resolved as shift
+WARNING: shift/reduce conflict for PARENTESIS_DER in state 89 resolved as shift
