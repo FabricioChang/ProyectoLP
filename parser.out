@@ -10,6 +10,7 @@ Unused terminals:
     DIFERENTE
     DOSPUNTOS
     DOSPUNTOS_IGUAL
+    END
     FLECHA_HASH
     IGUAL_IGUAL
     INTERROGACION
@@ -21,8 +22,6 @@ Unused terminals:
     MENOR_QUE
     NOT
     OR
-    PARENTESIS_DER
-    PARENTESIS_IZQ
     PUNTO
     PUNTO_Y_COMA
     RESERVADA
@@ -30,314 +29,461 @@ Unused terminals:
 
 Grammar
 
-Rule 0     S' -> asignacion
-Rule 1     asignacion -> variable ASIGNACION valor
-Rule 2     variable -> VARIABLE_LOCAL
-Rule 3     variable -> VARIABLE_GLOBAL
-Rule 4     variable -> VARIABLE_INSTANCIA
-Rule 5     variable -> VARIABLE_CLASE
-Rule 6     valor -> NUMERO
-Rule 7     valor -> FLOTANTE
-Rule 8     valor -> CADENA
-Rule 9     valor -> valor operador valor
-Rule 10    operador -> MAS
-Rule 11    operador -> MENOS
-Rule 12    operador -> MULTIPLICAR
-Rule 13    operador -> DIVIDIR
-Rule 14    operador -> MODULO
-Rule 15    operador -> EXPONENCIACION
+Rule 0     S' -> programa
+Rule 1     programa -> asignacion
+Rule 2     programa -> impresion
+Rule 3     asignacion -> variable ASIGNACION operacionAritmetica
+Rule 4     impresion -> PUTS PARENTESIS_IZQ operacionAritmetica PARENTESIS_DER
+Rule 5     variable -> VARIABLE_LOCAL
+Rule 6     variable -> VARIABLE_GLOBAL
+Rule 7     variable -> VARIABLE_INSTANCIA
+Rule 8     variable -> VARIABLE_CLASE
+Rule 9     valor -> NUMERO
+Rule 10    valor -> FLOTANTE
+Rule 11    valor -> CADENA
+Rule 12    valor -> variable
+Rule 13    operacionAritmetica -> valor
+Rule 14    operacionAritmetica -> valor operador operacionAritmetica
+Rule 15    operador -> MAS
+Rule 16    operador -> MENOS
+Rule 17    operador -> MULTIPLICAR
+Rule 18    operador -> DIVIDIR
+Rule 19    operador -> MODULO
+Rule 20    operador -> EXPONENCIACION
 
 Terminals, with rules where they appear
 
 AND                  : 
-ASIGNACION           : 1
-CADENA               : 8
+ASIGNACION           : 3
+CADENA               : 11
 COMA                 : 
 COMENTARIO           : 
 CORCHETE_DER         : 
 CORCHETE_IZQ         : 
 DIFERENTE            : 
-DIVIDIR              : 13
+DIVIDIR              : 18
 DOSPUNTOS            : 
 DOSPUNTOS_IGUAL      : 
-EXPONENCIACION       : 15
+END                  : 
+EXPONENCIACION       : 20
 FLECHA_HASH          : 
-FLOTANTE             : 7
+FLOTANTE             : 10
 IGUAL_IGUAL          : 
 INTERROGACION        : 
 LLAVE_DER            : 
 LLAVE_IZQ            : 
-MAS                  : 10
+MAS                  : 15
 MAYOR_IGUAL          : 
 MAYOR_QUE            : 
 MENOR_IGUAL          : 
 MENOR_QUE            : 
-MENOS                : 11
-MODULO               : 14
-MULTIPLICAR          : 12
+MENOS                : 16
+MODULO               : 19
+MULTIPLICAR          : 17
 NOT                  : 
-NUMERO               : 6
+NUMERO               : 9
 OR                   : 
-PARENTESIS_DER       : 
-PARENTESIS_IZQ       : 
+PARENTESIS_DER       : 4
+PARENTESIS_IZQ       : 4
 PUNTO                : 
 PUNTO_Y_COMA         : 
+PUTS                 : 4
 RESERVADA            : 
 SIMBOLO              : 
-VARIABLE_CLASE       : 5
-VARIABLE_GLOBAL      : 3
-VARIABLE_INSTANCIA   : 4
-VARIABLE_LOCAL       : 2
+VARIABLE_CLASE       : 8
+VARIABLE_GLOBAL      : 6
+VARIABLE_INSTANCIA   : 7
+VARIABLE_LOCAL       : 5
 error                : 
 
 Nonterminals, with rules where they appear
 
-asignacion           : 0
-operador             : 9
-valor                : 1 9 9
-variable             : 1
+asignacion           : 1
+impresion            : 2
+operacionAritmetica  : 3 4 14
+operador             : 14
+programa             : 0
+valor                : 13 14
+variable             : 3 12
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . asignacion
-    (1) asignacion -> . variable ASIGNACION valor
-    (2) variable -> . VARIABLE_LOCAL
-    (3) variable -> . VARIABLE_GLOBAL
-    (4) variable -> . VARIABLE_INSTANCIA
-    (5) variable -> . VARIABLE_CLASE
+    (0) S' -> . programa
+    (1) programa -> . asignacion
+    (2) programa -> . impresion
+    (3) asignacion -> . variable ASIGNACION operacionAritmetica
+    (4) impresion -> . PUTS PARENTESIS_IZQ operacionAritmetica PARENTESIS_DER
+    (5) variable -> . VARIABLE_LOCAL
+    (6) variable -> . VARIABLE_GLOBAL
+    (7) variable -> . VARIABLE_INSTANCIA
+    (8) variable -> . VARIABLE_CLASE
 
-    VARIABLE_LOCAL  shift and go to state 3
-    VARIABLE_GLOBAL shift and go to state 4
-    VARIABLE_INSTANCIA shift and go to state 5
-    VARIABLE_CLASE  shift and go to state 6
+    PUTS            shift and go to state 5
+    VARIABLE_LOCAL  shift and go to state 6
+    VARIABLE_GLOBAL shift and go to state 7
+    VARIABLE_INSTANCIA shift and go to state 8
+    VARIABLE_CLASE  shift and go to state 9
 
-    asignacion                     shift and go to state 1
-    variable                       shift and go to state 2
+    programa                       shift and go to state 1
+    asignacion                     shift and go to state 2
+    impresion                      shift and go to state 3
+    variable                       shift and go to state 4
 
 state 1
 
-    (0) S' -> asignacion .
+    (0) S' -> programa .
 
 
 
 state 2
 
-    (1) asignacion -> variable . ASIGNACION valor
+    (1) programa -> asignacion .
 
-    ASIGNACION      shift and go to state 7
+    $end            reduce using rule 1 (programa -> asignacion .)
 
 
 state 3
 
-    (2) variable -> VARIABLE_LOCAL .
+    (2) programa -> impresion .
 
-    ASIGNACION      reduce using rule 2 (variable -> VARIABLE_LOCAL .)
+    $end            reduce using rule 2 (programa -> impresion .)
 
 
 state 4
 
-    (3) variable -> VARIABLE_GLOBAL .
+    (3) asignacion -> variable . ASIGNACION operacionAritmetica
 
-    ASIGNACION      reduce using rule 3 (variable -> VARIABLE_GLOBAL .)
+    ASIGNACION      shift and go to state 10
 
 
 state 5
 
-    (4) variable -> VARIABLE_INSTANCIA .
+    (4) impresion -> PUTS . PARENTESIS_IZQ operacionAritmetica PARENTESIS_DER
 
-    ASIGNACION      reduce using rule 4 (variable -> VARIABLE_INSTANCIA .)
+    PARENTESIS_IZQ  shift and go to state 11
 
 
 state 6
 
-    (5) variable -> VARIABLE_CLASE .
+    (5) variable -> VARIABLE_LOCAL .
 
-    ASIGNACION      reduce using rule 5 (variable -> VARIABLE_CLASE .)
+    ASIGNACION      reduce using rule 5 (variable -> VARIABLE_LOCAL .)
+    MAS             reduce using rule 5 (variable -> VARIABLE_LOCAL .)
+    MENOS           reduce using rule 5 (variable -> VARIABLE_LOCAL .)
+    MULTIPLICAR     reduce using rule 5 (variable -> VARIABLE_LOCAL .)
+    DIVIDIR         reduce using rule 5 (variable -> VARIABLE_LOCAL .)
+    MODULO          reduce using rule 5 (variable -> VARIABLE_LOCAL .)
+    EXPONENCIACION  reduce using rule 5 (variable -> VARIABLE_LOCAL .)
+    $end            reduce using rule 5 (variable -> VARIABLE_LOCAL .)
+    PARENTESIS_DER  reduce using rule 5 (variable -> VARIABLE_LOCAL .)
 
 
 state 7
 
-    (1) asignacion -> variable ASIGNACION . valor
-    (6) valor -> . NUMERO
-    (7) valor -> . FLOTANTE
-    (8) valor -> . CADENA
-    (9) valor -> . valor operador valor
+    (6) variable -> VARIABLE_GLOBAL .
 
-    NUMERO          shift and go to state 9
-    FLOTANTE        shift and go to state 10
-    CADENA          shift and go to state 11
+    ASIGNACION      reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
+    MAS             reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
+    MENOS           reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
+    MULTIPLICAR     reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
+    DIVIDIR         reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
+    MODULO          reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
+    EXPONENCIACION  reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
+    $end            reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
+    PARENTESIS_DER  reduce using rule 6 (variable -> VARIABLE_GLOBAL .)
 
-    valor                          shift and go to state 8
 
 state 8
 
-    (1) asignacion -> variable ASIGNACION valor .
-    (9) valor -> valor . operador valor
-    (10) operador -> . MAS
-    (11) operador -> . MENOS
-    (12) operador -> . MULTIPLICAR
-    (13) operador -> . DIVIDIR
-    (14) operador -> . MODULO
-    (15) operador -> . EXPONENCIACION
+    (7) variable -> VARIABLE_INSTANCIA .
 
-    $end            reduce using rule 1 (asignacion -> variable ASIGNACION valor .)
-    MAS             shift and go to state 13
-    MENOS           shift and go to state 14
-    MULTIPLICAR     shift and go to state 15
-    DIVIDIR         shift and go to state 16
-    MODULO          shift and go to state 17
-    EXPONENCIACION  shift and go to state 18
+    ASIGNACION      reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
+    MAS             reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
+    MENOS           reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
+    MULTIPLICAR     reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
+    DIVIDIR         reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
+    MODULO          reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
+    EXPONENCIACION  reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
+    $end            reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
+    PARENTESIS_DER  reduce using rule 7 (variable -> VARIABLE_INSTANCIA .)
 
-    operador                       shift and go to state 12
 
 state 9
 
-    (6) valor -> NUMERO .
+    (8) variable -> VARIABLE_CLASE .
 
-    MAS             reduce using rule 6 (valor -> NUMERO .)
-    MENOS           reduce using rule 6 (valor -> NUMERO .)
-    MULTIPLICAR     reduce using rule 6 (valor -> NUMERO .)
-    DIVIDIR         reduce using rule 6 (valor -> NUMERO .)
-    MODULO          reduce using rule 6 (valor -> NUMERO .)
-    EXPONENCIACION  reduce using rule 6 (valor -> NUMERO .)
-    $end            reduce using rule 6 (valor -> NUMERO .)
+    ASIGNACION      reduce using rule 8 (variable -> VARIABLE_CLASE .)
+    MAS             reduce using rule 8 (variable -> VARIABLE_CLASE .)
+    MENOS           reduce using rule 8 (variable -> VARIABLE_CLASE .)
+    MULTIPLICAR     reduce using rule 8 (variable -> VARIABLE_CLASE .)
+    DIVIDIR         reduce using rule 8 (variable -> VARIABLE_CLASE .)
+    MODULO          reduce using rule 8 (variable -> VARIABLE_CLASE .)
+    EXPONENCIACION  reduce using rule 8 (variable -> VARIABLE_CLASE .)
+    $end            reduce using rule 8 (variable -> VARIABLE_CLASE .)
+    PARENTESIS_DER  reduce using rule 8 (variable -> VARIABLE_CLASE .)
 
 
 state 10
 
-    (7) valor -> FLOTANTE .
+    (3) asignacion -> variable ASIGNACION . operacionAritmetica
+    (13) operacionAritmetica -> . valor
+    (14) operacionAritmetica -> . valor operador operacionAritmetica
+    (9) valor -> . NUMERO
+    (10) valor -> . FLOTANTE
+    (11) valor -> . CADENA
+    (12) valor -> . variable
+    (5) variable -> . VARIABLE_LOCAL
+    (6) variable -> . VARIABLE_GLOBAL
+    (7) variable -> . VARIABLE_INSTANCIA
+    (8) variable -> . VARIABLE_CLASE
 
-    MAS             reduce using rule 7 (valor -> FLOTANTE .)
-    MENOS           reduce using rule 7 (valor -> FLOTANTE .)
-    MULTIPLICAR     reduce using rule 7 (valor -> FLOTANTE .)
-    DIVIDIR         reduce using rule 7 (valor -> FLOTANTE .)
-    MODULO          reduce using rule 7 (valor -> FLOTANTE .)
-    EXPONENCIACION  reduce using rule 7 (valor -> FLOTANTE .)
-    $end            reduce using rule 7 (valor -> FLOTANTE .)
+    NUMERO          shift and go to state 15
+    FLOTANTE        shift and go to state 16
+    CADENA          shift and go to state 17
+    VARIABLE_LOCAL  shift and go to state 6
+    VARIABLE_GLOBAL shift and go to state 7
+    VARIABLE_INSTANCIA shift and go to state 8
+    VARIABLE_CLASE  shift and go to state 9
 
+    variable                       shift and go to state 12
+    operacionAritmetica            shift and go to state 13
+    valor                          shift and go to state 14
 
 state 11
 
-    (8) valor -> CADENA .
+    (4) impresion -> PUTS PARENTESIS_IZQ . operacionAritmetica PARENTESIS_DER
+    (13) operacionAritmetica -> . valor
+    (14) operacionAritmetica -> . valor operador operacionAritmetica
+    (9) valor -> . NUMERO
+    (10) valor -> . FLOTANTE
+    (11) valor -> . CADENA
+    (12) valor -> . variable
+    (5) variable -> . VARIABLE_LOCAL
+    (6) variable -> . VARIABLE_GLOBAL
+    (7) variable -> . VARIABLE_INSTANCIA
+    (8) variable -> . VARIABLE_CLASE
 
-    MAS             reduce using rule 8 (valor -> CADENA .)
-    MENOS           reduce using rule 8 (valor -> CADENA .)
-    MULTIPLICAR     reduce using rule 8 (valor -> CADENA .)
-    DIVIDIR         reduce using rule 8 (valor -> CADENA .)
-    MODULO          reduce using rule 8 (valor -> CADENA .)
-    EXPONENCIACION  reduce using rule 8 (valor -> CADENA .)
-    $end            reduce using rule 8 (valor -> CADENA .)
+    NUMERO          shift and go to state 15
+    FLOTANTE        shift and go to state 16
+    CADENA          shift and go to state 17
+    VARIABLE_LOCAL  shift and go to state 6
+    VARIABLE_GLOBAL shift and go to state 7
+    VARIABLE_INSTANCIA shift and go to state 8
+    VARIABLE_CLASE  shift and go to state 9
 
+    operacionAritmetica            shift and go to state 18
+    valor                          shift and go to state 14
+    variable                       shift and go to state 12
 
 state 12
 
-    (9) valor -> valor operador . valor
-    (6) valor -> . NUMERO
-    (7) valor -> . FLOTANTE
-    (8) valor -> . CADENA
-    (9) valor -> . valor operador valor
+    (12) valor -> variable .
 
-    NUMERO          shift and go to state 9
-    FLOTANTE        shift and go to state 10
-    CADENA          shift and go to state 11
+    MAS             reduce using rule 12 (valor -> variable .)
+    MENOS           reduce using rule 12 (valor -> variable .)
+    MULTIPLICAR     reduce using rule 12 (valor -> variable .)
+    DIVIDIR         reduce using rule 12 (valor -> variable .)
+    MODULO          reduce using rule 12 (valor -> variable .)
+    EXPONENCIACION  reduce using rule 12 (valor -> variable .)
+    $end            reduce using rule 12 (valor -> variable .)
+    PARENTESIS_DER  reduce using rule 12 (valor -> variable .)
 
-    valor                          shift and go to state 19
 
 state 13
 
-    (10) operador -> MAS .
+    (3) asignacion -> variable ASIGNACION operacionAritmetica .
 
-    NUMERO          reduce using rule 10 (operador -> MAS .)
-    FLOTANTE        reduce using rule 10 (operador -> MAS .)
-    CADENA          reduce using rule 10 (operador -> MAS .)
+    $end            reduce using rule 3 (asignacion -> variable ASIGNACION operacionAritmetica .)
 
 
 state 14
 
-    (11) operador -> MENOS .
+    (13) operacionAritmetica -> valor .
+    (14) operacionAritmetica -> valor . operador operacionAritmetica
+    (15) operador -> . MAS
+    (16) operador -> . MENOS
+    (17) operador -> . MULTIPLICAR
+    (18) operador -> . DIVIDIR
+    (19) operador -> . MODULO
+    (20) operador -> . EXPONENCIACION
 
-    NUMERO          reduce using rule 11 (operador -> MENOS .)
-    FLOTANTE        reduce using rule 11 (operador -> MENOS .)
-    CADENA          reduce using rule 11 (operador -> MENOS .)
+    $end            reduce using rule 13 (operacionAritmetica -> valor .)
+    PARENTESIS_DER  reduce using rule 13 (operacionAritmetica -> valor .)
+    MAS             shift and go to state 20
+    MENOS           shift and go to state 21
+    MULTIPLICAR     shift and go to state 22
+    DIVIDIR         shift and go to state 23
+    MODULO          shift and go to state 24
+    EXPONENCIACION  shift and go to state 25
 
+    operador                       shift and go to state 19
 
 state 15
 
-    (12) operador -> MULTIPLICAR .
+    (9) valor -> NUMERO .
 
-    NUMERO          reduce using rule 12 (operador -> MULTIPLICAR .)
-    FLOTANTE        reduce using rule 12 (operador -> MULTIPLICAR .)
-    CADENA          reduce using rule 12 (operador -> MULTIPLICAR .)
+    MAS             reduce using rule 9 (valor -> NUMERO .)
+    MENOS           reduce using rule 9 (valor -> NUMERO .)
+    MULTIPLICAR     reduce using rule 9 (valor -> NUMERO .)
+    DIVIDIR         reduce using rule 9 (valor -> NUMERO .)
+    MODULO          reduce using rule 9 (valor -> NUMERO .)
+    EXPONENCIACION  reduce using rule 9 (valor -> NUMERO .)
+    $end            reduce using rule 9 (valor -> NUMERO .)
+    PARENTESIS_DER  reduce using rule 9 (valor -> NUMERO .)
 
 
 state 16
 
-    (13) operador -> DIVIDIR .
+    (10) valor -> FLOTANTE .
 
-    NUMERO          reduce using rule 13 (operador -> DIVIDIR .)
-    FLOTANTE        reduce using rule 13 (operador -> DIVIDIR .)
-    CADENA          reduce using rule 13 (operador -> DIVIDIR .)
+    MAS             reduce using rule 10 (valor -> FLOTANTE .)
+    MENOS           reduce using rule 10 (valor -> FLOTANTE .)
+    MULTIPLICAR     reduce using rule 10 (valor -> FLOTANTE .)
+    DIVIDIR         reduce using rule 10 (valor -> FLOTANTE .)
+    MODULO          reduce using rule 10 (valor -> FLOTANTE .)
+    EXPONENCIACION  reduce using rule 10 (valor -> FLOTANTE .)
+    $end            reduce using rule 10 (valor -> FLOTANTE .)
+    PARENTESIS_DER  reduce using rule 10 (valor -> FLOTANTE .)
 
 
 state 17
 
-    (14) operador -> MODULO .
+    (11) valor -> CADENA .
 
-    NUMERO          reduce using rule 14 (operador -> MODULO .)
-    FLOTANTE        reduce using rule 14 (operador -> MODULO .)
-    CADENA          reduce using rule 14 (operador -> MODULO .)
+    MAS             reduce using rule 11 (valor -> CADENA .)
+    MENOS           reduce using rule 11 (valor -> CADENA .)
+    MULTIPLICAR     reduce using rule 11 (valor -> CADENA .)
+    DIVIDIR         reduce using rule 11 (valor -> CADENA .)
+    MODULO          reduce using rule 11 (valor -> CADENA .)
+    EXPONENCIACION  reduce using rule 11 (valor -> CADENA .)
+    $end            reduce using rule 11 (valor -> CADENA .)
+    PARENTESIS_DER  reduce using rule 11 (valor -> CADENA .)
 
 
 state 18
 
-    (15) operador -> EXPONENCIACION .
+    (4) impresion -> PUTS PARENTESIS_IZQ operacionAritmetica . PARENTESIS_DER
 
-    NUMERO          reduce using rule 15 (operador -> EXPONENCIACION .)
-    FLOTANTE        reduce using rule 15 (operador -> EXPONENCIACION .)
-    CADENA          reduce using rule 15 (operador -> EXPONENCIACION .)
+    PARENTESIS_DER  shift and go to state 26
 
 
 state 19
 
-    (9) valor -> valor operador valor .
-    (9) valor -> valor . operador valor
-    (10) operador -> . MAS
-    (11) operador -> . MENOS
-    (12) operador -> . MULTIPLICAR
-    (13) operador -> . DIVIDIR
-    (14) operador -> . MODULO
-    (15) operador -> . EXPONENCIACION
+    (14) operacionAritmetica -> valor operador . operacionAritmetica
+    (13) operacionAritmetica -> . valor
+    (14) operacionAritmetica -> . valor operador operacionAritmetica
+    (9) valor -> . NUMERO
+    (10) valor -> . FLOTANTE
+    (11) valor -> . CADENA
+    (12) valor -> . variable
+    (5) variable -> . VARIABLE_LOCAL
+    (6) variable -> . VARIABLE_GLOBAL
+    (7) variable -> . VARIABLE_INSTANCIA
+    (8) variable -> . VARIABLE_CLASE
 
-  ! shift/reduce conflict for MAS resolved as shift
-  ! shift/reduce conflict for MENOS resolved as shift
-  ! shift/reduce conflict for MULTIPLICAR resolved as shift
-  ! shift/reduce conflict for DIVIDIR resolved as shift
-  ! shift/reduce conflict for MODULO resolved as shift
-  ! shift/reduce conflict for EXPONENCIACION resolved as shift
-    $end            reduce using rule 9 (valor -> valor operador valor .)
-    MAS             shift and go to state 13
-    MENOS           shift and go to state 14
-    MULTIPLICAR     shift and go to state 15
-    DIVIDIR         shift and go to state 16
-    MODULO          shift and go to state 17
-    EXPONENCIACION  shift and go to state 18
+    NUMERO          shift and go to state 15
+    FLOTANTE        shift and go to state 16
+    CADENA          shift and go to state 17
+    VARIABLE_LOCAL  shift and go to state 6
+    VARIABLE_GLOBAL shift and go to state 7
+    VARIABLE_INSTANCIA shift and go to state 8
+    VARIABLE_CLASE  shift and go to state 9
 
-  ! MAS             [ reduce using rule 9 (valor -> valor operador valor .) ]
-  ! MENOS           [ reduce using rule 9 (valor -> valor operador valor .) ]
-  ! MULTIPLICAR     [ reduce using rule 9 (valor -> valor operador valor .) ]
-  ! DIVIDIR         [ reduce using rule 9 (valor -> valor operador valor .) ]
-  ! MODULO          [ reduce using rule 9 (valor -> valor operador valor .) ]
-  ! EXPONENCIACION  [ reduce using rule 9 (valor -> valor operador valor .) ]
+    valor                          shift and go to state 14
+    operacionAritmetica            shift and go to state 27
+    variable                       shift and go to state 12
 
-    operador                       shift and go to state 12
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for MAS in state 19 resolved as shift
-WARNING: shift/reduce conflict for MENOS in state 19 resolved as shift
-WARNING: shift/reduce conflict for MULTIPLICAR in state 19 resolved as shift
-WARNING: shift/reduce conflict for DIVIDIR in state 19 resolved as shift
-WARNING: shift/reduce conflict for MODULO in state 19 resolved as shift
-WARNING: shift/reduce conflict for EXPONENCIACION in state 19 resolved as shift
+state 20
+
+    (15) operador -> MAS .
+
+    NUMERO          reduce using rule 15 (operador -> MAS .)
+    FLOTANTE        reduce using rule 15 (operador -> MAS .)
+    CADENA          reduce using rule 15 (operador -> MAS .)
+    VARIABLE_LOCAL  reduce using rule 15 (operador -> MAS .)
+    VARIABLE_GLOBAL reduce using rule 15 (operador -> MAS .)
+    VARIABLE_INSTANCIA reduce using rule 15 (operador -> MAS .)
+    VARIABLE_CLASE  reduce using rule 15 (operador -> MAS .)
+
+
+state 21
+
+    (16) operador -> MENOS .
+
+    NUMERO          reduce using rule 16 (operador -> MENOS .)
+    FLOTANTE        reduce using rule 16 (operador -> MENOS .)
+    CADENA          reduce using rule 16 (operador -> MENOS .)
+    VARIABLE_LOCAL  reduce using rule 16 (operador -> MENOS .)
+    VARIABLE_GLOBAL reduce using rule 16 (operador -> MENOS .)
+    VARIABLE_INSTANCIA reduce using rule 16 (operador -> MENOS .)
+    VARIABLE_CLASE  reduce using rule 16 (operador -> MENOS .)
+
+
+state 22
+
+    (17) operador -> MULTIPLICAR .
+
+    NUMERO          reduce using rule 17 (operador -> MULTIPLICAR .)
+    FLOTANTE        reduce using rule 17 (operador -> MULTIPLICAR .)
+    CADENA          reduce using rule 17 (operador -> MULTIPLICAR .)
+    VARIABLE_LOCAL  reduce using rule 17 (operador -> MULTIPLICAR .)
+    VARIABLE_GLOBAL reduce using rule 17 (operador -> MULTIPLICAR .)
+    VARIABLE_INSTANCIA reduce using rule 17 (operador -> MULTIPLICAR .)
+    VARIABLE_CLASE  reduce using rule 17 (operador -> MULTIPLICAR .)
+
+
+state 23
+
+    (18) operador -> DIVIDIR .
+
+    NUMERO          reduce using rule 18 (operador -> DIVIDIR .)
+    FLOTANTE        reduce using rule 18 (operador -> DIVIDIR .)
+    CADENA          reduce using rule 18 (operador -> DIVIDIR .)
+    VARIABLE_LOCAL  reduce using rule 18 (operador -> DIVIDIR .)
+    VARIABLE_GLOBAL reduce using rule 18 (operador -> DIVIDIR .)
+    VARIABLE_INSTANCIA reduce using rule 18 (operador -> DIVIDIR .)
+    VARIABLE_CLASE  reduce using rule 18 (operador -> DIVIDIR .)
+
+
+state 24
+
+    (19) operador -> MODULO .
+
+    NUMERO          reduce using rule 19 (operador -> MODULO .)
+    FLOTANTE        reduce using rule 19 (operador -> MODULO .)
+    CADENA          reduce using rule 19 (operador -> MODULO .)
+    VARIABLE_LOCAL  reduce using rule 19 (operador -> MODULO .)
+    VARIABLE_GLOBAL reduce using rule 19 (operador -> MODULO .)
+    VARIABLE_INSTANCIA reduce using rule 19 (operador -> MODULO .)
+    VARIABLE_CLASE  reduce using rule 19 (operador -> MODULO .)
+
+
+state 25
+
+    (20) operador -> EXPONENCIACION .
+
+    NUMERO          reduce using rule 20 (operador -> EXPONENCIACION .)
+    FLOTANTE        reduce using rule 20 (operador -> EXPONENCIACION .)
+    CADENA          reduce using rule 20 (operador -> EXPONENCIACION .)
+    VARIABLE_LOCAL  reduce using rule 20 (operador -> EXPONENCIACION .)
+    VARIABLE_GLOBAL reduce using rule 20 (operador -> EXPONENCIACION .)
+    VARIABLE_INSTANCIA reduce using rule 20 (operador -> EXPONENCIACION .)
+    VARIABLE_CLASE  reduce using rule 20 (operador -> EXPONENCIACION .)
+
+
+state 26
+
+    (4) impresion -> PUTS PARENTESIS_IZQ operacionAritmetica PARENTESIS_DER .
+
+    $end            reduce using rule 4 (impresion -> PUTS PARENTESIS_IZQ operacionAritmetica PARENTESIS_DER .)
+
+
+state 27
+
+    (14) operacionAritmetica -> valor operador operacionAritmetica .
+
+    $end            reduce using rule 14 (operacionAritmetica -> valor operador operacionAritmetica .)
+    PARENTESIS_DER  reduce using rule 14 (operacionAritmetica -> valor operador operacionAritmetica .)
+

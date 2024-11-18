@@ -5,7 +5,7 @@ import datetime
 path = "/home/fabricio/ProyectoLP/"
 # Palabras reservadas
 reservadas = {
-    'BEGIN': 'BEGIN',
+    'begin': 'BEGIN',
     'END': 'END',
     'alias': 'RESERVADA', 
     'and': 'RESERVADA',
@@ -41,12 +41,11 @@ reservadas = {
     'redo': 'RESERVADA',
     'retry': 'RESERVADA',
     'ensure': 'RESERVADA'
-
-}
+    }
 
 # Tokens para el lenguaje Ruby
 #Fabricio Chang
-tokens = [
+tokens = (
     'VARIABLE_LOCAL',
     'VARIABLE_GLOBAL',
     'VARIABLE_INSTANCIA',
@@ -87,7 +86,9 @@ tokens = [
     'DOSPUNTOS_IGUAL',
     'INTERROGACION',
     'SIMBOLO'
-]
+)
+
+tokens += tuple(reservadas.values())
 
 # Expresiones regulares para tokens
 #Fabricio Chang

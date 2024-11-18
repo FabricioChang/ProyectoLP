@@ -1,8 +1,15 @@
 import ply.yacc as yacc
 from Analizador_Lexico import tokens
 
+def p_programa(p):
+    '''programa : asignacion
+                | impresion'''
+
 def p_asignacion(p):
-    'asignacion : variable ASIGNACION valor'
+    'asignacion : variable ASIGNACION operacionAritmetica'
+
+def p_impresion(p):
+    'impresion : PUTS PARENTESIS_IZQ operacionAritmetica PARENTESIS_DER'
 
 def p_variable(p):
     '''variable : VARIABLE_LOCAL
@@ -13,10 +20,13 @@ def p_variable(p):
 def p_valor(p):
     '''valor : NUMERO
             | FLOTANTE
-            | CADENA'''
+            | CADENA
+            | variable'''
 
-def p_valor_Operacion(p):
-    'valor : valor operador valor'
+def p_operacionAritmetica(p):
+    '''operacionAritmetica : valor 
+                         | valor operador operacionAritmetica'''
+
 
 def p_operador(p):
     '''operador : MAS

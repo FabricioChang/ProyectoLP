@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AND ASIGNACION CADENA COMA COMENTARIO CORCHETE_DER CORCHETE_IZQ DIFERENTE DIVIDIR DOSPUNTOS DOSPUNTOS_IGUAL EXPONENCIACION FLECHA_HASH FLOTANTE IGUAL_IGUAL INTERROGACION LLAVE_DER LLAVE_IZQ MAS MAYOR_IGUAL MAYOR_QUE MENOR_IGUAL MENOR_QUE MENOS MODULO MULTIPLICAR NOT NUMERO OR PARENTESIS_DER PARENTESIS_IZQ PUNTO PUNTO_Y_COMA RESERVADA SIMBOLO VARIABLE_CLASE VARIABLE_GLOBAL VARIABLE_INSTANCIA VARIABLE_LOCALasignacion : variable ASIGNACION valorvariable : VARIABLE_LOCAL\n                | VARIABLE_GLOBAL\n                | VARIABLE_INSTANCIA\n                | VARIABLE_CLASEvalor : NUMERO\n            | FLOTANTE\n            | CADENAvalor : valor operador valoroperador : MAS\n                | MENOS\n                | MULTIPLICAR\n                | DIVIDIR\n                | MODULO\n                | EXPONENCIACION'
+_lr_signature = 'AND ASIGNACION CADENA COMA COMENTARIO CORCHETE_DER CORCHETE_IZQ DIFERENTE DIVIDIR DOSPUNTOS DOSPUNTOS_IGUAL END EXPONENCIACION FLECHA_HASH FLOTANTE IGUAL_IGUAL INTERROGACION LLAVE_DER LLAVE_IZQ MAS MAYOR_IGUAL MAYOR_QUE MENOR_IGUAL MENOR_QUE MENOS MODULO MULTIPLICAR NOT NUMERO OR PARENTESIS_DER PARENTESIS_IZQ PUNTO PUNTO_Y_COMA PUTS RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA RESERVADA SIMBOLO VARIABLE_CLASE VARIABLE_GLOBAL VARIABLE_INSTANCIA VARIABLE_LOCALprograma : asignacion\n                | impresionasignacion : variable ASIGNACION operacionAritmeticaimpresion : PUTS PARENTESIS_IZQ operacionAritmetica PARENTESIS_DERvariable : VARIABLE_LOCAL\n                | VARIABLE_GLOBAL\n                | VARIABLE_INSTANCIA\n                | VARIABLE_CLASEvalor : NUMERO\n            | FLOTANTE\n            | CADENA\n            | variableoperacionAritmetica : valor \n                         | valor operador operacionAritmeticaoperador : MAS\n                | MENOS\n                | MULTIPLICAR\n                | DIVIDIR\n                | MODULO\n                | EXPONENCIACION'
     
-_lr_action_items = {'VARIABLE_LOCAL':([0,],[3,]),'VARIABLE_GLOBAL':([0,],[4,]),'VARIABLE_INSTANCIA':([0,],[5,]),'VARIABLE_CLASE':([0,],[6,]),'$end':([1,8,9,10,11,19,],[0,-1,-6,-7,-8,-9,]),'ASIGNACION':([2,3,4,5,6,],[7,-2,-3,-4,-5,]),'NUMERO':([7,12,13,14,15,16,17,18,],[9,9,-10,-11,-12,-13,-14,-15,]),'FLOTANTE':([7,12,13,14,15,16,17,18,],[10,10,-10,-11,-12,-13,-14,-15,]),'CADENA':([7,12,13,14,15,16,17,18,],[11,11,-10,-11,-12,-13,-14,-15,]),'MAS':([8,9,10,11,19,],[13,-6,-7,-8,13,]),'MENOS':([8,9,10,11,19,],[14,-6,-7,-8,14,]),'MULTIPLICAR':([8,9,10,11,19,],[15,-6,-7,-8,15,]),'DIVIDIR':([8,9,10,11,19,],[16,-6,-7,-8,16,]),'MODULO':([8,9,10,11,19,],[17,-6,-7,-8,17,]),'EXPONENCIACION':([8,9,10,11,19,],[18,-6,-7,-8,18,]),}
+_lr_action_items = {'PUTS':([0,],[5,]),'VARIABLE_LOCAL':([0,10,11,19,20,21,22,23,24,25,],[6,6,6,6,-15,-16,-17,-18,-19,-20,]),'VARIABLE_GLOBAL':([0,10,11,19,20,21,22,23,24,25,],[7,7,7,7,-15,-16,-17,-18,-19,-20,]),'VARIABLE_INSTANCIA':([0,10,11,19,20,21,22,23,24,25,],[8,8,8,8,-15,-16,-17,-18,-19,-20,]),'VARIABLE_CLASE':([0,10,11,19,20,21,22,23,24,25,],[9,9,9,9,-15,-16,-17,-18,-19,-20,]),'$end':([1,2,3,6,7,8,9,12,13,14,15,16,17,26,27,],[0,-1,-2,-5,-6,-7,-8,-12,-3,-13,-9,-10,-11,-4,-14,]),'ASIGNACION':([4,6,7,8,9,],[10,-5,-6,-7,-8,]),'PARENTESIS_IZQ':([5,],[11,]),'MAS':([6,7,8,9,12,14,15,16,17,],[-5,-6,-7,-8,-12,20,-9,-10,-11,]),'MENOS':([6,7,8,9,12,14,15,16,17,],[-5,-6,-7,-8,-12,21,-9,-10,-11,]),'MULTIPLICAR':([6,7,8,9,12,14,15,16,17,],[-5,-6,-7,-8,-12,22,-9,-10,-11,]),'DIVIDIR':([6,7,8,9,12,14,15,16,17,],[-5,-6,-7,-8,-12,23,-9,-10,-11,]),'MODULO':([6,7,8,9,12,14,15,16,17,],[-5,-6,-7,-8,-12,24,-9,-10,-11,]),'EXPONENCIACION':([6,7,8,9,12,14,15,16,17,],[-5,-6,-7,-8,-12,25,-9,-10,-11,]),'PARENTESIS_DER':([6,7,8,9,12,14,15,16,17,18,27,],[-5,-6,-7,-8,-12,-13,-9,-10,-11,26,-14,]),'NUMERO':([10,11,19,20,21,22,23,24,25,],[15,15,15,-15,-16,-17,-18,-19,-20,]),'FLOTANTE':([10,11,19,20,21,22,23,24,25,],[16,16,16,-15,-16,-17,-18,-19,-20,]),'CADENA':([10,11,19,20,21,22,23,24,25,],[17,17,17,-15,-16,-17,-18,-19,-20,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'asignacion':([0,],[1,]),'variable':([0,],[2,]),'valor':([7,12,],[8,19,]),'operador':([8,19,],[12,12,]),}
+_lr_goto_items = {'programa':([0,],[1,]),'asignacion':([0,],[2,]),'impresion':([0,],[3,]),'variable':([0,10,11,19,],[4,12,12,12,]),'operacionAritmetica':([10,11,19,],[13,18,27,]),'valor':([10,11,19,],[14,14,14,]),'operador':([14,],[19,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,20 +26,25 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> asignacion","S'",1,None,None,None),
-  ('asignacion -> variable ASIGNACION valor','asignacion',3,'p_asignacion','Analizador_Sintactico.py',5),
-  ('variable -> VARIABLE_LOCAL','variable',1,'p_variable','Analizador_Sintactico.py',8),
-  ('variable -> VARIABLE_GLOBAL','variable',1,'p_variable','Analizador_Sintactico.py',9),
-  ('variable -> VARIABLE_INSTANCIA','variable',1,'p_variable','Analizador_Sintactico.py',10),
-  ('variable -> VARIABLE_CLASE','variable',1,'p_variable','Analizador_Sintactico.py',11),
-  ('valor -> NUMERO','valor',1,'p_valor','Analizador_Sintactico.py',14),
-  ('valor -> FLOTANTE','valor',1,'p_valor','Analizador_Sintactico.py',15),
-  ('valor -> CADENA','valor',1,'p_valor','Analizador_Sintactico.py',16),
-  ('valor -> valor operador valor','valor',3,'p_valor_Operacion','Analizador_Sintactico.py',19),
-  ('operador -> MAS','operador',1,'p_operador','Analizador_Sintactico.py',22),
-  ('operador -> MENOS','operador',1,'p_operador','Analizador_Sintactico.py',23),
-  ('operador -> MULTIPLICAR','operador',1,'p_operador','Analizador_Sintactico.py',24),
-  ('operador -> DIVIDIR','operador',1,'p_operador','Analizador_Sintactico.py',25),
-  ('operador -> MODULO','operador',1,'p_operador','Analizador_Sintactico.py',26),
-  ('operador -> EXPONENCIACION','operador',1,'p_operador','Analizador_Sintactico.py',27),
+  ("S' -> programa","S'",1,None,None,None),
+  ('programa -> asignacion','programa',1,'p_programa','Analizador_Sintactico.py',5),
+  ('programa -> impresion','programa',1,'p_programa','Analizador_Sintactico.py',6),
+  ('asignacion -> variable ASIGNACION operacionAritmetica','asignacion',3,'p_asignacion','Analizador_Sintactico.py',9),
+  ('impresion -> PUTS PARENTESIS_IZQ operacionAritmetica PARENTESIS_DER','impresion',4,'p_impresion','Analizador_Sintactico.py',12),
+  ('variable -> VARIABLE_LOCAL','variable',1,'p_variable','Analizador_Sintactico.py',15),
+  ('variable -> VARIABLE_GLOBAL','variable',1,'p_variable','Analizador_Sintactico.py',16),
+  ('variable -> VARIABLE_INSTANCIA','variable',1,'p_variable','Analizador_Sintactico.py',17),
+  ('variable -> VARIABLE_CLASE','variable',1,'p_variable','Analizador_Sintactico.py',18),
+  ('valor -> NUMERO','valor',1,'p_valor','Analizador_Sintactico.py',21),
+  ('valor -> FLOTANTE','valor',1,'p_valor','Analizador_Sintactico.py',22),
+  ('valor -> CADENA','valor',1,'p_valor','Analizador_Sintactico.py',23),
+  ('valor -> variable','valor',1,'p_valor','Analizador_Sintactico.py',24),
+  ('operacionAritmetica -> valor','operacionAritmetica',1,'p_operacionAritmetica','Analizador_Sintactico.py',27),
+  ('operacionAritmetica -> valor operador operacionAritmetica','operacionAritmetica',3,'p_operacionAritmetica','Analizador_Sintactico.py',28),
+  ('operador -> MAS','operador',1,'p_operador','Analizador_Sintactico.py',32),
+  ('operador -> MENOS','operador',1,'p_operador','Analizador_Sintactico.py',33),
+  ('operador -> MULTIPLICAR','operador',1,'p_operador','Analizador_Sintactico.py',34),
+  ('operador -> DIVIDIR','operador',1,'p_operador','Analizador_Sintactico.py',35),
+  ('operador -> MODULO','operador',1,'p_operador','Analizador_Sintactico.py',36),
+  ('operador -> EXPONENCIACION','operador',1,'p_operador','Analizador_Sintactico.py',37),
 ]
