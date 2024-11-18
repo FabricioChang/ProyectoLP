@@ -9,7 +9,8 @@ def p_sentencia(p):
     '''sentencia : asignacion
                 | impresion
                 | array
-                | condicion'''
+                | condicion
+                | funcion'''
 
 def p_asignacion(p):
     'asignacion : variable ASIGNACION valores'
@@ -49,6 +50,18 @@ def p_elsif_clauses(p):
                      | ELSIF expresion instrucciones elsif_clauses
                      | ELSIF expresion THEN instrucciones elsif_clauses'''
 
+# 1 Tipo de funcion 
+def p_funcion(p):
+    '''funcion : DEF VARIABLE_LOCAL PARENTESIS_IZQ parametros PARENTESIS_DER instrucciones END_BLOCK'''
+
+def p_parametros(p):
+    '''parametros : parametro
+                  | parametro COMA parametros'''
+
+def p_parametro(p):
+    '''parametro : VARIABLE_LOCAL
+                | empty'''
+
 
 def p_expresion(p):
     '''expresion : var_expresion
@@ -84,7 +97,8 @@ def p_instruccion(p):
     '''instruccion : asignacion
                     | impresion
                     | condicion
-                    | llamada_funcion'''
+                    | llamada_funcion
+                    | funcion'''
     
 def p_llamada_funcion(p):
     '''llamada_funcion : VARIABLE_LOCAL PARENTESIS_IZQ argumentos PARENTESIS_DER
