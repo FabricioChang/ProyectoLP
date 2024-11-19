@@ -1,6 +1,9 @@
 import ply.yacc as yacc
+import datetime
+import os
 from Analizador_Lexico import tokens
 
+path = r"C:\Users\fabri\Desktop"
 def p_programa(p):
     '''programa : sentencia
                 | sentencia programa'''
@@ -15,9 +18,16 @@ def p_sentencia(p):
 def p_asignacion(p):
     'asignacion : variable ASIGNACION valores'
 
-
+def p_solicitud_datos(p):
+    '''solicitud_datos : VARIABLE_LOCAL ASIGNACION GETS PARENTESIS_IZQ PARENTESIS_DER'''
+    
 def p_impresion(p):
     'impresion : PUTS PARENTESIS_IZQ argumentos PARENTESIS_DER'
+
+def p_impresion_sin_argumentos(p):
+    '''impresion : PUTS'''
+
+
 
 #Cristhian Vinces - 1 estructura de datos, 1 estructura de control y 1 tipo de función.
 #1 estructura de datos
@@ -139,6 +149,7 @@ def p_valor(p):
             | FLOTANTE
             | CADENA
             | variable'''
+    
 
 def p_operacionAritmetica(p):
     '''operacionAritmetica : valor 
@@ -152,22 +163,91 @@ def p_operador(p):
                 | DIVIDIR
                 | MODULO
                 | EXPONENCIACION'''
+    
+#Fabricio Chang - 1 estructura de datos, 1 estructura de control y 1 tipo de función.
+#1 estructura de datos
+def p_hash(p):
+    '''hash : LLAVE_IZQ pares LLAVE_DER'''
 
- # Error rule for syntax errors
+def p_pares(p):
+    '''pares : par
+             | par COMA pares'''
+
+def p_par(p):
+    '''par : valor FLECHA_HASH valor'''
+
+#1 estructura de control
+def p_until(p):
+    '''until : UNTIL expresion DO instrucciones END_BLOCK
+             | UNTIL expresion instrucciones END_BLOCK'''
+
+# 1 Tipo de funcion 
+def p_funcion_parametros_defecto(p):
+    '''funcion : DEF VARIABLE_LOCAL PARENTESIS_IZQ parametros_defecto PARENTESIS_DER instrucciones END_BLOCK'''
+
+def p_parametros_defecto(p):
+    '''parametros_defecto : parametro_defecto
+                          | parametro_defecto COMA parametros_defecto'''
+
+def p_parametro_defecto(p):
+    '''parametro_defecto : VARIABLE_LOCAL
+                         | VARIABLE_LOCAL ASIGNACION valor'''
+
+
+def p_cadena_interpolacion(p):
+    '''cadena_interpolacion : CADENA LLAVE_IZQ variable LLAVE_DER'''
+
+def p_incremento(p):
+    '''incremento : VARIABLE_LOCAL MAS ASIGNACION expresion'''
+
+
+
+# Función para generar el log
+def generar_log(nombre_usuario, contenido, path):
+    fecha_hora = datetime.datetime.now().strftime("%d%m%Y-%Hh%M")
+    nombre_archivo = os.path.join(path, f"sintactico-{nombre_usuario}-{fecha_hora}.txt")  # Usar os.path.join para asegurar la ruta correcta
+    try:
+        # Asegurarse de que el directorio exista
+        os.makedirs(os.path.dirname(nombre_archivo), exist_ok=True)
+        
+        with open(nombre_archivo, 'w') as log:
+            log.write(contenido)
+        print(f"Archivo de log '{nombre_archivo}' creado exitosamente.")
+    except Exception as e:
+        print(f"Error al crear el archivo de log: {e}")
+
+# Error rule for syntax errors
 def p_error(p):
+    global input_data
     if p:
-        print(f"Error de sintaxis en la línea {p.lineno}, cerca de '{p.value}'")
+        col = find_column(input_data, p)
+        error_message = f"Error de sintaxis en la línea {p.lineno}, columna {col}, cerca de '{p.value}'"
     else:
-        print("Error de sintaxis: final inesperado de la entrada.")
+        error_message = "Error de sintaxis: final inesperado de la entrada."
+    
+    # Guardamos el error en el archivo de log
+    nombre = input("Indicanos tu nombre: ")
+    generar_log(nombre, error_message, path)
+
+# Función para encontrar la columna donde ocurrió el error
+def find_column(input_data, token):
+    last_newline = input_data.rfind('\\n', 0, token.lexpos)
+    if last_newline < 0:
+        last_newline = -1
+    return (token.lexpos - last_newline)
 
 # Build the parser
 parser = yacc.yacc()
 
 while True:
-   try:
-       s = input('calc > ')
-   except EOFError:
-       break
-   if not s: continue
-   result = parser.parse(s)
-   print(result)
+    try:
+        s = input('calc > ')
+    except EOFError:
+        break
+    if not s: 
+        continue
+    
+    # Asignar el texto de entrada a input_data
+    input_data = s
+    result = parser.parse(s)
+    print(result)

@@ -1,8 +1,9 @@
 import ply.lex as lex
+import os
 import datetime
 
 # Fabricio Chang - Inicio
-path = "/home/fabricio/ProyectoLP/"
+path = r"C:\Users\fabri\OneDrive\Documents\GitHub\ProyectoLP"
 # Palabras reservadas
 reservadas = {
     'begin': 'BEGIN',
@@ -74,6 +75,7 @@ tokens = (
     'MENOR_QUE',
     'MAYOR_QUE',
     'PUNTO',
+    'GETS',
     #Cristhian Vinces
     'IGUAL_IGUAL',
     'DIFERENTE',
@@ -113,6 +115,7 @@ t_LLAVE_DER = r'\}'
 t_MAYOR_QUE = r'>'
 t_MENOR_QUE = r'<'
 t_PUNTO =r'\.'
+t_GETS = r'gets'
 #Cristhian Vinces
 t_IGUAL_IGUAL = r'=='
 t_DIFERENTE = r'!='
@@ -176,8 +179,10 @@ lexer = lex.lex()
 # Función para generar un log con el nombre del archivo según la convención
 def generar_log(nombre_usuario, contenido):
     fecha_hora = datetime.datetime.now().strftime("%d%m%Y-%Hh%M")
-    nombre_archivo = f"{path}lexico-{nombre_usuario}-{fecha_hora}.txt"
+    nombre_archivo = os.path.join(path, f"lexico-{nombre_usuario}-{fecha_hora}.txt")
+    
     try:
+        os.makedirs(os.path.dirname(nombre_archivo), exist_ok=True)  # Verifica que el directorio exista
         with open(nombre_archivo, 'w') as log:
             log.write(contenido)
         print(f"Archivo de log '{nombre_archivo}' creado exitosamente.")
