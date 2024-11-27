@@ -251,3 +251,10 @@ while True:
     input_data = s
     result = parser.parse(s)
     print(result)
+
+def analizador_sintactico(codigo):
+    try:
+        resultado = parser.parse(codigo)
+        return "Análisis sintáctico completado con éxito."
+    except:
+        return "Error en el análisis sintáctico."

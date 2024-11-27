@@ -199,3 +199,12 @@ def analizar_archivo(nombre_usuario, archivo_prueba):
         for token in lexer:
             resultado += f"{token.type}: {token.value}\n"
     generar_log(nombre_usuario, resultado)
+
+def analizador_lexico(archivo):
+    with open(archivo, 'r') as archivo:
+        data = archivo.read()
+        lexer.input(data)
+        resultado = ""
+        for token in lexer:
+            resultado += f"{token.type}: {token.value}\n"
+    return resultado
