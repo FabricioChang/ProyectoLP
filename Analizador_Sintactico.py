@@ -13,7 +13,8 @@ def p_sentencia(p):
                 | impresion
                 | array
                 | condicion
-                | funcion'''
+                | funcion
+                | comentario'''
 
 def p_asignacion(p):
     'asignacion : variable ASIGNACION valores'
@@ -27,7 +28,8 @@ def p_impresion(p):
 def p_impresion_sin_argumentos(p):
     '''impresion : PUTS'''
 
-
+def p_comentario(p):
+    '''comentario : COMENTARIO argumento'''
 
 #Cristhian Vinces - 1 estructura de datos, 1 estructura de control y 1 tipo de función.
 #1 estructura de datos
@@ -201,7 +203,7 @@ def p_incremento(p):
     '''incremento : VARIABLE_LOCAL MAS ASIGNACION expresion'''
 
 
-
+'''
 # Función para generar el log
 def generar_log(nombre_usuario, contenido, path):
     fecha_hora = datetime.datetime.now().strftime("%d%m%Y-%Hh%M")
@@ -234,12 +236,12 @@ def find_column(input_data, token):
     last_newline = input_data.rfind('\\n', 0, token.lexpos)
     if last_newline < 0:
         last_newline = -1
-    return (token.lexpos - last_newline)
+    return (token.lexpos - last_newline)'''
 
 # Build the parser
 parser = yacc.yacc()
 
-while True:
+'''while True:
     try:
         s = input('calc > ')
     except EOFError:
@@ -250,11 +252,29 @@ while True:
     # Asignar el texto de entrada a input_data
     input_data = s
     result = parser.parse(s)
-    print(result)
+    print(result)'''
 
-def analizador_sintactico(codigo):
+def analizador_sintactico(file_path):
+    resultados = []
     try:
-        resultado = parser.parse(codigo)
-        return "Análisis sintáctico completado con éxito."
-    except:
-        return "Error en el análisis sintáctico."
+        with open(file_path, 'r') as archivo:
+            for i, linea in enumerate(archivo, start=1):
+                linea = linea.strip()  # Elimina espacios en blanco al inicio y final de la línea
+                if not linea:  # Si la línea está vacía, continuar con la siguiente
+                    continue
+                
+                # Asignar la línea de entrada actual a input_data
+                global input_data
+                input_data = linea
+                
+                try:
+                    resultado = parser.parse(linea)
+                    resultados.append(f"Línea {i}: Análisis sintáctico completado con éxito.")
+                except Exception as e:
+                    resultados.append(f"Línea {i}: Error en el análisis sintáctico: {e}")
+        
+        return "\n".join(resultados)  # Devuelve un resumen de los resultados línea por línea
+    except FileNotFoundError:
+        return f"Error: No se pudo encontrar el archivo en la ruta '{file_path}'."
+    except Exception as e:
+        return f"Error al procesar el archivo: {e}"

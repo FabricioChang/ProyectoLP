@@ -1,19 +1,25 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
+from Analizador_Lexico import analizador_lexico
+from Analizador_Sintactico import analizador_sintactico
 
+file = None
 # Funciones de los botones
 def cargar_archivo():
-    archivo = filedialog.askopenfilename(title="Seleccionar archivo", filetypes=[("Archivos de texto", "*.txt"), ("Todos los archivos", "*.*")])
+    global file
+    archivo = filedialog.askopenfilename(title="Seleccionar archivo", filetypes=[("Archivos de texto", "*.rb"), ("Todos los archivos", "*.*")])
+    file = archivo
     if archivo:
         estado_carga.set("Estado de carga: Exitoso ✓")
         messagebox.showinfo("Archivo cargado", f"Se ha cargado el archivo: {archivo}")
     else:
         estado_carga.set("Estado de carga: Fallido ✗")
+    
 
 def ejecutar_analisis():
     # Aquí iría la lógica para ejecutar los análisis léxico, sintáctico y semántico
-    text_lexico.insert(tk.END, "Resultado del análisis léxico...\n")
-    text_sintactico.insert(tk.END, "Resultado del análisis sintáctico...\n")
+    text_lexico.insert(tk.END, analizador_lexico(file))
+    text_sintactico.insert(tk.END, analizador_sintactico(file))
     text_semantico.insert(tk.END, "Resultado del análisis semántico...\n")
     messagebox.showinfo("Ejecutar", "Análisis completado.")
 

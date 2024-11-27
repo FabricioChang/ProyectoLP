@@ -177,7 +177,7 @@ def t_error(t):
 lexer = lex.lex()
 
 # Función para generar un log con el nombre del archivo según la convención
-def generar_log(nombre_usuario, contenido):
+"""def generar_log(nombre_usuario, contenido):
     fecha_hora = datetime.datetime.now().strftime("%d%m%Y-%Hh%M")
     nombre_archivo = os.path.join(path, f"lexico-{nombre_usuario}-{fecha_hora}.txt")
     
@@ -198,7 +198,7 @@ def analizar_archivo(nombre_usuario, archivo_prueba):
         resultado = ""
         for token in lexer:
             resultado += f"{token.type}: {token.value}\n"
-    generar_log(nombre_usuario, resultado)
+    generar_log(nombre_usuario, resultado)"""
 
 def analizador_lexico(archivo):
     with open(archivo, 'r') as archivo:
