@@ -247,9 +247,9 @@ def analizador_sintactico(file_path):
                 
                 try:
                     parser.parse(linea)
-                    resultados.append(f"Línea {i}: Análisis sintáctico completado con éxito.")
+                    resultados.append(f"Línea {i}: Análisis sintáctico completado con éxito.  \n")
                 except SyntaxError as e:
-                    resultados.append(f"Línea {i}: {e}")
+                    resultados.append(f"Línea {i}: {e}\n")
         
         return resultados
     except FileNotFoundError:

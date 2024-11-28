@@ -44,7 +44,14 @@ def guardar_analisis():
 # Configuración principal de la ventana
 root = tk.Tk()
 root.title("Analizador de Código Ruby")
-root.geometry("800x600")
+root.geometry("800x600")  # Tamaño inicial
+
+# Configuración de expansión para filas y columnas
+root.grid_columnconfigure(0, weight=1)  # Expansión para la columna 0
+root.grid_columnconfigure(1, weight=1)  # Expansión para la columna 1
+root.grid_columnconfigure(2, weight=1)  # Expansión para la columna 2
+root.grid_rowconfigure(2, weight=3)     # Expansión para la fila 2
+root.grid_rowconfigure(4, weight=3)     # Expansión para la fila 4
 
 # Estado de carga
 estado_carga = tk.StringVar()
@@ -59,19 +66,19 @@ label_estado.grid(row=0, column=1, padx=10, pady=10, sticky="w")
 
 # Cuadros de texto para los análisis
 label_semantico = tk.Label(root, text="Análisis Semántico")
-label_semantico.grid(row=1, column=0, columnspan=2, pady=10, sticky="w")
+label_semantico.grid(row=1, column=0, columnspan=3, pady=10, sticky="w")
 text_semantico = tk.Text(root, height=5, width=90)
-text_semantico.grid(row=2, column=0, columnspan=3, padx=10)
+text_semantico.grid(row=2, column=0, columnspan=3, padx=10, pady=10, sticky="nsew")  # Se adapta dinámicamente
 
 label_lexico = tk.Label(root, text="Análisis Léxico")
 label_lexico.grid(row=3, column=0, padx=10, sticky="w")
 text_lexico = tk.Text(root, height=10, width=40)
-text_lexico.grid(row=4, column=0, padx=10, pady=10)
+text_lexico.grid(row=4, column=0, padx=10, pady=10, sticky="nsew")  # Se adapta dinámicamente
 
 label_sintactico = tk.Label(root, text="Análisis Sintáctico")
 label_sintactico.grid(row=3, column=1, padx=10, sticky="w")
 text_sintactico = tk.Text(root, height=10, width=40)
-text_sintactico.grid(row=4, column=1, padx=10, pady=10)
+text_sintactico.grid(row=4, column=1, padx=10, pady=10, sticky="nsew")  # Se adapta dinámicamente
 
 # Botones inferiores
 btn_guardar = tk.Button(root, text="Guardar Análisis", command=guardar_analisis, width=15, height=2)
