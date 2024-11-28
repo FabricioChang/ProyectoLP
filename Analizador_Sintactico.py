@@ -203,78 +203,56 @@ def p_incremento(p):
     '''incremento : VARIABLE_LOCAL MAS ASIGNACION expresion'''
 
 
-'''
-# Función para generar el log
-def generar_log(nombre_usuario, contenido, path):
-    fecha_hora = datetime.datetime.now().strftime("%d%m%Y-%Hh%M")
-    nombre_archivo = os.path.join(path, f"sintactico-{nombre_usuario}-{fecha_hora}.txt")  # Usar os.path.join para asegurar la ruta correcta
-    try:
-        # Asegurarse de que el directorio exista
-        os.makedirs(os.path.dirname(nombre_archivo), exist_ok=True)
-        
-        with open(nombre_archivo, 'w') as log:
-            log.write(contenido)
-        print(f"Archivo de log '{nombre_archivo}' creado exitosamente.")
-    except Exception as e:
-        print(f"Error al crear el archivo de log: {e}")
+def find_column(input_data, token):
+    """
+    Encuentra la columna donde ocurrió el error basado en la posición del token.
+    """
+    last_newline = input_data.rfind('\n', 0, token.lexpos)
+    if last_newline < 0:
+        last_newline = -1
+    return token.lexpos - last_newline
 
-# Error rule for syntax errors
+# Regla de error para errores sintácticos
 def p_error(p):
+    """
+    Función que se activa cuando hay un error en el análisis sintáctico.
+    """
     global input_data
     if p:
         col = find_column(input_data, p)
-        error_message = f"Error de sintaxis en la línea {p.lineno}, columna {col}, cerca de '{p.value}'"
+        raise SyntaxError(f"Error de sintaxis en la línea actual, columna {col}, cerca de '{p.value}'.")
     else:
-        error_message = "Error de sintaxis: final inesperado de la entrada."
-    
-    # Guardamos el error en el archivo de log
-    nombre = input("Indicanos tu nombre: ")
-    generar_log(nombre, error_message, path)
+        raise SyntaxError("Error de sintaxis: final inesperado de la entrada.")
 
-# Función para encontrar la columna donde ocurrió el error
-def find_column(input_data, token):
-    last_newline = input_data.rfind('\\n', 0, token.lexpos)
-    if last_newline < 0:
-        last_newline = -1
-    return (token.lexpos - last_newline)'''
-
-# Build the parser
+# Construir el parser
 parser = yacc.yacc()
 
-'''while True:
-    try:
-        s = input('calc > ')
-    except EOFError:
-        break
-    if not s: 
-        continue
-    
-    # Asignar el texto de entrada a input_data
-    input_data = s
-    result = parser.parse(s)
-    print(result)'''
-
 def analizador_sintactico(file_path):
+    """
+    Analiza un archivo línea por línea y devuelve el resultado del análisis.
+    """
     resultados = []
     try:
         with open(file_path, 'r') as archivo:
             for i, linea in enumerate(archivo, start=1):
                 linea = linea.strip()  # Elimina espacios en blanco al inicio y final de la línea
-                if not linea:  # Si la línea está vacía, continuar con la siguiente
+                if not linea:  # Ignorar líneas vacías
                     continue
-                
-                # Asignar la línea de entrada actual a input_data
+
                 global input_data
                 input_data = linea
+
+                # Asignar manualmente el número de línea
+                parser.lineno = i
                 
                 try:
-                    resultado = parser.parse(linea)
+                    parser.parse(linea)
                     resultados.append(f"Línea {i}: Análisis sintáctico completado con éxito.")
-                except Exception as e:
-                    resultados.append(f"Línea {i}: Error en el análisis sintáctico: {e}")
+                except SyntaxError as e:
+                    resultados.append(f"Línea {i}: {e}")
         
-        return "\n".join(resultados)  # Devuelve un resumen de los resultados línea por línea
+        return resultados
     except FileNotFoundError:
-        return f"Error: No se pudo encontrar el archivo en la ruta '{file_path}'."
+        return [f"Error: No se pudo encontrar el archivo en la ruta '{file_path}'."]
     except Exception as e:
-        return f"Error al procesar el archivo: {e}"
+        return [f"Error al procesar el archivo: {e}."]
