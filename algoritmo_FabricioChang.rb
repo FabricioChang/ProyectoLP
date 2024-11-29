@@ -1,44 +1,52 @@
-# Declaración de variables
-nombre = "Fabricio"
-$contador = 10
-@lista = [1, 2, 3, 4, 5]
+# Algoritmo de prueba - Fabricio Alberto Chang Encalada
+# Comentario de prueba: Declaración de variables
+edad = 25            # Variable de tipo entero
+nombre = "Carlos"    # Variable de tipo cadena
+precio = 10.5        # Variable de tipo flotante
+is_active = true     # Variable booleana
 
-# Estructura de datos Hash
-mi_hash = { "clave1" => 10, "clave2" => 20 }
+# Error semántico: Asignación incorrecta de tipo
+# Edad debería ser un entero, pero se le asigna una cadena
+edad = "treinta"     # Error: Se esperaba un entero
 
-# Solicitud de datos
-puts "Escribe un número:"
-numero = gets()
+# Operadores y expresiones
+total = precio * 2    # Operación válida: multiplicación de flotante
+descuento = 5 + "10"  # Error semántico: intento de sumar flotante y cadena
 
-# Función con parámetros por defecto
-def saludar(nombre = "Invitado")
-    puts "Hola, #{nombre}"
-end
-
-# Condicionales y operadores lógicos
-if numero.to_i > 5 && @lista.include?(numero.to_i)
-    puts "El número está en la lista y es mayor a 5"
+# Estructuras de control
+if edad == "treinta"  # Error semántico: edad debería ser un número entero
+  puts "Edad válida"
 else
-    puts "El número no cumple las condiciones"
+  puts "Edad no válida"
 end
 
-# Ciclo until
-until $contador == 0
-    puts "Contador: #{$contador}"
-    $contador -= 1
+# Bucle for
+for i in 1..3
+  puts "Iteración #{i}"
 end
 
-# Función llamada con y sin parámetros
-saludar()
-saludar(nombre)
+# Error semántico: break fuera de un bucle
+break  # Error: no está dentro de un bucle
 
-# Uso de interpolación en cadenas
-puts "El valor de mi_hash['clave1'] es #{mi_hash['clave1']}"
-
-# Operación aritmética e incremento
-suma = 0
-@lista.each do |num|
-    suma += num
+# Funciones
+def saludar(nombre)
+  # Función correcta: retorna un saludo
+  return "Hola, #{nombre}"
 end
-puts "La suma de la lista es #{suma}"
 
+puts saludar("Carlos")
+
+def calcular_area(base, altura)
+  # Función incorrecta: retorna un string en lugar de un número
+  return "El área es #{base * altura}"
+end
+
+puts calcular_area(5, 10)  # Error semántico: se espera un valor numérico
+
+# Comprobación de variables globales
+$contador = 0
+$contador += 1
+puts $contador
+
+# Uso de variables no declaradas (error léxico y sintáctico)
+puts non_existent_variable   # Error sintáctico: variable no definida

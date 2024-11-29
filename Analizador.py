@@ -21,7 +21,7 @@ def ejecutar_analisis():
     # Aquí iría la lógica para ejecutar los análisis léxico, sintáctico y semántico
     text_lexico.insert(tk.END, analizador_lexico(file))
     text_sintactico.insert(tk.END, analizador_sintactico(file))
-    text_semantico.insert(tk.END, "Resultado del análisis semántico...\n")
+    text_semantico.insert(tk.END, analizador_semantico(file))
     messagebox.showinfo("Ejecutar", "Análisis completado.")
 
 def limpiar():

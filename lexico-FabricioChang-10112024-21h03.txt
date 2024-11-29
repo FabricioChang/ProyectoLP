@@ -1,19 +1,161 @@
-COMENTARIO: # Fabricio Chang
+=== Análisis Léxico ===
+COMENTARIO: # Algoritmo de prueba - Fabricio Alberto Chang Encalada
+COMENTARIO: # Comentario de prueba: DeclaraciÃ³n de variables
+VARIABLE_LOCAL: edad
+ASIGNACION: =
+NUMERO: 25
+COMENTARIO: # Variable de tipo entero
 VARIABLE_LOCAL: nombre
 ASIGNACION: =
-CADENA: "Fabricio"
-VARIABLE_GLOBAL: $contador
+CADENA: "Carlos"
+COMENTARIO: # Variable de tipo cadena
+VARIABLE_LOCAL: precio
+ASIGNACION: =
+FLOTANTE: 10.5
+COMENTARIO: # Variable de tipo flotante
+VARIABLE_LOCAL: is_active
+ASIGNACION: =
+TRUE: true
+COMENTARIO: # Variable booleana
+COMENTARIO: # Error semÃ¡ntico: AsignaciÃ³n incorrecta de tipo
+COMENTARIO: # Edad deberÃ­a ser un entero, pero se le asigna una cadena
+VARIABLE_LOCAL: edad
+ASIGNACION: =
+CADENA: "treinta"
+COMENTARIO: # Error: Se esperaba un entero
+COMENTARIO: # Operadores y expresiones
+VARIABLE_LOCAL: total
+ASIGNACION: =
+VARIABLE_LOCAL: precio
+MULTIPLICAR: *
+NUMERO: 2
+COMENTARIO: # OperaciÃ³n vÃ¡lida: multiplicaciÃ³n de flotante
+VARIABLE_LOCAL: descuento
 ASIGNACION: =
 NUMERO: 5
-RESERVADA: if
-VARIABLE_LOCAL: nombre
+MAS: +
+CADENA: "10"
+COMENTARIO: # Error semÃ¡ntico: intento de sumar flotante y cadena
+COMENTARIO: # Estructuras de control
+IF: if
+VARIABLE_LOCAL: edad
+IGUAL_IGUAL: ==
+CADENA: "treinta"
+COMENTARIO: # Error semÃ¡ntico: edad deberÃ­a ser un nÃºmero entero
+PUTS: puts
+CADENA: "Edad vÃ¡lida"
+ELSE: else
+PUTS: puts
+CADENA: "Edad no vÃ¡lida"
+END_BLOCK: end
+COMENTARIO: # Bucle for
+VARIABLE_LOCAL: for
+VARIABLE_LOCAL: i
+IN: in
+NUMERO: 1
 PUNTO: .
-RESERVADA: length
-MAYOR_QUE: >
-NUMERO: 3
-RESERVADA: puts
-CADENA: "Nombre largo"
-RESERVADA: else
-RESERVADA: puts
-CADENA: "Nombre corto"
-RESERVADA: end
+FLOTANTE: 0.3
+PUTS: puts
+CADENA: "IteraciÃ³n #{i}"
+END_BLOCK: end
+COMENTARIO: # Error semÃ¡ntico: break fuera de un bucle
+BREAK: break
+COMENTARIO: # Error: no estÃ¡ dentro de un bucle
+COMENTARIO: # Funciones
+DEF: def
+VARIABLE_LOCAL: saludar
+PARENTESIS_IZQ: (
+VARIABLE_LOCAL: nombre
+PARENTESIS_DER: )
+COMENTARIO: # FunciÃ³n correcta: retorna un saludo
+RETURN: return
+CADENA: "Hola, #{nombre}"
+END_BLOCK: end
+PUTS: puts
+VARIABLE_LOCAL: saludar
+PARENTESIS_IZQ: (
+CADENA: "Carlos"
+PARENTESIS_DER: )
+DEF: def
+VARIABLE_LOCAL: calcular_area
+PARENTESIS_IZQ: (
+VARIABLE_LOCAL: base
+COMA: ,
+VARIABLE_LOCAL: altura
+PARENTESIS_DER: )
+COMENTARIO: # FunciÃ³n incorrecta: retorna un string en lugar de un nÃºmero
+RETURN: return
+CADENA: "El Ã¡rea es #{base * altura}"
+END_BLOCK: end
+PUTS: puts
+VARIABLE_LOCAL: calcular_area
+PARENTESIS_IZQ: (
+NUMERO: 5
+COMA: ,
+NUMERO: 10
+PARENTESIS_DER: )
+COMENTARIO: # Error semÃ¡ntico: se espera un valor numÃ©rico
+COMENTARIO: # ComprobaciÃ³n de variables globales
+VARIABLE_GLOBAL: $contador
+ASIGNACION: =
+NUMERO: 0
+VARIABLE_GLOBAL: $contador
+MAS: +
+ASIGNACION: =
+NUMERO: 1
+PUTS: puts
+VARIABLE_GLOBAL: $contador
+COMENTARIO: # Uso de variables no declaradas (error lÃ©xico y sintÃ¡ctico)
+PUTS: puts
+VARIABLE_LOCAL: non_existent_variable
+COMENTARIO: # Error sintÃ¡ctico: variable no definida
+
+
+=== Análisis Sintáctico ===
+{Línea 1: Análisis sintáctico completado con éxito.  
+} {Línea 2: Análisis sintáctico completado con éxito.  
+} {Línea 3: Análisis sintáctico completado con éxito.  
+} {Línea 4: Análisis sintáctico completado con éxito.  
+} {Línea 5: Análisis sintáctico completado con éxito.  
+} {Línea 6: Análisis sintáctico completado con éxito.  
+} {Línea 8: Análisis sintáctico completado con éxito.  
+} {Línea 9: Análisis sintáctico completado con éxito.  
+} {Línea 10: Análisis sintáctico completado con éxito.  
+} {Línea 12: Análisis sintáctico completado con éxito.  
+} {Línea 13: Análisis sintáctico completado con éxito.  
+} {Línea 14: Análisis sintáctico completado con éxito.  
+} {Línea 16: Análisis sintáctico completado con éxito.  
+} {Línea 17: Error de sintaxis en la línea actual, columna 23, cerca de '# Error semÃ¡ntico: edad deberÃ­a ser un nÃºmero entero'.
+} {Línea 18: Error de sintaxis en la línea actual, columna 6, cerca de '"Edad vÃ¡lida"'.
+} {Línea 19: Error de sintaxis en la línea actual, columna 1, cerca de 'else'.
+} {Línea 20: Error de sintaxis en la línea actual, columna 6, cerca de '"Edad no vÃ¡lida"'.
+} {Línea 21: Error de sintaxis en la línea actual, columna 1, cerca de 'end'.
+} {Línea 23: Análisis sintáctico completado con éxito.  
+} {Línea 24: Error de sintaxis en la línea actual, columna 5, cerca de 'i'.
+} {Línea 25: Error de sintaxis en la línea actual, columna 6, cerca de '"IteraciÃ³n #{i}"'.
+} {Línea 26: Error de sintaxis en la línea actual, columna 1, cerca de 'end'.
+} {Línea 28: Análisis sintáctico completado con éxito.  
+} {Línea 29: Error de sintaxis en la línea actual, columna 1, cerca de 'break'.
+} {Línea 31: Análisis sintáctico completado con éxito.  
+} {Línea 32: Error de sintaxis: final inesperado de la entrada.
+} {Línea 33: Análisis sintáctico completado con éxito.  
+} {Línea 34: Error de sintaxis en la línea actual, columna 1, cerca de 'return'.
+} {Línea 35: Error de sintaxis en la línea actual, columna 1, cerca de 'end'.
+} {Línea 37: Error de sintaxis en la línea actual, columna 13, cerca de '('.
+} {Línea 39: Error de sintaxis: final inesperado de la entrada.
+} {Línea 40: Análisis sintáctico completado con éxito.  
+} {Línea 41: Error de sintaxis en la línea actual, columna 1, cerca de 'return'.
+} {Línea 42: Error de sintaxis en la línea actual, columna 1, cerca de 'end'.
+} {Línea 44: Error de sintaxis en la línea actual, columna 19, cerca de '('.
+} {Línea 46: Análisis sintáctico completado con éxito.  
+} {Línea 47: Análisis sintáctico completado con éxito.  
+} {Línea 48: Error de sintaxis en la línea actual, columna 11, cerca de '+'.
+} {Línea 49: Error de sintaxis: final inesperado de la entrada.
+} {Línea 51: Análisis sintáctico completado con éxito.  
+} {Línea 52: Error de sintaxis en la línea actual, columna 30, cerca de '# Error sintÃ¡ctico: variable no definida'.
+}
+
+=== Análisis Semántico ===
+Error: No se pudo determinar el tipo de la variable 'is_active' con valor 'true     # Variable booleana'.
+Error: No se pudo determinar el tipo de la variable 'total' con valor 'precio * 2    # Operación válida: multiplicación de flotante'.
+Error: No se pudo determinar el tipo de la variable 'descuento' con valor '5 + "10"  # Error semántico: intento de sumar flotante y cadena'.
