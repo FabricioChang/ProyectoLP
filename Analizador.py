@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from Analizador_Lexico import analizador_lexico
 from Analizador_Sintactico import analizador_sintactico
+from Analizador_Semantico import analizador_semantico
 
 file = None
 # Funciones de los botones
