@@ -1,4 +1,3 @@
-import ast
 import re
 
 def extraer_asignaciones_y_funciones(archivo):
@@ -12,18 +11,27 @@ def extraer_asignaciones_y_funciones(archivo):
         lines = f.readlines()
 
     for i, linea in enumerate(lines):
-        linea = linea.strip()
+        # Eliminar comentarios
+        linea = re.sub(r'#.*$', '', linea).strip()
 
-        # Detectar asignaciones usando ast.literal_eval para evaluar tipos
+        # Detectar asignaciones
         if re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*\s*=\s*.+', linea):
             try:
                 partes = linea.split("=")
                 variable = partes[0].strip()
                 valor = partes[1].strip()
-                tipo = type(ast.literal_eval(valor)).__name__
+
+                # Evaluar el valor de la asignación para determinar su tipo
+                try:
+                    # Intentamos evaluar la expresión usando eval para expresiones aritméticas
+                    valor_evaluado = eval(valor)
+                    tipo = type(valor_evaluado).__name__
+                except Exception:
+                    # Si no se puede evaluar, asignamos tipo desconocido
+                    tipo = "desconocido"
+
                 asignaciones.append((variable, tipo, valor))
             except Exception:
-                # Caso de error de asignación (ej: tipos incompatibles o sintaxis inválida)
                 asignaciones.append((variable, "desconocido", valor))
 
         # Detectar funciones
@@ -37,7 +45,7 @@ def extraer_asignaciones_y_funciones(archivo):
                 if "return" in lines[j]:
                     retorno = lines[j].split("return")[1].strip()
                     try:
-                        valor_retorno = ast.literal_eval(retorno)
+                        valor_retorno = eval(retorno)
                         tipo_retorno = type(valor_retorno).__name__
                     except:
                         tipo_retorno = "desconocido"
